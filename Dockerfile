@@ -1,6 +1,6 @@
 FROM node:8.4.0-alpine
 
-EXPOSE 8080
+RUN apk add bash
 ADD . /cbm
 WORKDIR /cbm
 CMD ["npm","start"]
