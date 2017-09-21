@@ -4,4 +4,4 @@ RUN apk update
 RUN apk add bash
 ADD . /cbm
 WORKDIR /cbm
-CMD ["npm","start"]
+ENTRYPOINT ["npm","start"]
