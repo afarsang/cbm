@@ -14,41 +14,42 @@ info:
     \ Ambari, Docker lightweight containers, Swarm and Consul.\nFor further product\
     \ documentation follow the link: <a href=\"http://hortonworks.com/apache/cloudbreak/\"\
     >http://hortonworks.com/apache/cloudbreak/</a>"
-  version: "2.1.0-dev.229"
+  version: "1.15.0-dev.199"
   title: "Cloudbreak API"
-basePath: "/cb/api/v1"
+basePath: "/cb/api"
 tags:
-- name: "connectors"
-- name: "settings"
-- name: "securitygroups"
-- name: "subscriptions"
-- name: "events"
-- name: "credentials"
-- name: "usages"
-- name: "templates"
-- name: "clustertemplates"
-- name: "flexsubscriptions"
-- name: "constraints"
-- name: "ldap"
-- name: "users"
-- name: "recipes"
-- name: "topologies"
-- name: "stacks"
-- name: "util"
-- name: "blueprints"
+- name: "v1flexsubscriptions"
+- name: "v1usages"
 - name: "cluster"
-- name: "accountpreferences"
-- name: "networks"
-- name: "rdsconfigs"
-- name: "smartsensesubscriptions"
+- name: "v1blueprints"
+- name: "v1smartsensesubscriptions"
+- name: "v1ldap"
+- name: "v1accountpreferences"
+- name: "v1networks"
+- name: "v1topologies"
+- name: "v1users"
+- name: "v1util"
+- name: "v1rdsconfigs"
+- name: "v1recipes"
+- name: "v1stacks"
+- name: "v1securitygroups"
+- name: "v1settings"
+- name: "v1subscriptions"
+- name: "v2stacks"
+- name: "v1templates"
+- name: "v1clustertemplates"
+- name: "v1credentials"
+- name: "v1constraints"
+- name: "v1connectors"
+- name: "v1events"
 schemes:
 - "http"
 - "https"
 paths:
-  /accountpreferences:
+  /v1/accountpreferences:
     get:
       tags:
-      - "accountpreferences"
+      - "v1accountpreferences"
       summary: "retrieve account preferences for admin user"
       description: "Account related preferences that could be managed by the account\
         \ admins and different restrictions could be added to Cloudbreak resources."
@@ -66,10 +67,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/AccountPreference"
-      x-swagger-router-controller: "Accountpreferences"
+      x-swagger-router-controller: "V1accountpreferences"
     post:
       tags:
-      - "accountpreferences"
+      - "v1accountpreferences"
       summary: "post account preferences of admin user"
       description: "Account related preferences that could be managed by the account\
         \ admins and different restrictions could be added to Cloudbreak resources."
@@ -92,10 +93,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/AccountPreference"
-      x-swagger-router-controller: "Accountpreferences"
+      x-swagger-router-controller: "V1accountpreferences"
     put:
       tags:
-      - "accountpreferences"
+      - "v1accountpreferences"
       summary: "update account preferences of admin user"
       description: "Account related preferences that could be managed by the account\
         \ admins and different restrictions could be added to Cloudbreak resources."
@@ -118,11 +119,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/AccountPreference"
-      x-swagger-router-controller: "Accountpreferences"
-  /accountpreferences/isplatformselectiondisabled:
+      x-swagger-router-controller: "V1accountpreferences"
+  /v1/accountpreferences/isplatformselectiondisabled:
     get:
       tags:
-      - "accountpreferences"
+      - "v1accountpreferences"
       summary: "is platform selection disabled"
       description: "Account related preferences that could be managed by the account\
         \ admins and different restrictions could be added to Cloudbreak resources."
@@ -142,11 +143,11 @@ paths:
             type: "object"
             additionalProperties:
               type: "boolean"
-      x-swagger-router-controller: "Accountpreferences"
-  /accountpreferences/validate:
+      x-swagger-router-controller: "V1accountpreferences"
+  /v1/accountpreferences/validate:
     get:
       tags:
-      - "accountpreferences"
+      - "v1accountpreferences"
       summary: "validate account preferences of all stacks"
       description: "Account related preferences that could be managed by the account\
         \ admins and different restrictions could be added to Cloudbreak resources."
@@ -162,11 +163,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Accountpreferences"
-  /blueprints/account:
+      x-swagger-router-controller: "V1accountpreferences"
+  /v1/blueprints/account:
     get:
       tags:
-      - "blueprints"
+      - "v1blueprints"
       summary: "retrieve public and private (owned) blueprints"
       description: "Ambari Blueprints are a declarative definition of a Hadoop cluster.\
         \ With a Blueprint, you specify a stack, the component layout and the configurations\
@@ -193,10 +194,10 @@ paths:
             uniqueItems: true
             items:
               $ref: "#/definitions/BlueprintResponse"
-      x-swagger-router-controller: "Blueprints"
+      x-swagger-router-controller: "V1blueprints"
     post:
       tags:
-      - "blueprints"
+      - "v1blueprints"
       summary: "create blueprint as public resource"
       description: "Ambari Blueprints are a declarative definition of a Hadoop cluster.\
         \ With a Blueprint, you specify a stack, the component layout and the configurations\
@@ -225,11 +226,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/BlueprintResponse"
-      x-swagger-router-controller: "Blueprints"
-  /blueprints/account/{name}:
+      x-swagger-router-controller: "V1blueprints"
+  /v1/blueprints/account/{name}:
     get:
       tags:
-      - "blueprints"
+      - "v1blueprints"
       summary: "retrieve a public or private (owned) blueprint by name"
       description: "Ambari Blueprints are a declarative definition of a Hadoop cluster.\
         \ With a Blueprint, you specify a stack, the component layout and the configurations\
@@ -257,10 +258,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/BlueprintResponse"
-      x-swagger-router-controller: "Blueprints"
+      x-swagger-router-controller: "V1blueprints"
     delete:
       tags:
-      - "blueprints"
+      - "v1blueprints"
       summary: "delete public (owned) or private blueprint by name"
       description: "Ambari Blueprints are a declarative definition of a Hadoop cluster.\
         \ With a Blueprint, you specify a stack, the component layout and the configurations\
@@ -286,11 +287,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Blueprints"
-  /blueprints/user:
+      x-swagger-router-controller: "V1blueprints"
+  /v1/blueprints/user:
     get:
       tags:
-      - "blueprints"
+      - "v1blueprints"
       summary: "retrieve private blueprints"
       description: "Ambari Blueprints are a declarative definition of a Hadoop cluster.\
         \ With a Blueprint, you specify a stack, the component layout and the configurations\
@@ -317,10 +318,10 @@ paths:
             uniqueItems: true
             items:
               $ref: "#/definitions/BlueprintResponse"
-      x-swagger-router-controller: "Blueprints"
+      x-swagger-router-controller: "V1blueprints"
     post:
       tags:
-      - "blueprints"
+      - "v1blueprints"
       summary: "create blueprint as private resource"
       description: "Ambari Blueprints are a declarative definition of a Hadoop cluster.\
         \ With a Blueprint, you specify a stack, the component layout and the configurations\
@@ -349,11 +350,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/BlueprintResponse"
-      x-swagger-router-controller: "Blueprints"
-  /blueprints/user/{name}:
+      x-swagger-router-controller: "V1blueprints"
+  /v1/blueprints/user/{name}:
     get:
       tags:
-      - "blueprints"
+      - "v1blueprints"
       summary: "retrieve a private blueprint by name"
       description: "Ambari Blueprints are a declarative definition of a Hadoop cluster.\
         \ With a Blueprint, you specify a stack, the component layout and the configurations\
@@ -381,10 +382,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/BlueprintResponse"
-      x-swagger-router-controller: "Blueprints"
+      x-swagger-router-controller: "V1blueprints"
     delete:
       tags:
-      - "blueprints"
+      - "v1blueprints"
       summary: "delete private blueprint by name"
       description: "Ambari Blueprints are a declarative definition of a Hadoop cluster.\
         \ With a Blueprint, you specify a stack, the component layout and the configurations\
@@ -410,11 +411,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Blueprints"
-  /blueprints/{id}:
+      x-swagger-router-controller: "V1blueprints"
+  /v1/blueprints/{id}:
     get:
       tags:
-      - "blueprints"
+      - "v1blueprints"
       summary: "retrieve blueprint by id"
       description: "Ambari Blueprints are a declarative definition of a Hadoop cluster.\
         \ With a Blueprint, you specify a stack, the component layout and the configurations\
@@ -443,10 +444,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/BlueprintResponse"
-      x-swagger-router-controller: "Blueprints"
+      x-swagger-router-controller: "V1blueprints"
     delete:
       tags:
-      - "blueprints"
+      - "v1blueprints"
       summary: "delete blueprint by id"
       description: "Ambari Blueprints are a declarative definition of a Hadoop cluster.\
         \ With a Blueprint, you specify a stack, the component layout and the configurations\
@@ -473,11 +474,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Blueprints"
-  /clustertemplates/account:
+      x-swagger-router-controller: "V1blueprints"
+  /v1/clustertemplates/account:
     get:
       tags:
-      - "clustertemplates"
+      - "v1clustertemplates"
       summary: "retrieve public and private (owned) cluster template"
       description: "Cluster templates are stored cluster configurations, which configurations\
         \ are reusable any time"
@@ -498,10 +499,10 @@ paths:
             uniqueItems: true
             items:
               $ref: "#/definitions/ClusterTemplateResponse"
-      x-swagger-router-controller: "Clustertemplates"
+      x-swagger-router-controller: "V1clustertemplates"
     post:
       tags:
-      - "clustertemplates"
+      - "v1clustertemplates"
       summary: "create cluster template as public resource"
       description: "Cluster templates are stored cluster configurations, which configurations\
         \ are reusable any time"
@@ -524,11 +525,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/ClusterTemplateResponse"
-      x-swagger-router-controller: "Clustertemplates"
-  /clustertemplates/account/{name}:
+      x-swagger-router-controller: "V1clustertemplates"
+  /v1/clustertemplates/account/{name}:
     get:
       tags:
-      - "clustertemplates"
+      - "v1clustertemplates"
       summary: "retrieve a public or private (owned) cluster template by name"
       description: "Cluster templates are stored cluster configurations, which configurations\
         \ are reusable any time"
@@ -550,10 +551,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/ClusterTemplateResponse"
-      x-swagger-router-controller: "Clustertemplates"
+      x-swagger-router-controller: "V1clustertemplates"
     delete:
       tags:
-      - "clustertemplates"
+      - "v1clustertemplates"
       summary: "delete public (owned) or private cluster template by name"
       description: "Cluster templates are stored cluster configurations, which configurations\
         \ are reusable any time"
@@ -573,11 +574,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Clustertemplates"
-  /clustertemplates/user:
+      x-swagger-router-controller: "V1clustertemplates"
+  /v1/clustertemplates/user:
     get:
       tags:
-      - "clustertemplates"
+      - "v1clustertemplates"
       summary: "retrieve private cluster templates"
       description: "Cluster templates are stored cluster configurations, which configurations\
         \ are reusable any time"
@@ -598,10 +599,10 @@ paths:
             uniqueItems: true
             items:
               $ref: "#/definitions/ClusterTemplateResponse"
-      x-swagger-router-controller: "Clustertemplates"
+      x-swagger-router-controller: "V1clustertemplates"
     post:
       tags:
-      - "clustertemplates"
+      - "v1clustertemplates"
       summary: "create cluster template as private resource"
       description: "Cluster templates are stored cluster configurations, which configurations\
         \ are reusable any time"
@@ -624,11 +625,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/ClusterTemplateResponse"
-      x-swagger-router-controller: "Clustertemplates"
-  /clustertemplates/user/{name}:
+      x-swagger-router-controller: "V1clustertemplates"
+  /v1/clustertemplates/user/{name}:
     get:
       tags:
-      - "clustertemplates"
+      - "v1clustertemplates"
       summary: "retrieve a private cluster template by name"
       description: "Cluster templates are stored cluster configurations, which configurations\
         \ are reusable any time"
@@ -650,10 +651,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/ClusterTemplateResponse"
-      x-swagger-router-controller: "Clustertemplates"
+      x-swagger-router-controller: "V1clustertemplates"
     delete:
       tags:
-      - "clustertemplates"
+      - "v1clustertemplates"
       summary: "delete private cluster template by name"
       description: "Cluster templates are stored cluster configurations, which configurations\
         \ are reusable any time"
@@ -673,11 +674,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Clustertemplates"
-  /clustertemplates/{id}:
+      x-swagger-router-controller: "V1clustertemplates"
+  /v1/clustertemplates/{id}:
     get:
       tags:
-      - "clustertemplates"
+      - "v1clustertemplates"
       summary: "retrieve cluster template by id"
       description: "Cluster templates are stored cluster configurations, which configurations\
         \ are reusable any time"
@@ -700,10 +701,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/ClusterTemplateResponse"
-      x-swagger-router-controller: "Clustertemplates"
+      x-swagger-router-controller: "V1clustertemplates"
     delete:
       tags:
-      - "clustertemplates"
+      - "v1clustertemplates"
       summary: "delete cluster template by id"
       description: "Cluster templates are stored cluster configurations, which configurations\
         \ are reusable any time"
@@ -724,11 +725,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Clustertemplates"
-  /connectors:
+      x-swagger-router-controller: "V1clustertemplates"
+  /v1/connectors:
     get:
       tags:
-      - "connectors"
+      - "v1connectors"
       summary: "retrive available platforms"
       description: "Each cloud provider has it's own specific resources like instance\
         \ types and disk types. These endpoints are collecting them."
@@ -751,60 +752,13 @@ paths:
           schema:
             type: "object"
             additionalProperties:
-              $ref: "#/definitions/JsonEntity"
-      x-swagger-router-controller: "Connectors"
-  /connectors/connectors/regions:
-    get:
+              type: "object"
+              properties: {}
+      x-swagger-router-controller: "V1connectors"
+  /v1/connectors/custom:
+    post:
       tags:
-      - "connectors"
-      summary: "retrive available regions"
-      description: "Each cloud provider has it's own specific resources like instance\
-        \ types and disk types. These endpoints are collecting them."
-      operationId: "getRegions"
-      schemes:
-      - "http"
-      - "https"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      parameters: []
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/PlatformRegionsJson"
-      x-swagger-router-controller: "Connectors"
-  /connectors/connectors/vmtypes:
-    get:
-      tags:
-      - "connectors"
-      summary: "retrive available vm types"
-      description: "Each cloud provider has it's own specific resources like instance\
-        \ types and disk types. These endpoints are collecting them."
-      operationId: "getVmTypes"
-      schemes:
-      - "http"
-      - "https"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "extended"
-        in: "query"
-        required: false
-        type: "boolean"
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/PlatformVirtualMachinesJson"
-      x-swagger-router-controller: "Connectors"
-  /connectors/custom:
-    get:
-      tags:
-      - "connectors"
+      - "v1connectors"
       summary: "retrive special properties"
       description: "Each cloud provider has it's own specific resources like instance\
         \ types and disk types. These endpoints are collecting them."
@@ -824,11 +778,11 @@ paths:
             type: "object"
             additionalProperties:
               type: "boolean"
-      x-swagger-router-controller: "Connectors"
-  /connectors/disktypes:
+      x-swagger-router-controller: "V1connectors"
+  /v1/connectors/disktypes:
     get:
       tags:
-      - "connectors"
+      - "v1connectors"
       summary: "retrive available disk types"
       description: "Each cloud provider has it's own specific resources like instance\
         \ types and disk types. These endpoints are collecting them."
@@ -846,11 +800,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/PlatformDisksJson"
-      x-swagger-router-controller: "Connectors"
-  /connectors/disktypes/{type}:
+      x-swagger-router-controller: "V1connectors"
+  /v1/connectors/disktypes/{type}:
     get:
       tags:
-      - "connectors"
+      - "v1connectors"
       summary: "retrive disks by type"
       description: "Each cloud provider has it's own specific resources like instance\
         \ types and disk types. These endpoints are collecting them."
@@ -874,11 +828,38 @@ paths:
             type: "array"
             items:
               type: "string"
-      x-swagger-router-controller: "Connectors"
-  /connectors/images:
+      x-swagger-router-controller: "V1connectors"
+  /v1/connectors/gateways:
+    post:
+      tags:
+      - "v1connectors"
+      summary: "retrive gateways with properties"
+      description: "Each cloud provider has it's own specific resources like instance\
+        \ types and disk types. These endpoints are collecting them."
+      operationId: "getGatewaysCredentialId"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/PlatformResourceRequestJson"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/PlatformGatewaysResponse"
+      x-swagger-router-controller: "V1connectors"
+  /v1/connectors/images:
     get:
       tags:
-      - "connectors"
+      - "v1connectors"
       summary: "retrive available images"
       description: "Each cloud provider has it's own specific resources like instance\
         \ types and disk types. These endpoints are collecting them."
@@ -896,11 +877,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/PlatformImagesJson"
-      x-swagger-router-controller: "Connectors"
-  /connectors/images/{type}:
+      x-swagger-router-controller: "V1connectors"
+  /v1/connectors/images/{type}:
     get:
       tags:
-      - "connectors"
+      - "v1connectors"
       summary: "retrive images by type"
       description: "Each cloud provider has it's own specific resources like instance\
         \ types and disk types. These endpoints are collecting them."
@@ -924,11 +905,38 @@ paths:
             type: "object"
             additionalProperties:
               type: "string"
-      x-swagger-router-controller: "Connectors"
-  /connectors/networks:
+      x-swagger-router-controller: "V1connectors"
+  /v1/connectors/ippools:
     post:
       tags:
-      - "connectors"
+      - "v1connectors"
+      summary: "retrive ip pools with properties"
+      description: "Each cloud provider has it's own specific resources like instance\
+        \ types and disk types. These endpoints are collecting them."
+      operationId: "getIpPoolsCredentialId"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/PlatformResourceRequestJson"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/PlatformIpPoolsResponse"
+      x-swagger-router-controller: "V1connectors"
+  /v1/connectors/networks:
+    post:
+      tags:
+      - "v1connectors"
       summary: "retrive network properties"
       description: "Each cloud provider has it's own specific resources like instance\
         \ types and disk types. These endpoints are collecting them."
@@ -956,11 +964,11 @@ paths:
               uniqueItems: true
               items:
                 $ref: "#/definitions/PlatformNetworkResponse"
-      x-swagger-router-controller: "Connectors"
-  /connectors/ochestrators:
+      x-swagger-router-controller: "V1connectors"
+  /v1/connectors/ochestrators:
     get:
       tags:
-      - "connectors"
+      - "v1connectors"
       summary: "retrive available orchestrator types"
       description: "Each cloud provider has it's own specific resources like instance\
         \ types and disk types. These endpoints are collecting them."
@@ -978,11 +986,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/PlatformOrchestratorsJson"
-      x-swagger-router-controller: "Connectors"
-  /connectors/ochestrators/{type}:
+      x-swagger-router-controller: "V1connectors"
+  /v1/connectors/ochestrators/{type}:
     get:
       tags:
-      - "connectors"
+      - "v1connectors"
       summary: "retrive orchestrators by type"
       description: "Each cloud provider has it's own specific resources like instance\
         \ types and disk types. These endpoints are collecting them."
@@ -1006,11 +1014,61 @@ paths:
             type: "array"
             items:
               type: "string"
-      x-swagger-router-controller: "Connectors"
-  /connectors/regions/av/{type}:
+      x-swagger-router-controller: "V1connectors"
+  /v1/connectors/recommendation:
+    post:
+      tags:
+      - "v1connectors"
+      summary: "creates a recommendation that advises cloud resources for the given\
+        \ blueprint"
+      description: "Each cloud provider has it's own specific resources like instance\
+        \ types and disk types. These endpoints are collecting them."
+      operationId: "createRecommendation"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/RecommendationRequestJson"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/RecommendationResponse"
+      x-swagger-router-controller: "V1connectors"
+  /v1/connectors/regions:
     get:
       tags:
-      - "connectors"
+      - "v1connectors"
+      summary: "retrive available regions"
+      description: "Each cloud provider has it's own specific resources like instance\
+        \ types and disk types. These endpoints are collecting them."
+      operationId: "getRegions"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/PlatformRegionsJson"
+      x-swagger-router-controller: "V1connectors"
+  /v1/connectors/regions/av/{type}:
+    get:
+      tags:
+      - "v1connectors"
       summary: "retrive availability zones by type"
       description: "Each cloud provider has it's own specific resources like instance\
         \ types and disk types. These endpoints are collecting them."
@@ -1036,11 +1094,11 @@ paths:
               type: "array"
               items:
                 type: "string"
-      x-swagger-router-controller: "Connectors"
-  /connectors/regions/r/{type}:
+      x-swagger-router-controller: "V1connectors"
+  /v1/connectors/regions/r/{type}:
     get:
       tags:
-      - "connectors"
+      - "v1connectors"
       summary: "retrive regions by type"
       description: "Each cloud provider has it's own specific resources like instance\
         \ types and disk types. These endpoints are collecting them."
@@ -1064,11 +1122,11 @@ paths:
             type: "array"
             items:
               type: "string"
-      x-swagger-router-controller: "Connectors"
-  /connectors/securitygroups:
+      x-swagger-router-controller: "V1connectors"
+  /v1/connectors/securitygroups:
     post:
       tags:
-      - "connectors"
+      - "v1connectors"
       summary: "retrive securitygroups properties"
       description: "Each cloud provider has it's own specific resources like instance\
         \ types and disk types. These endpoints are collecting them."
@@ -1096,11 +1154,11 @@ paths:
               uniqueItems: true
               items:
                 $ref: "#/definitions/PlatformSecurityGroupResponse"
-      x-swagger-router-controller: "Connectors"
-  /connectors/sshkeys:
+      x-swagger-router-controller: "V1connectors"
+  /v1/connectors/sshkeys:
     post:
       tags:
-      - "connectors"
+      - "v1connectors"
       summary: "retrive sshkeys properties"
       description: "Each cloud provider has it's own specific resources like instance\
         \ types and disk types. These endpoints are collecting them."
@@ -1128,11 +1186,11 @@ paths:
               uniqueItems: true
               items:
                 $ref: "#/definitions/PlatformSshKeyResponse"
-      x-swagger-router-controller: "Connectors"
-  /connectors/tagspecifications:
+      x-swagger-router-controller: "V1connectors"
+  /v1/connectors/tagspecifications:
     get:
       tags:
-      - "connectors"
+      - "v1connectors"
       summary: "retrive tag specifications"
       description: "Each cloud provider has it's own specific resources like instance\
         \ types and disk types. These endpoints are collecting them."
@@ -1150,11 +1208,65 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/TagSpecificationsJson"
-      x-swagger-router-controller: "Connectors"
-  /connectors/variants:
+      x-swagger-router-controller: "V1connectors"
+  /v1/connectors/v2/regions:
+    post:
+      tags:
+      - "v1connectors"
+      summary: "retrive regions by type"
+      description: "Each cloud provider has it's own specific resources like instance\
+        \ types and disk types. These endpoints are collecting them."
+      operationId: "getRegionsByCredentialId"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/PlatformResourceRequestJson"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/RegionResponse"
+      x-swagger-router-controller: "V1connectors"
+  /v1/connectors/v2/vmtypes:
+    post:
+      tags:
+      - "v1connectors"
+      summary: "retrive vmtype properties by credential"
+      description: "Each cloud provider has it's own specific resources like instance\
+        \ types and disk types. These endpoints are collecting them."
+      operationId: "getVmTypesByCredentialId"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/PlatformResourceRequestJson"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/PlatformVmtypesResponse"
+      x-swagger-router-controller: "V1connectors"
+  /v1/connectors/variants:
     get:
       tags:
-      - "connectors"
+      - "v1connectors"
       summary: "retrive available platform variants"
       description: "Each cloud provider has it's own specific resources like instance\
         \ types and disk types. These endpoints are collecting them."
@@ -1172,11 +1284,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/PlatformVariantsJson"
-      x-swagger-router-controller: "Connectors"
-  /connectors/variants/{type}:
+      x-swagger-router-controller: "V1connectors"
+  /v1/connectors/variants/{type}:
     get:
       tags:
-      - "connectors"
+      - "v1connectors"
       summary: "retrive a platform variant by type"
       description: "Each cloud provider has it's own specific resources like instance\
         \ types and disk types. These endpoints are collecting them."
@@ -1200,15 +1312,41 @@ paths:
             type: "array"
             items:
               type: "string"
-      x-swagger-router-controller: "Connectors"
-  /connectors/vmtypes/{type}:
+      x-swagger-router-controller: "V1connectors"
+  /v1/connectors/vmtypes:
     get:
       tags:
-      - "connectors"
-      summary: "retrive vm types by type"
+      - "v1connectors"
+      summary: "retrive available vm types"
       description: "Each cloud provider has it's own specific resources like instance\
         \ types and disk types. These endpoints are collecting them."
-      operationId: "getVmTypeByType"
+      operationId: "getVmTypes"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "extended"
+        in: "query"
+        required: false
+        type: "boolean"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/PlatformVirtualMachinesJson"
+      x-swagger-router-controller: "V1connectors"
+  /v1/connectors/vmtypes/{type}:
+    get:
+      tags:
+      - "v1connectors"
+      summary: "retrive available vm types"
+      description: "Each cloud provider has it's own specific resources like instance\
+        \ types and disk types. These endpoints are collecting them."
+      operationId: "getVmTypesByType"
       schemes:
       - "http"
       - "https"
@@ -1229,14 +1367,12 @@ paths:
         200:
           description: "successful operation"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/VmTypeJson"
-      x-swagger-router-controller: "Connectors"
-  /constraints/account:
+            $ref: "#/definitions/PlatformVirtualMachinesJson"
+      x-swagger-router-controller: "V1connectors"
+  /v1/constraints/account:
     get:
       tags:
-      - "constraints"
+      - "v1constraints"
       summary: "retrieve public and private (owned) constraint templates"
       description: "A constraint template tells Cloudbreak the resource constraints\
         \ (cpu, memory, disk) of the Ambari containers that will be deployed to the\
@@ -1259,10 +1395,10 @@ paths:
             uniqueItems: true
             items:
               $ref: "#/definitions/ConstraintTemplateResponse"
-      x-swagger-router-controller: "Constraints"
+      x-swagger-router-controller: "V1constraints"
     post:
       tags:
-      - "constraints"
+      - "v1constraints"
       summary: "create constraint template as public resource"
       description: "A constraint template tells Cloudbreak the resource constraints\
         \ (cpu, memory, disk) of the Ambari containers that will be deployed to the\
@@ -1287,11 +1423,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/ConstraintTemplateResponse"
-      x-swagger-router-controller: "Constraints"
-  /constraints/account/{name}:
+      x-swagger-router-controller: "V1constraints"
+  /v1/constraints/account/{name}:
     get:
       tags:
-      - "constraints"
+      - "v1constraints"
       summary: "retrieve a public or private (owned) constraint template by name"
       description: "A constraint template tells Cloudbreak the resource constraints\
         \ (cpu, memory, disk) of the Ambari containers that will be deployed to the\
@@ -1315,10 +1451,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/ConstraintTemplateResponse"
-      x-swagger-router-controller: "Constraints"
+      x-swagger-router-controller: "V1constraints"
     delete:
       tags:
-      - "constraints"
+      - "v1constraints"
       summary: "delete public (owned) or private constraint template by name"
       description: "A constraint template tells Cloudbreak the resource constraints\
         \ (cpu, memory, disk) of the Ambari containers that will be deployed to the\
@@ -1340,11 +1476,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Constraints"
-  /constraints/user:
+      x-swagger-router-controller: "V1constraints"
+  /v1/constraints/user:
     get:
       tags:
-      - "constraints"
+      - "v1constraints"
       summary: "retrieve private constraint templates"
       description: "A constraint template tells Cloudbreak the resource constraints\
         \ (cpu, memory, disk) of the Ambari containers that will be deployed to the\
@@ -1367,10 +1503,10 @@ paths:
             uniqueItems: true
             items:
               $ref: "#/definitions/ConstraintTemplateResponse"
-      x-swagger-router-controller: "Constraints"
+      x-swagger-router-controller: "V1constraints"
     post:
       tags:
-      - "constraints"
+      - "v1constraints"
       summary: "create constraint template as private resource"
       description: "A constraint template tells Cloudbreak the resource constraints\
         \ (cpu, memory, disk) of the Ambari containers that will be deployed to the\
@@ -1395,11 +1531,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/ConstraintTemplateResponse"
-      x-swagger-router-controller: "Constraints"
-  /constraints/user/{name}:
+      x-swagger-router-controller: "V1constraints"
+  /v1/constraints/user/{name}:
     get:
       tags:
-      - "constraints"
+      - "v1constraints"
       summary: "retrieve a private constraint template by name"
       description: "A constraint template tells Cloudbreak the resource constraints\
         \ (cpu, memory, disk) of the Ambari containers that will be deployed to the\
@@ -1423,10 +1559,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/ConstraintTemplateResponse"
-      x-swagger-router-controller: "Constraints"
+      x-swagger-router-controller: "V1constraints"
     delete:
       tags:
-      - "constraints"
+      - "v1constraints"
       summary: "delete private constraint template by name"
       description: "A constraint template tells Cloudbreak the resource constraints\
         \ (cpu, memory, disk) of the Ambari containers that will be deployed to the\
@@ -1448,11 +1584,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Constraints"
-  /constraints/{id}:
+      x-swagger-router-controller: "V1constraints"
+  /v1/constraints/{id}:
     get:
       tags:
-      - "constraints"
+      - "v1constraints"
       summary: "retrieve constraint template by id"
       description: "A constraint template tells Cloudbreak the resource constraints\
         \ (cpu, memory, disk) of the Ambari containers that will be deployed to the\
@@ -1477,10 +1613,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/ConstraintTemplateResponse"
-      x-swagger-router-controller: "Constraints"
+      x-swagger-router-controller: "V1constraints"
     delete:
       tags:
-      - "constraints"
+      - "v1constraints"
       summary: "delete constraint template by id"
       description: "A constraint template tells Cloudbreak the resource constraints\
         \ (cpu, memory, disk) of the Ambari containers that will be deployed to the\
@@ -1503,11 +1639,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Constraints"
-  /credentials/account:
+      x-swagger-router-controller: "V1constraints"
+  /v1/credentials/account:
     get:
       tags:
-      - "credentials"
+      - "v1credentials"
       summary: "retrieve public and private (owned) credentials"
       description: "Cloudbreak is launching Hadoop clusters on the user's behalf -\
         \ on different cloud providers. One key point is that Cloudbreak does not\
@@ -1533,10 +1669,10 @@ paths:
             uniqueItems: true
             items:
               $ref: "#/definitions/CredentialResponse"
-      x-swagger-router-controller: "Credentials"
+      x-swagger-router-controller: "V1credentials"
     post:
       tags:
-      - "credentials"
+      - "v1credentials"
       summary: "create credential as public resource"
       description: "Cloudbreak is launching Hadoop clusters on the user's behalf -\
         \ on different cloud providers. One key point is that Cloudbreak does not\
@@ -1564,11 +1700,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/CredentialResponse"
-      x-swagger-router-controller: "Credentials"
-  /credentials/account/{name}:
+      x-swagger-router-controller: "V1credentials"
+  /v1/credentials/account/{name}:
     get:
       tags:
-      - "credentials"
+      - "v1credentials"
       summary: "retrieve a public or private (owned) credential by name"
       description: "Cloudbreak is launching Hadoop clusters on the user's behalf -\
         \ on different cloud providers. One key point is that Cloudbreak does not\
@@ -1595,10 +1731,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/CredentialResponse"
-      x-swagger-router-controller: "Credentials"
+      x-swagger-router-controller: "V1credentials"
     delete:
       tags:
-      - "credentials"
+      - "v1credentials"
       summary: "delete public (owned) or private credential by name"
       description: "Cloudbreak is launching Hadoop clusters on the user's behalf -\
         \ on different cloud providers. One key point is that Cloudbreak does not\
@@ -1623,11 +1759,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Credentials"
-  /credentials/accountinteractivelogin:
+      x-swagger-router-controller: "V1credentials"
+  /v1/credentials/accountinteractivelogin:
     post:
       tags:
-      - "credentials"
+      - "v1credentials"
       summary: "interactive login"
       description: "Cloudbreak is launching Hadoop clusters on the user's behalf -\
         \ on different cloud providers. One key point is that Cloudbreak does not\
@@ -1657,11 +1793,11 @@ paths:
             type: "object"
             additionalProperties:
               type: "string"
-      x-swagger-router-controller: "Credentials"
-  /credentials/user:
+      x-swagger-router-controller: "V1credentials"
+  /v1/credentials/user:
     get:
       tags:
-      - "credentials"
+      - "v1credentials"
       summary: "retrieve private credentials"
       description: "Cloudbreak is launching Hadoop clusters on the user's behalf -\
         \ on different cloud providers. One key point is that Cloudbreak does not\
@@ -1687,10 +1823,10 @@ paths:
             uniqueItems: true
             items:
               $ref: "#/definitions/CredentialResponse"
-      x-swagger-router-controller: "Credentials"
+      x-swagger-router-controller: "V1credentials"
     post:
       tags:
-      - "credentials"
+      - "v1credentials"
       summary: "create credential as private resource"
       description: "Cloudbreak is launching Hadoop clusters on the user's behalf -\
         \ on different cloud providers. One key point is that Cloudbreak does not\
@@ -1718,11 +1854,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/CredentialResponse"
-      x-swagger-router-controller: "Credentials"
-  /credentials/user/{name}:
+      x-swagger-router-controller: "V1credentials"
+  /v1/credentials/user/{name}:
     get:
       tags:
-      - "credentials"
+      - "v1credentials"
       summary: "retrieve a private credential by name"
       description: "Cloudbreak is launching Hadoop clusters on the user's behalf -\
         \ on different cloud providers. One key point is that Cloudbreak does not\
@@ -1749,10 +1885,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/CredentialResponse"
-      x-swagger-router-controller: "Credentials"
+      x-swagger-router-controller: "V1credentials"
     delete:
       tags:
-      - "credentials"
+      - "v1credentials"
       summary: "delete private credential by name"
       description: "Cloudbreak is launching Hadoop clusters on the user's behalf -\
         \ on different cloud providers. One key point is that Cloudbreak does not\
@@ -1777,11 +1913,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Credentials"
-  /credentials/userinteractivelogin:
+      x-swagger-router-controller: "V1credentials"
+  /v1/credentials/userinteractivelogin:
     post:
       tags:
-      - "credentials"
+      - "v1credentials"
       summary: "interactive login"
       description: "Cloudbreak is launching Hadoop clusters on the user's behalf -\
         \ on different cloud providers. One key point is that Cloudbreak does not\
@@ -1811,11 +1947,11 @@ paths:
             type: "object"
             additionalProperties:
               type: "string"
-      x-swagger-router-controller: "Credentials"
-  /credentials/{id}:
+      x-swagger-router-controller: "V1credentials"
+  /v1/credentials/{id}:
     get:
       tags:
-      - "credentials"
+      - "v1credentials"
       summary: "retrieve credential by id"
       description: "Cloudbreak is launching Hadoop clusters on the user's behalf -\
         \ on different cloud providers. One key point is that Cloudbreak does not\
@@ -1843,10 +1979,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/CredentialResponse"
-      x-swagger-router-controller: "Credentials"
+      x-swagger-router-controller: "V1credentials"
     delete:
       tags:
-      - "credentials"
+      - "v1credentials"
       summary: "delete credential by id"
       description: "Cloudbreak is launching Hadoop clusters on the user's behalf -\
         \ on different cloud providers. One key point is that Cloudbreak does not\
@@ -1872,11 +2008,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Credentials"
-  /events:
+      x-swagger-router-controller: "V1credentials"
+  /v1/events:
     get:
       tags:
-      - "events"
+      - "v1events"
       summary: "retrieve events by timestamp (long)"
       description: "Events are used to track stack creation initiated by cloudbreak\
         \ users. Events are generated by the backend when resources requested by the\
@@ -1902,11 +2038,11 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/CloudbreakEvent"
-      x-swagger-router-controller: "Events"
-  /events/{stackId}:
+      x-swagger-router-controller: "V1events"
+  /v1/events/{stackId}:
     get:
       tags:
-      - "events"
+      - "v1events"
       summary: "retrieve events by stackid (long)"
       description: "Events are used to track stack creation initiated by cloudbreak\
         \ users. Events are generated by the backend when resources requested by the\
@@ -1932,11 +2068,11 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/CloudbreakEvent"
-      x-swagger-router-controller: "Events"
-  /flexsubscriptions/account:
+      x-swagger-router-controller: "V1events"
+  /v1/flexsubscriptions/account:
     get:
       tags:
-      - "flexsubscriptions"
+      - "v1flexsubscriptions"
       summary: "retrieve public and private (owned) Flex subscriptions"
       description: "Flex subscriptions could be configured."
       operationId: "getPublicFlexSubscriptions"
@@ -1955,10 +2091,10 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/FlexSubscriptionResponse"
-      x-swagger-router-controller: "Flexsubscriptions"
+      x-swagger-router-controller: "V1flexsubscriptions"
     post:
       tags:
-      - "flexsubscriptions"
+      - "v1flexsubscriptions"
       summary: "create Flex subscription as public resource"
       description: "Flex subscriptions could be configured."
       operationId: "postPublicFlexSubscription"
@@ -1980,11 +2116,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/FlexSubscriptionResponse"
-      x-swagger-router-controller: "Flexsubscriptions"
-  /flexsubscriptions/account/setdefault/{name}:
+      x-swagger-router-controller: "V1flexsubscriptions"
+  /v1/flexsubscriptions/account/setdefault/{name}:
     put:
       tags:
-      - "flexsubscriptions"
+      - "v1flexsubscriptions"
       summary: "sets the account default flag on the Flex subscription"
       description: "Flex subscriptions could be configured."
       operationId: "putPublicDefaultFlexSubscriptionByName"
@@ -2003,11 +2139,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Flexsubscriptions"
-  /flexsubscriptions/account/setusedforcontroller/{name}:
+      x-swagger-router-controller: "V1flexsubscriptions"
+  /v1/flexsubscriptions/account/setusedforcontroller/{name}:
     put:
       tags:
-      - "flexsubscriptions"
+      - "v1flexsubscriptions"
       summary: "sets the account 'used for controller' flag on the Flex subscription"
       description: "Flex subscriptions could be configured."
       operationId: "putPublicUsedForControllerFlexSubscriptionByName"
@@ -2026,11 +2162,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Flexsubscriptions"
-  /flexsubscriptions/account/{name}:
+      x-swagger-router-controller: "V1flexsubscriptions"
+  /v1/flexsubscriptions/account/{name}:
     get:
       tags:
-      - "flexsubscriptions"
+      - "v1flexsubscriptions"
       summary: "retrieve a public or private (owned) Flex subscription by name"
       description: "Flex subscriptions could be configured."
       operationId: "getPublicFlexSubscriptionByName"
@@ -2051,10 +2187,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/FlexSubscriptionResponse"
-      x-swagger-router-controller: "Flexsubscriptions"
+      x-swagger-router-controller: "V1flexsubscriptions"
     delete:
       tags:
-      - "flexsubscriptions"
+      - "v1flexsubscriptions"
       summary: "delete public (owned) or private Flex subscription by name"
       description: "Flex subscriptions could be configured."
       operationId: "deletePublicFlexSubscriptionByName"
@@ -2073,11 +2209,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Flexsubscriptions"
-  /flexsubscriptions/setdefault/{id}:
+      x-swagger-router-controller: "V1flexsubscriptions"
+  /v1/flexsubscriptions/setdefault/{id}:
     put:
       tags:
-      - "flexsubscriptions"
+      - "v1flexsubscriptions"
       summary: "sets the account default flag on the Flex subscription"
       description: "Flex subscriptions could be configured."
       operationId: "putDefaultFlexSubscriptionById"
@@ -2097,11 +2233,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Flexsubscriptions"
-  /flexsubscriptions/setusedforcontroller/{id}:
+      x-swagger-router-controller: "V1flexsubscriptions"
+  /v1/flexsubscriptions/setusedforcontroller/{id}:
     put:
       tags:
-      - "flexsubscriptions"
+      - "v1flexsubscriptions"
       summary: "sets the account 'used for controller' flag on the Flex subscription"
       description: "Flex subscriptions could be configured."
       operationId: "putUsedForControllerFlexSubscriptionById"
@@ -2121,11 +2257,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Flexsubscriptions"
-  /flexsubscriptions/user:
+      x-swagger-router-controller: "V1flexsubscriptions"
+  /v1/flexsubscriptions/user:
     get:
       tags:
-      - "flexsubscriptions"
+      - "v1flexsubscriptions"
       summary: "retrieve private Flex subscriptions"
       description: "Flex subscriptions could be configured."
       operationId: "getPrivateFlexSubscriptions"
@@ -2144,10 +2280,10 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/FlexSubscriptionResponse"
-      x-swagger-router-controller: "Flexsubscriptions"
+      x-swagger-router-controller: "V1flexsubscriptions"
     post:
       tags:
-      - "flexsubscriptions"
+      - "v1flexsubscriptions"
       summary: "create Flex subscription as private resource"
       description: "Flex subscriptions could be configured."
       operationId: "postPrivateFlexSubscription"
@@ -2169,11 +2305,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/FlexSubscriptionResponse"
-      x-swagger-router-controller: "Flexsubscriptions"
-  /flexsubscriptions/user/{name}:
+      x-swagger-router-controller: "V1flexsubscriptions"
+  /v1/flexsubscriptions/user/{name}:
     get:
       tags:
-      - "flexsubscriptions"
+      - "v1flexsubscriptions"
       summary: "retrieve a private Flex subscription by name"
       description: "Flex subscriptions could be configured."
       operationId: "getPrivateFlexSubscriptionByName"
@@ -2194,10 +2330,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/FlexSubscriptionResponse"
-      x-swagger-router-controller: "Flexsubscriptions"
+      x-swagger-router-controller: "V1flexsubscriptions"
     delete:
       tags:
-      - "flexsubscriptions"
+      - "v1flexsubscriptions"
       summary: "delete private Flex subscription by name"
       description: "Flex subscriptions could be configured."
       operationId: "deletePrivateFlexSubscriptionByName"
@@ -2216,11 +2352,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Flexsubscriptions"
-  /flexsubscriptions/{id}:
+      x-swagger-router-controller: "V1flexsubscriptions"
+  /v1/flexsubscriptions/{id}:
     get:
       tags:
-      - "flexsubscriptions"
+      - "v1flexsubscriptions"
       summary: "retrieve Flex subscription by id"
       description: "Flex subscriptions could be configured."
       operationId: "getFlexSubscriptionById"
@@ -2242,10 +2378,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/FlexSubscriptionResponse"
-      x-swagger-router-controller: "Flexsubscriptions"
+      x-swagger-router-controller: "V1flexsubscriptions"
     delete:
       tags:
-      - "flexsubscriptions"
+      - "v1flexsubscriptions"
       summary: "delete Flex subscription by id"
       description: "Flex subscriptions could be configured."
       operationId: "deleteFlexSubscriptionById"
@@ -2265,11 +2401,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Flexsubscriptions"
-  /ldap/account:
+      x-swagger-router-controller: "V1flexsubscriptions"
+  /v1/ldap/account:
     get:
       tags:
-      - "ldap"
+      - "v1ldap"
       summary: "retrieve public and private (owned) LDAP configs"
       description: "LDAP server integration enables the user to provide a central\
         \ place to store usernames and passwords for the users of his/her clusters."
@@ -2290,10 +2426,10 @@ paths:
             uniqueItems: true
             items:
               $ref: "#/definitions/LdapConfigResponse"
-      x-swagger-router-controller: "Ldap"
+      x-swagger-router-controller: "V1ldap"
     post:
       tags:
-      - "ldap"
+      - "v1ldap"
       summary: "create LDAP config as public resource"
       description: "LDAP server integration enables the user to provide a central\
         \ place to store usernames and passwords for the users of his/her clusters."
@@ -2316,11 +2452,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/LdapConfigResponse"
-      x-swagger-router-controller: "Ldap"
-  /ldap/account/{name}:
+      x-swagger-router-controller: "V1ldap"
+  /v1/ldap/account/{name}:
     get:
       tags:
-      - "ldap"
+      - "v1ldap"
       summary: "retrieve a public or private (owned) LDAP config by name"
       description: "LDAP server integration enables the user to provide a central\
         \ place to store usernames and passwords for the users of his/her clusters."
@@ -2342,10 +2478,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/LdapConfigResponse"
-      x-swagger-router-controller: "Ldap"
+      x-swagger-router-controller: "V1ldap"
     delete:
       tags:
-      - "ldap"
+      - "v1ldap"
       summary: "delete public (owned) or private LDAP config by name"
       description: "LDAP server integration enables the user to provide a central\
         \ place to store usernames and passwords for the users of his/her clusters."
@@ -2365,11 +2501,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Ldap"
-  /ldap/user:
+      x-swagger-router-controller: "V1ldap"
+  /v1/ldap/user:
     get:
       tags:
-      - "ldap"
+      - "v1ldap"
       summary: "retrieve private LDAP configs"
       description: "LDAP server integration enables the user to provide a central\
         \ place to store usernames and passwords for the users of his/her clusters."
@@ -2390,10 +2526,10 @@ paths:
             uniqueItems: true
             items:
               $ref: "#/definitions/LdapConfigResponse"
-      x-swagger-router-controller: "Ldap"
+      x-swagger-router-controller: "V1ldap"
     post:
       tags:
-      - "ldap"
+      - "v1ldap"
       summary: "create LDAP config as private resource"
       description: "LDAP server integration enables the user to provide a central\
         \ place to store usernames and passwords for the users of his/her clusters."
@@ -2416,11 +2552,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/LdapConfigResponse"
-      x-swagger-router-controller: "Ldap"
-  /ldap/user/{name}:
+      x-swagger-router-controller: "V1ldap"
+  /v1/ldap/user/{name}:
     get:
       tags:
-      - "ldap"
+      - "v1ldap"
       summary: "retrieve a private LDAP config by name"
       description: "LDAP server integration enables the user to provide a central\
         \ place to store usernames and passwords for the users of his/her clusters."
@@ -2442,10 +2578,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/LdapConfigResponse"
-      x-swagger-router-controller: "Ldap"
+      x-swagger-router-controller: "V1ldap"
     delete:
       tags:
-      - "ldap"
+      - "v1ldap"
       summary: "delete private LDAP config by name"
       description: "LDAP server integration enables the user to provide a central\
         \ place to store usernames and passwords for the users of his/her clusters."
@@ -2465,11 +2601,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Ldap"
-  /ldap/{id}:
+      x-swagger-router-controller: "V1ldap"
+  /v1/ldap/{id}:
     get:
       tags:
-      - "ldap"
+      - "v1ldap"
       summary: "retrieve LDAP config by id"
       description: "LDAP server integration enables the user to provide a central\
         \ place to store usernames and passwords for the users of his/her clusters."
@@ -2492,10 +2628,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/LdapConfigResponse"
-      x-swagger-router-controller: "Ldap"
+      x-swagger-router-controller: "V1ldap"
     delete:
       tags:
-      - "ldap"
+      - "v1ldap"
       summary: "delete LDAP config by id"
       description: "LDAP server integration enables the user to provide a central\
         \ place to store usernames and passwords for the users of his/her clusters."
@@ -2516,11 +2652,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Ldap"
-  /networks/account:
+      x-swagger-router-controller: "V1ldap"
+  /v1/networks/account:
     get:
       tags:
-      - "networks"
+      - "v1networks"
       summary: "retrieve public and private (owned) networks"
       description: "Provider specific network settings could be configured by using\
         \ Network resources."
@@ -2541,10 +2677,10 @@ paths:
             uniqueItems: true
             items:
               $ref: "#/definitions/NetworkResponse"
-      x-swagger-router-controller: "Networks"
+      x-swagger-router-controller: "V1networks"
     post:
       tags:
-      - "networks"
+      - "v1networks"
       summary: "create network as public resource"
       description: "Provider specific network settings could be configured by using\
         \ Network resources."
@@ -2567,11 +2703,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/NetworkResponse"
-      x-swagger-router-controller: "Networks"
-  /networks/account/{name}:
+      x-swagger-router-controller: "V1networks"
+  /v1/networks/account/{name}:
     get:
       tags:
-      - "networks"
+      - "v1networks"
       summary: "retrieve a public or private (owned) network by name"
       description: "Provider specific network settings could be configured by using\
         \ Network resources."
@@ -2593,10 +2729,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/NetworkResponse"
-      x-swagger-router-controller: "Networks"
+      x-swagger-router-controller: "V1networks"
     delete:
       tags:
-      - "networks"
+      - "v1networks"
       summary: "delete public (owned) or private network by name"
       description: "Provider specific network settings could be configured by using\
         \ Network resources."
@@ -2616,11 +2752,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Networks"
-  /networks/user:
+      x-swagger-router-controller: "V1networks"
+  /v1/networks/user:
     get:
       tags:
-      - "networks"
+      - "v1networks"
       summary: "retrieve private networks"
       description: "Provider specific network settings could be configured by using\
         \ Network resources."
@@ -2641,10 +2777,10 @@ paths:
             uniqueItems: true
             items:
               $ref: "#/definitions/NetworkResponse"
-      x-swagger-router-controller: "Networks"
+      x-swagger-router-controller: "V1networks"
     post:
       tags:
-      - "networks"
+      - "v1networks"
       summary: "create network as private resource"
       description: "Provider specific network settings could be configured by using\
         \ Network resources."
@@ -2667,11 +2803,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/NetworkResponse"
-      x-swagger-router-controller: "Networks"
-  /networks/user/{name}:
+      x-swagger-router-controller: "V1networks"
+  /v1/networks/user/{name}:
     get:
       tags:
-      - "networks"
+      - "v1networks"
       summary: "retrieve a private network by name"
       description: "Provider specific network settings could be configured by using\
         \ Network resources."
@@ -2693,10 +2829,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/NetworkResponse"
-      x-swagger-router-controller: "Networks"
+      x-swagger-router-controller: "V1networks"
     delete:
       tags:
-      - "networks"
+      - "v1networks"
       summary: "delete private network by name"
       description: "Provider specific network settings could be configured by using\
         \ Network resources."
@@ -2716,11 +2852,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Networks"
-  /networks/{id}:
+      x-swagger-router-controller: "V1networks"
+  /v1/networks/{id}:
     get:
       tags:
-      - "networks"
+      - "v1networks"
       summary: "retrieve network by id"
       description: "Provider specific network settings could be configured by using\
         \ Network resources."
@@ -2743,10 +2879,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/NetworkResponse"
-      x-swagger-router-controller: "Networks"
+      x-swagger-router-controller: "V1networks"
     delete:
       tags:
-      - "networks"
+      - "v1networks"
       summary: "delete network by id"
       description: "Provider specific network settings could be configured by using\
         \ Network resources."
@@ -2767,11 +2903,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Networks"
-  /rdsconfigs/account:
+      x-swagger-router-controller: "V1networks"
+  /v1/rdsconfigs/account:
     get:
       tags:
-      - "rdsconfigs"
+      - "v1rdsconfigs"
       summary: "retrieve public and private (owned) RDS configurations"
       description: "An RDS Configuration describe a connection to an external Relational\
         \ Database Service that can be used as the Hive Metastore."
@@ -2792,10 +2928,10 @@ paths:
             uniqueItems: true
             items:
               $ref: "#/definitions/RDSConfigResponse"
-      x-swagger-router-controller: "Rdsconfigs"
+      x-swagger-router-controller: "V1rdsconfigs"
     post:
       tags:
-      - "rdsconfigs"
+      - "v1rdsconfigs"
       summary: "create RDS configuration as public resource"
       description: "An RDS Configuration describe a connection to an external Relational\
         \ Database Service that can be used as the Hive Metastore."
@@ -2818,11 +2954,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/RDSConfigResponse"
-      x-swagger-router-controller: "Rdsconfigs"
-  /rdsconfigs/account/{name}:
+      x-swagger-router-controller: "V1rdsconfigs"
+  /v1/rdsconfigs/account/{name}:
     get:
       tags:
-      - "rdsconfigs"
+      - "v1rdsconfigs"
       summary: "retrieve a public or private (owned) RDS configuration by name"
       description: "An RDS Configuration describe a connection to an external Relational\
         \ Database Service that can be used as the Hive Metastore."
@@ -2844,10 +2980,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/RDSConfigResponse"
-      x-swagger-router-controller: "Rdsconfigs"
+      x-swagger-router-controller: "V1rdsconfigs"
     delete:
       tags:
-      - "rdsconfigs"
+      - "v1rdsconfigs"
       summary: "delete public (owned) or private RDS configuration by name"
       description: "An RDS Configuration describe a connection to an external Relational\
         \ Database Service that can be used as the Hive Metastore."
@@ -2867,11 +3003,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Rdsconfigs"
-  /rdsconfigs/user:
+      x-swagger-router-controller: "V1rdsconfigs"
+  /v1/rdsconfigs/user:
     get:
       tags:
-      - "rdsconfigs"
+      - "v1rdsconfigs"
       summary: "retrieve private RDS configurations"
       description: "An RDS Configuration describe a connection to an external Relational\
         \ Database Service that can be used as the Hive Metastore."
@@ -2892,10 +3028,10 @@ paths:
             uniqueItems: true
             items:
               $ref: "#/definitions/RDSConfigResponse"
-      x-swagger-router-controller: "Rdsconfigs"
+      x-swagger-router-controller: "V1rdsconfigs"
     post:
       tags:
-      - "rdsconfigs"
+      - "v1rdsconfigs"
       summary: "create RDS configuration as private resource"
       description: "An RDS Configuration describe a connection to an external Relational\
         \ Database Service that can be used as the Hive Metastore."
@@ -2918,11 +3054,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/RDSConfigResponse"
-      x-swagger-router-controller: "Rdsconfigs"
-  /rdsconfigs/user/{name}:
+      x-swagger-router-controller: "V1rdsconfigs"
+  /v1/rdsconfigs/user/{name}:
     get:
       tags:
-      - "rdsconfigs"
+      - "v1rdsconfigs"
       summary: "retrieve a private RDS configuration by name"
       description: "An RDS Configuration describe a connection to an external Relational\
         \ Database Service that can be used as the Hive Metastore."
@@ -2944,10 +3080,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/RDSConfigResponse"
-      x-swagger-router-controller: "Rdsconfigs"
+      x-swagger-router-controller: "V1rdsconfigs"
     delete:
       tags:
-      - "rdsconfigs"
+      - "v1rdsconfigs"
       summary: "delete private RDS configuration by name"
       description: "An RDS Configuration describe a connection to an external Relational\
         \ Database Service that can be used as the Hive Metastore."
@@ -2967,11 +3103,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Rdsconfigs"
-  /rdsconfigs/{id}:
+      x-swagger-router-controller: "V1rdsconfigs"
+  /v1/rdsconfigs/{id}:
     get:
       tags:
-      - "rdsconfigs"
+      - "v1rdsconfigs"
       summary: "retrieve RDS configuration by id"
       description: "An RDS Configuration describe a connection to an external Relational\
         \ Database Service that can be used as the Hive Metastore."
@@ -2994,10 +3130,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/RDSConfigResponse"
-      x-swagger-router-controller: "Rdsconfigs"
+      x-swagger-router-controller: "V1rdsconfigs"
     delete:
       tags:
-      - "rdsconfigs"
+      - "v1rdsconfigs"
       summary: "delete RDS configuration by id"
       description: "An RDS Configuration describe a connection to an external Relational\
         \ Database Service that can be used as the Hive Metastore."
@@ -3018,11 +3154,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Rdsconfigs"
-  /recipes/account:
+      x-swagger-router-controller: "V1rdsconfigs"
+  /v1/recipes/account:
     get:
       tags:
-      - "recipes"
+      - "v1recipes"
       summary: "retrieve public and private (owned) recipes"
       description: "Recipes are basically script extensions to a cluster that run\
         \ on a set of nodes before or after the Ambari cluster installation."
@@ -3043,10 +3179,10 @@ paths:
             uniqueItems: true
             items:
               $ref: "#/definitions/RecipeResponse"
-      x-swagger-router-controller: "Recipes"
+      x-swagger-router-controller: "V1recipes"
     post:
       tags:
-      - "recipes"
+      - "v1recipes"
       summary: "create recipe as public resource"
       description: "Recipes are basically script extensions to a cluster that run\
         \ on a set of nodes before or after the Ambari cluster installation."
@@ -3069,11 +3205,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/RecipeResponse"
-      x-swagger-router-controller: "Recipes"
-  /recipes/account/{name}:
+      x-swagger-router-controller: "V1recipes"
+  /v1/recipes/account/{name}:
     get:
       tags:
-      - "recipes"
+      - "v1recipes"
       summary: "retrieve a public or private (owned) recipe by name"
       description: "Recipes are basically script extensions to a cluster that run\
         \ on a set of nodes before or after the Ambari cluster installation."
@@ -3095,10 +3231,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/RecipeResponse"
-      x-swagger-router-controller: "Recipes"
+      x-swagger-router-controller: "V1recipes"
     delete:
       tags:
-      - "recipes"
+      - "v1recipes"
       summary: "delete public (owned) or private recipe by name"
       description: "Recipes are basically script extensions to a cluster that run\
         \ on a set of nodes before or after the Ambari cluster installation."
@@ -3118,11 +3254,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Recipes"
-  /recipes/user:
+      x-swagger-router-controller: "V1recipes"
+  /v1/recipes/user:
     get:
       tags:
-      - "recipes"
+      - "v1recipes"
       summary: "retrieve private recipes"
       description: "Recipes are basically script extensions to a cluster that run\
         \ on a set of nodes before or after the Ambari cluster installation."
@@ -3143,10 +3279,10 @@ paths:
             uniqueItems: true
             items:
               $ref: "#/definitions/RecipeResponse"
-      x-swagger-router-controller: "Recipes"
+      x-swagger-router-controller: "V1recipes"
     post:
       tags:
-      - "recipes"
+      - "v1recipes"
       summary: "create recipe as private resource"
       description: "Recipes are basically script extensions to a cluster that run\
         \ on a set of nodes before or after the Ambari cluster installation."
@@ -3169,11 +3305,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/RecipeResponse"
-      x-swagger-router-controller: "Recipes"
-  /recipes/user/{name}:
+      x-swagger-router-controller: "V1recipes"
+  /v1/recipes/user/{name}:
     get:
       tags:
-      - "recipes"
+      - "v1recipes"
       summary: "retrieve a private recipe by name"
       description: "Recipes are basically script extensions to a cluster that run\
         \ on a set of nodes before or after the Ambari cluster installation."
@@ -3195,10 +3331,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/RecipeResponse"
-      x-swagger-router-controller: "Recipes"
+      x-swagger-router-controller: "V1recipes"
     delete:
       tags:
-      - "recipes"
+      - "v1recipes"
       summary: "delete private recipe by name"
       description: "Recipes are basically script extensions to a cluster that run\
         \ on a set of nodes before or after the Ambari cluster installation."
@@ -3218,11 +3354,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Recipes"
-  /recipes/{id}:
+      x-swagger-router-controller: "V1recipes"
+  /v1/recipes/{id}:
     get:
       tags:
-      - "recipes"
+      - "v1recipes"
       summary: "retrieve recipe by id"
       description: "Recipes are basically script extensions to a cluster that run\
         \ on a set of nodes before or after the Ambari cluster installation."
@@ -3245,10 +3381,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/RecipeResponse"
-      x-swagger-router-controller: "Recipes"
+      x-swagger-router-controller: "V1recipes"
     delete:
       tags:
-      - "recipes"
+      - "v1recipes"
       summary: "delete recipe by id"
       description: "Recipes are basically script extensions to a cluster that run\
         \ on a set of nodes before or after the Ambari cluster installation."
@@ -3269,11 +3405,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Recipes"
-  /securitygroups/account:
+      x-swagger-router-controller: "V1recipes"
+  /v1/securitygroups/account:
     get:
       tags:
-      - "securitygroups"
+      - "v1securitygroups"
       summary: "retrieve public and private (owned) security groups"
       description: "Different inbound security rules(group) could be configured by\
         \ using SecurityGroup resources and a group could be assigned to any Stack(cluster)."
@@ -3294,10 +3430,10 @@ paths:
             uniqueItems: true
             items:
               $ref: "#/definitions/SecurityGroupResponse"
-      x-swagger-router-controller: "Securitygroups"
+      x-swagger-router-controller: "V1securitygroups"
     post:
       tags:
-      - "securitygroups"
+      - "v1securitygroups"
       summary: "create security group as public resource"
       description: "Different inbound security rules(group) could be configured by\
         \ using SecurityGroup resources and a group could be assigned to any Stack(cluster)."
@@ -3320,11 +3456,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/SecurityGroupResponse"
-      x-swagger-router-controller: "Securitygroups"
-  /securitygroups/account/{name}:
+      x-swagger-router-controller: "V1securitygroups"
+  /v1/securitygroups/account/{name}:
     get:
       tags:
-      - "securitygroups"
+      - "v1securitygroups"
       summary: "retrieve a public or private (owned) security group by name"
       description: "Different inbound security rules(group) could be configured by\
         \ using SecurityGroup resources and a group could be assigned to any Stack(cluster)."
@@ -3346,10 +3482,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/SecurityGroupResponse"
-      x-swagger-router-controller: "Securitygroups"
+      x-swagger-router-controller: "V1securitygroups"
     delete:
       tags:
-      - "securitygroups"
+      - "v1securitygroups"
       summary: "delete public (owned) or private security group by name"
       description: "Different inbound security rules(group) could be configured by\
         \ using SecurityGroup resources and a group could be assigned to any Stack(cluster)."
@@ -3369,11 +3505,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Securitygroups"
-  /securitygroups/user:
+      x-swagger-router-controller: "V1securitygroups"
+  /v1/securitygroups/user:
     get:
       tags:
-      - "securitygroups"
+      - "v1securitygroups"
       summary: "retrieve private security groups"
       description: "Different inbound security rules(group) could be configured by\
         \ using SecurityGroup resources and a group could be assigned to any Stack(cluster)."
@@ -3394,10 +3530,10 @@ paths:
             uniqueItems: true
             items:
               $ref: "#/definitions/SecurityGroupResponse"
-      x-swagger-router-controller: "Securitygroups"
+      x-swagger-router-controller: "V1securitygroups"
     post:
       tags:
-      - "securitygroups"
+      - "v1securitygroups"
       summary: "create security group as private resource"
       description: "Different inbound security rules(group) could be configured by\
         \ using SecurityGroup resources and a group could be assigned to any Stack(cluster)."
@@ -3420,11 +3556,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/SecurityGroupResponse"
-      x-swagger-router-controller: "Securitygroups"
-  /securitygroups/user/{name}:
+      x-swagger-router-controller: "V1securitygroups"
+  /v1/securitygroups/user/{name}:
     get:
       tags:
-      - "securitygroups"
+      - "v1securitygroups"
       summary: "retrieve a private security group by name"
       description: "Different inbound security rules(group) could be configured by\
         \ using SecurityGroup resources and a group could be assigned to any Stack(cluster)."
@@ -3446,10 +3582,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/SecurityGroupResponse"
-      x-swagger-router-controller: "Securitygroups"
+      x-swagger-router-controller: "V1securitygroups"
     delete:
       tags:
-      - "securitygroups"
+      - "v1securitygroups"
       summary: "delete private security group by name"
       description: "Different inbound security rules(group) could be configured by\
         \ using SecurityGroup resources and a group could be assigned to any Stack(cluster)."
@@ -3469,11 +3605,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Securitygroups"
-  /securitygroups/{id}:
+      x-swagger-router-controller: "V1securitygroups"
+  /v1/securitygroups/{id}:
     get:
       tags:
-      - "securitygroups"
+      - "v1securitygroups"
       summary: "retrieve security group by id"
       description: "Different inbound security rules(group) could be configured by\
         \ using SecurityGroup resources and a group could be assigned to any Stack(cluster)."
@@ -3496,10 +3632,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/SecurityGroupResponse"
-      x-swagger-router-controller: "Securitygroups"
+      x-swagger-router-controller: "V1securitygroups"
     delete:
       tags:
-      - "securitygroups"
+      - "v1securitygroups"
       summary: "delete security group by id"
       description: "Different inbound security rules(group) could be configured by\
         \ using SecurityGroup resources and a group could be assigned to any Stack(cluster)."
@@ -3520,11 +3656,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Securitygroups"
-  /settings/all:
+      x-swagger-router-controller: "V1securitygroups"
+  /v1/settings/all:
     get:
       tags:
-      - "settings"
+      - "v1settings"
       summary: "retrive all available settings"
       description: "Collecting Cloudbreak specific resource settings."
       operationId: "getAllSettings"
@@ -3546,11 +3682,11 @@ paths:
               additionalProperties:
                 type: "object"
                 properties: {}
-      x-swagger-router-controller: "Settings"
-  /settings/database:
+      x-swagger-router-controller: "V1settings"
+  /v1/settings/database:
     get:
       tags:
-      - "settings"
+      - "v1settings"
       summary: "retrive available Ambari database settings"
       description: "Collecting Cloudbreak specific resource settings."
       operationId: "getDatabaseConfigSettings"
@@ -3570,11 +3706,11 @@ paths:
             additionalProperties:
               type: "object"
               properties: {}
-      x-swagger-router-controller: "Settings"
-  /settings/recipe:
+      x-swagger-router-controller: "V1settings"
+  /v1/settings/recipe:
     get:
       tags:
-      - "settings"
+      - "v1settings"
       summary: "retrive available recipe settings"
       description: "Collecting Cloudbreak specific resource settings."
       operationId: "getRecipeSettings"
@@ -3594,11 +3730,11 @@ paths:
             additionalProperties:
               type: "object"
               properties: {}
-      x-swagger-router-controller: "Settings"
-  /smartsensesubscriptions:
+      x-swagger-router-controller: "V1settings"
+  /v1/smartsensesubscriptions:
     get:
       tags:
-      - "smartsensesubscriptions"
+      - "v1smartsensesubscriptions"
       summary: "retrieve default SmartSense subscription"
       description: "SmartSense subscriptions could be configured."
       operationId: "getSmartSenseSubscription"
@@ -3615,11 +3751,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/SmartSenseSubscriptionJson"
-      x-swagger-router-controller: "Smartsensesubscriptions"
-  /smartsensesubscriptions/account:
+      x-swagger-router-controller: "V1smartsensesubscriptions"
+  /v1/smartsensesubscriptions/account:
     get:
       tags:
-      - "smartsensesubscriptions"
+      - "v1smartsensesubscriptions"
       summary: "retrieve public and private (owned) SmartSense subscriptions"
       description: "SmartSense subscriptions could be configured."
       operationId: "getPublicSmartSenseSubscriptions"
@@ -3638,10 +3774,10 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/SmartSenseSubscriptionJson"
-      x-swagger-router-controller: "Smartsensesubscriptions"
+      x-swagger-router-controller: "V1smartsensesubscriptions"
     post:
       tags:
-      - "smartsensesubscriptions"
+      - "v1smartsensesubscriptions"
       summary: "create SmartSense subscription as public resource"
       description: "SmartSense subscriptions could be configured."
       operationId: "postPublicSmartSenseSubscription"
@@ -3663,11 +3799,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/SmartSenseSubscriptionJson"
-      x-swagger-router-controller: "Smartsensesubscriptions"
-  /smartsensesubscriptions/account/{subscriptionId}:
+      x-swagger-router-controller: "V1smartsensesubscriptions"
+  /v1/smartsensesubscriptions/account/{subscriptionId}:
     delete:
       tags:
-      - "smartsensesubscriptions"
+      - "v1smartsensesubscriptions"
       summary: "delete public (owned) or private SmartSense subscription by subscription\
         \ ID"
       description: "SmartSense subscriptions could be configured."
@@ -3687,11 +3823,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Smartsensesubscriptions"
-  /smartsensesubscriptions/user:
+      x-swagger-router-controller: "V1smartsensesubscriptions"
+  /v1/smartsensesubscriptions/user:
     get:
       tags:
-      - "smartsensesubscriptions"
+      - "v1smartsensesubscriptions"
       summary: "retrieve private SmartSense subscriptions"
       description: "SmartSense subscriptions could be configured."
       operationId: "getPrivateSmartSenseSubscriptions"
@@ -3710,10 +3846,10 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/SmartSenseSubscriptionJson"
-      x-swagger-router-controller: "Smartsensesubscriptions"
+      x-swagger-router-controller: "V1smartsensesubscriptions"
     post:
       tags:
-      - "smartsensesubscriptions"
+      - "v1smartsensesubscriptions"
       summary: "create SmartSense subscription as private resource"
       description: "SmartSense subscriptions could be configured."
       operationId: "postPrivateSmartSenseSubscription"
@@ -3735,11 +3871,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/SmartSenseSubscriptionJson"
-      x-swagger-router-controller: "Smartsensesubscriptions"
-  /smartsensesubscriptions/user/{subscriptionId}:
+      x-swagger-router-controller: "V1smartsensesubscriptions"
+  /v1/smartsensesubscriptions/user/{subscriptionId}:
     delete:
       tags:
-      - "smartsensesubscriptions"
+      - "v1smartsensesubscriptions"
       summary: "delete private SmartSense subscription by subscription ID"
       description: "SmartSense subscriptions could be configured."
       operationId: "deletePrivateSmartSenseSubscriptionBySubscriptionId"
@@ -3758,11 +3894,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Smartsensesubscriptions"
-  /smartsensesubscriptions/{id}:
+      x-swagger-router-controller: "V1smartsensesubscriptions"
+  /v1/smartsensesubscriptions/{id}:
     get:
       tags:
-      - "smartsensesubscriptions"
+      - "v1smartsensesubscriptions"
       summary: "retrieve SmartSense subscription by id"
       description: "SmartSense subscriptions could be configured."
       operationId: "getSmartSenseSubscriptionById"
@@ -3784,10 +3920,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/SmartSenseSubscriptionJson"
-      x-swagger-router-controller: "Smartsensesubscriptions"
+      x-swagger-router-controller: "V1smartsensesubscriptions"
     delete:
       tags:
-      - "smartsensesubscriptions"
+      - "v1smartsensesubscriptions"
       summary: "delete SmartSense subscription by id"
       description: "SmartSense subscriptions could be configured."
       operationId: "deleteSmartSenseSubscriptionById"
@@ -3807,11 +3943,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Smartsensesubscriptions"
-  /stacks/account:
+      x-swagger-router-controller: "V1smartsensesubscriptions"
+  /v1/stacks/account:
     get:
       tags:
-      - "stacks"
+      - "v1stacks"
       summary: "retrieve public and private (owned) stacks"
       description: "Stacks are template instances - a running cloud infrastructure\
         \ created based on a template. Stacks are always launched on behalf of a cloud\
@@ -3835,10 +3971,10 @@ paths:
             uniqueItems: true
             items:
               $ref: "#/definitions/StackResponse"
-      x-swagger-router-controller: "Stacks"
+      x-swagger-router-controller: "V1stacks"
     post:
       tags:
-      - "stacks"
+      - "v1stacks"
       summary: "create stack as public resource"
       description: "Stacks are template instances - a running cloud infrastructure\
         \ created based on a template. Stacks are always launched on behalf of a cloud\
@@ -3864,11 +4000,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/StackResponse"
-      x-swagger-router-controller: "Stacks"
-  /stacks/account/{name}:
+      x-swagger-router-controller: "V1stacks"
+  /v1/stacks/account/{name}:
     get:
       tags:
-      - "stacks"
+      - "v1stacks"
       summary: "retrieve a public or private (owned) stack by name"
       description: "Stacks are template instances - a running cloud infrastructure\
         \ created based on a template. Stacks are always launched on behalf of a cloud\
@@ -3900,10 +4036,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/StackResponse"
-      x-swagger-router-controller: "Stacks"
+      x-swagger-router-controller: "V1stacks"
     delete:
       tags:
-      - "stacks"
+      - "v1stacks"
       summary: "delete public (owned) or private stack by name"
       description: "Stacks are template instances - a running cloud infrastructure\
         \ created based on a template. Stacks are always launched on behalf of a cloud\
@@ -3936,8 +4072,8 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Stacks"
-  /stacks/account/{name}/cluster:
+      x-swagger-router-controller: "V1stacks"
+  /v1/stacks/account/{name}/cluster:
     get:
       tags:
       - "cluster"
@@ -3966,10 +4102,10 @@ paths:
           schema:
             $ref: "#/definitions/ClusterResponse"
       x-swagger-router-controller: "Cluster"
-  /stacks/all:
+  /v1/stacks/all:
     get:
       tags:
-      - "stacks"
+      - "v1stacks"
       summary: "retrieve all stacks"
       description: "Stacks are template instances - a running cloud infrastructure\
         \ created based on a template. Stacks are always launched on behalf of a cloud\
@@ -3993,11 +4129,11 @@ paths:
             uniqueItems: true
             items:
               $ref: "#/definitions/AutoscaleStackResponse"
-      x-swagger-router-controller: "Stacks"
-  /stacks/ambari:
+      x-swagger-router-controller: "V1stacks"
+  /v1/stacks/ambari:
     post:
       tags:
-      - "stacks"
+      - "v1stacks"
       summary: "retrieve stack by ambari address"
       description: "Stacks are template instances - a running cloud infrastructure\
         \ created based on a template. Stacks are always launched on behalf of a cloud\
@@ -4023,11 +4159,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/StackResponse"
-      x-swagger-router-controller: "Stacks"
-  /stacks/platformVariants:
+      x-swagger-router-controller: "V1stacks"
+  /v1/stacks/platformVariants:
     get:
       tags:
-      - "stacks"
+      - "v1stacks"
       summary: "retrieve available platform variants"
       description: "Stacks are template instances - a running cloud infrastructure\
         \ created based on a template. Stacks are always launched on behalf of a cloud\
@@ -4048,11 +4184,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/PlatformVariantsJson"
-      x-swagger-router-controller: "Stacks"
-  /stacks/user:
+      x-swagger-router-controller: "V1stacks"
+  /v1/stacks/user:
     get:
       tags:
-      - "stacks"
+      - "v1stacks"
       summary: "retrieve private stack"
       description: "Stacks are template instances - a running cloud infrastructure\
         \ created based on a template. Stacks are always launched on behalf of a cloud\
@@ -4076,10 +4212,10 @@ paths:
             uniqueItems: true
             items:
               $ref: "#/definitions/StackResponse"
-      x-swagger-router-controller: "Stacks"
+      x-swagger-router-controller: "V1stacks"
     post:
       tags:
-      - "stacks"
+      - "v1stacks"
       summary: "create stack as private resource"
       description: "Stacks are template instances - a running cloud infrastructure\
         \ created based on a template. Stacks are always launched on behalf of a cloud\
@@ -4105,11 +4241,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/StackResponse"
-      x-swagger-router-controller: "Stacks"
-  /stacks/user/{name}:
+      x-swagger-router-controller: "V1stacks"
+  /v1/stacks/user/{name}:
     get:
       tags:
-      - "stacks"
+      - "v1stacks"
       summary: "retrieve a private stack by name"
       description: "Stacks are template instances - a running cloud infrastructure\
         \ created based on a template. Stacks are always launched on behalf of a cloud\
@@ -4141,10 +4277,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/StackResponse"
-      x-swagger-router-controller: "Stacks"
+      x-swagger-router-controller: "V1stacks"
     delete:
       tags:
-      - "stacks"
+      - "v1stacks"
       summary: "delete private stack by name"
       description: "Stacks are template instances - a running cloud infrastructure\
         \ created based on a template. Stacks are always launched on behalf of a cloud\
@@ -4177,8 +4313,8 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Stacks"
-  /stacks/user/{name}/cluster:
+      x-swagger-router-controller: "V1stacks"
+  /v1/stacks/user/{name}/cluster:
     get:
       tags:
       - "cluster"
@@ -4207,10 +4343,10 @@ paths:
           schema:
             $ref: "#/definitions/ClusterResponse"
       x-swagger-router-controller: "Cluster"
-  /stacks/validate:
+  /v1/stacks/validate:
     post:
       tags:
-      - "stacks"
+      - "v1stacks"
       summary: "validate stack"
       description: "Stacks are template instances - a running cloud infrastructure\
         \ created based on a template. Stacks are always launched on behalf of a cloud\
@@ -4234,11 +4370,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Stacks"
-  /stacks/{id}:
+      x-swagger-router-controller: "V1stacks"
+  /v1/stacks/{id}:
     get:
       tags:
-      - "stacks"
+      - "v1stacks"
       summary: "retrieve stack by id"
       description: "Stacks are template instances - a running cloud infrastructure\
         \ created based on a template. Stacks are always launched on behalf of a cloud\
@@ -4271,10 +4407,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/StackResponse"
-      x-swagger-router-controller: "Stacks"
+      x-swagger-router-controller: "V1stacks"
     put:
       tags:
-      - "stacks"
+      - "v1stacks"
       summary: "update stack by id"
       description: "Stacks are template instances - a running cloud infrastructure\
         \ created based on a template. Stacks are always launched on behalf of a cloud\
@@ -4303,10 +4439,10 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Stacks"
+      x-swagger-router-controller: "V1stacks"
     delete:
       tags:
-      - "stacks"
+      - "v1stacks"
       summary: "delete stack by id"
       description: "Stacks are template instances - a running cloud infrastructure\
         \ created based on a template. Stacks are always launched on behalf of a cloud\
@@ -4340,11 +4476,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Stacks"
-  /stacks/{id}/certificate:
+      x-swagger-router-controller: "V1stacks"
+  /v1/stacks/{id}/certificate:
     get:
       tags:
-      - "stacks"
+      - "v1stacks"
       summary: "retrieves the TLS certificate used by the gateway"
       description: "Stacks are template instances - a running cloud infrastructure\
         \ created based on a template. Stacks are always launched on behalf of a cloud\
@@ -4370,8 +4506,8 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/CertificateResponse"
-      x-swagger-router-controller: "Stacks"
-  /stacks/{id}/cluster:
+      x-swagger-router-controller: "V1stacks"
+  /v1/stacks/{id}/cluster:
     get:
       tags:
       - "cluster"
@@ -4494,7 +4630,7 @@ paths:
         default:
           description: "successful operation"
       x-swagger-router-controller: "Cluster"
-  /stacks/{id}/cluster/config:
+  /v1/stacks/{id}/cluster/config:
     post:
       tags:
       - "cluster"
@@ -4529,7 +4665,7 @@ paths:
           schema:
             $ref: "#/definitions/ConfigsResponse"
       x-swagger-router-controller: "Cluster"
-  /stacks/{id}/cluster/failurereport:
+  /v1/stacks/{id}/cluster/failurereport:
     post:
       tags:
       - "cluster"
@@ -4561,7 +4697,7 @@ paths:
         default:
           description: "successful operation"
       x-swagger-router-controller: "Cluster"
-  /stacks/{id}/cluster/full:
+  /v1/stacks/{id}/cluster/full:
     get:
       tags:
       - "cluster"
@@ -4591,7 +4727,7 @@ paths:
           schema:
             $ref: "#/definitions/AutoscaleClusterResponse"
       x-swagger-router-controller: "Cluster"
-  /stacks/{id}/cluster/manualrepair:
+  /v1/stacks/{id}/cluster/manualrepair:
     post:
       tags:
       - "cluster"
@@ -4621,7 +4757,7 @@ paths:
         default:
           description: "successful operation"
       x-swagger-router-controller: "Cluster"
-  /stacks/{id}/cluster/upgrade:
+  /v1/stacks/{id}/cluster/upgrade:
     post:
       tags:
       - "cluster"
@@ -4650,10 +4786,10 @@ paths:
         default:
           description: "successful operation"
       x-swagger-router-controller: "Cluster"
-  /stacks/{id}/status:
+  /v1/stacks/{id}/status:
     get:
       tags:
-      - "stacks"
+      - "v1stacks"
       summary: "retrieve stack status by stack id"
       description: "Stacks are template instances - a running cloud infrastructure\
         \ created based on a template. Stacks are always launched on behalf of a cloud\
@@ -4682,11 +4818,11 @@ paths:
             additionalProperties:
               type: "object"
               properties: {}
-      x-swagger-router-controller: "Stacks"
-  /stacks/{stackId}/{instanceId}:
+      x-swagger-router-controller: "V1stacks"
+  /v1/stacks/{stackId}/{instanceId}:
     delete:
       tags:
-      - "stacks"
+      - "v1stacks"
       summary: "delete instance resource from stack"
       description: "Stacks are template instances - a running cloud infrastructure\
         \ created based on a template. Stacks are always launched on behalf of a cloud\
@@ -4714,11 +4850,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Stacks"
-  /subscriptions:
+      x-swagger-router-controller: "V1stacks"
+  /v1/subscriptions:
     post:
       tags:
-      - "subscriptions"
+      - "v1subscriptions"
       summary: "retrive subscribe identifier"
       description: "Accepting client subscriptions to notification events."
       operationId: "subscribeSubscription"
@@ -4740,11 +4876,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/Id"
-      x-swagger-router-controller: "Subscriptions"
-  /templates/account:
+      x-swagger-router-controller: "V1subscriptions"
+  /v1/templates/account:
     get:
       tags:
-      - "templates"
+      - "v1templates"
       summary: "retrieve public and private (owned) templates"
       description: "A template gives developers and systems administrators an easy\
         \ way to create and manage a collection of cloud infrastructure related resources,\
@@ -4771,10 +4907,10 @@ paths:
             uniqueItems: true
             items:
               $ref: "#/definitions/TemplateResponse"
-      x-swagger-router-controller: "Templates"
+      x-swagger-router-controller: "V1templates"
     post:
       tags:
-      - "templates"
+      - "v1templates"
       summary: "create template as public resource"
       description: "A template gives developers and systems administrators an easy\
         \ way to create and manage a collection of cloud infrastructure related resources,\
@@ -4803,11 +4939,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/TemplateResponse"
-      x-swagger-router-controller: "Templates"
-  /templates/account/{name}:
+      x-swagger-router-controller: "V1templates"
+  /v1/templates/account/{name}:
     get:
       tags:
-      - "templates"
+      - "v1templates"
       summary: "retrieve a public or private (owned) template by name"
       description: "A template gives developers and systems administrators an easy\
         \ way to create and manage a collection of cloud infrastructure related resources,\
@@ -4835,10 +4971,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/TemplateResponse"
-      x-swagger-router-controller: "Templates"
+      x-swagger-router-controller: "V1templates"
     delete:
       tags:
-      - "templates"
+      - "v1templates"
       summary: "delete public (owned) or private template by name"
       description: "A template gives developers and systems administrators an easy\
         \ way to create and manage a collection of cloud infrastructure related resources,\
@@ -4864,11 +5000,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Templates"
-  /templates/user:
+      x-swagger-router-controller: "V1templates"
+  /v1/templates/user:
     get:
       tags:
-      - "templates"
+      - "v1templates"
       summary: "retrieve private templates"
       description: "A template gives developers and systems administrators an easy\
         \ way to create and manage a collection of cloud infrastructure related resources,\
@@ -4895,10 +5031,10 @@ paths:
             uniqueItems: true
             items:
               $ref: "#/definitions/TemplateResponse"
-      x-swagger-router-controller: "Templates"
+      x-swagger-router-controller: "V1templates"
     post:
       tags:
-      - "templates"
+      - "v1templates"
       summary: "create template as private resource"
       description: "A template gives developers and systems administrators an easy\
         \ way to create and manage a collection of cloud infrastructure related resources,\
@@ -4927,11 +5063,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/TemplateResponse"
-      x-swagger-router-controller: "Templates"
-  /templates/user/{name}:
+      x-swagger-router-controller: "V1templates"
+  /v1/templates/user/{name}:
     get:
       tags:
-      - "templates"
+      - "v1templates"
       summary: "retrieve a private template by name"
       description: "A template gives developers and systems administrators an easy\
         \ way to create and manage a collection of cloud infrastructure related resources,\
@@ -4959,10 +5095,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/TemplateResponse"
-      x-swagger-router-controller: "Templates"
+      x-swagger-router-controller: "V1templates"
     delete:
       tags:
-      - "templates"
+      - "v1templates"
       summary: "delete private template by name"
       description: "A template gives developers and systems administrators an easy\
         \ way to create and manage a collection of cloud infrastructure related resources,\
@@ -4988,11 +5124,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Templates"
-  /templates/{id}:
+      x-swagger-router-controller: "V1templates"
+  /v1/templates/{id}:
     get:
       tags:
-      - "templates"
+      - "v1templates"
       summary: "retrieve template by id"
       description: "A template gives developers and systems administrators an easy\
         \ way to create and manage a collection of cloud infrastructure related resources,\
@@ -5021,10 +5157,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/TemplateResponse"
-      x-swagger-router-controller: "Templates"
+      x-swagger-router-controller: "V1templates"
     delete:
       tags:
-      - "templates"
+      - "v1templates"
       summary: "delete template by id"
       description: "A template gives developers and systems administrators an easy\
         \ way to create and manage a collection of cloud infrastructure related resources,\
@@ -5051,11 +5187,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Templates"
-  /topologies/account:
+      x-swagger-router-controller: "V1templates"
+  /v1/topologies/account:
     get:
       tags:
-      - "topologies"
+      - "v1topologies"
       summary: "retrieve topoligies"
       description: "A topology gives system administrators an easy way to associate\
         \ compute nodes with data centers and racks."
@@ -5076,10 +5212,10 @@ paths:
             uniqueItems: true
             items:
               $ref: "#/definitions/TopologyResponse"
-      x-swagger-router-controller: "Topologies"
+      x-swagger-router-controller: "V1topologies"
     post:
       tags:
-      - "topologies"
+      - "v1topologies"
       summary: "create topology as public resource"
       description: "A topology gives system administrators an easy way to associate\
         \ compute nodes with data centers and racks."
@@ -5102,11 +5238,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/TopologyResponse"
-      x-swagger-router-controller: "Topologies"
-  /topologies/account/{id}:
+      x-swagger-router-controller: "V1topologies"
+  /v1/topologies/account/{id}:
     get:
       tags:
-      - "topologies"
+      - "v1topologies"
       summary: "retrieve topology by id"
       description: "A template gives developers and systems administrators an easy\
         \ way to create and manage a collection of cloud infrastructure related resources,\
@@ -5135,10 +5271,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/TopologyResponse"
-      x-swagger-router-controller: "Topologies"
+      x-swagger-router-controller: "V1topologies"
     delete:
       tags:
-      - "topologies"
+      - "v1topologies"
       summary: "delete topology by id"
       description: "A topology gives system administrators an easy way to associate\
         \ compute nodes with data centers and racks."
@@ -5164,11 +5300,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Topologies"
-  /usages:
+      x-swagger-router-controller: "V1topologies"
+  /v1/usages:
     get:
       tags:
-      - "usages"
+      - "v1usages"
       summary: "retrieve usages by filter parameters"
       description: "Cloudbreak gives you an up to date overview of cluster usage based\
         \ on different filtering criteria (start/end date, users, providers, region,\
@@ -5215,11 +5351,11 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/CloudbreakUsage"
-      x-swagger-router-controller: "Usages"
-  /usages/account:
+      x-swagger-router-controller: "V1usages"
+  /v1/usages/account:
     get:
       tags:
-      - "usages"
+      - "v1usages"
       summary: "retrieve public and private (owned) usages by filter parameters"
       description: "Cloudbreak gives you an up to date overview of cluster usage based\
         \ on different filtering criteria (start/end date, users, providers, region,\
@@ -5262,11 +5398,11 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/CloudbreakUsage"
-      x-swagger-router-controller: "Usages"
-  /usages/flex/daily:
+      x-swagger-router-controller: "V1usages"
+  /v1/usages/flex/daily:
     get:
       tags:
-      - "usages"
+      - "v1usages"
       summary: "retrieve Flex related daily usages"
       description: "Cloudbreak gives you an up to date overview of cluster usage based\
         \ on different filtering criteria (start/end date, users, providers, region,\
@@ -5285,11 +5421,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/CloudbreakFlexUsage"
-      x-swagger-router-controller: "Usages"
-  /usages/flex/latest:
+      x-swagger-router-controller: "V1usages"
+  /v1/usages/flex/latest:
     get:
       tags:
-      - "usages"
+      - "v1usages"
       summary: "retrieve Flex related latest usages, usages for the given day"
       description: "Cloudbreak gives you an up to date overview of cluster usage based\
         \ on different filtering criteria (start/end date, users, providers, region,\
@@ -5308,11 +5444,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/CloudbreakFlexUsage"
-      x-swagger-router-controller: "Usages"
-  /usages/user:
+      x-swagger-router-controller: "V1usages"
+  /v1/usages/user:
     get:
       tags:
-      - "usages"
+      - "v1usages"
       summary: "retrieve private usages by filter parameters"
       description: "Cloudbreak gives you an up to date overview of cluster usage based\
         \ on different filtering criteria (start/end date, users, providers, region,\
@@ -5351,11 +5487,11 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/CloudbreakUsage"
-      x-swagger-router-controller: "Usages"
-  /users/evict:
+      x-swagger-router-controller: "V1usages"
+  /v1/users/evict:
     delete:
       tags:
-      - "users"
+      - "v1users"
       summary: "remove current user from cache"
       description: "Users can be invited under an account by the administrator, and\
         \ all resources (e.g. resources, networks, blueprints, credentials, clusters)\
@@ -5374,11 +5510,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/User"
-      x-swagger-router-controller: "Users"
-  /users/profile:
+      x-swagger-router-controller: "V1users"
+  /v1/users/profile:
     get:
       tags:
-      - "users"
+      - "v1users"
       summary: "user related profile"
       description: "Users can be invited under an account by the administrator, and\
         \ all resources (e.g. resources, networks, blueprints, credentials, clusters)\
@@ -5397,10 +5533,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/UserProfileResponse"
-      x-swagger-router-controller: "Users"
+      x-swagger-router-controller: "V1users"
     put:
       tags:
-      - "users"
+      - "v1users"
       summary: "modify user related profile"
       description: "Users can be invited under an account by the administrator, and\
         \ all resources (e.g. resources, networks, blueprints, credentials, clusters)\
@@ -5422,11 +5558,11 @@ paths:
       responses:
         default:
           description: "successful operation"
-      x-swagger-router-controller: "Users"
-  /users/{id}:
+      x-swagger-router-controller: "V1users"
+  /v1/users/{id}:
     put:
       tags:
-      - "users"
+      - "v1users"
       summary: "remove user from cache (by username)"
       description: "Users can be invited under an account by the administrator, and\
         \ all resources (e.g. resources, networks, blueprints, credentials, clusters)\
@@ -5454,11 +5590,11 @@ paths:
           description: "successful operation"
           schema:
             type: "string"
-      x-swagger-router-controller: "Users"
-  /users/{id}/resources:
+      x-swagger-router-controller: "V1users"
+  /v1/users/{id}/resources:
     get:
       tags:
-      - "users"
+      - "v1users"
       summary: "check that account user has any resources"
       description: "Users can be invited under an account by the administrator, and\
         \ all resources (e.g. resources, networks, blueprints, credentials, clusters)\
@@ -5481,11 +5617,11 @@ paths:
           description: "successful operation"
           schema:
             type: "boolean"
-      x-swagger-router-controller: "Users"
-  /util/ambari-database:
+      x-swagger-router-controller: "V1users"
+  /v1/util/ambari-database:
     post:
       tags:
-      - "util"
+      - "v1util"
       summary: "tests a database connection parameters"
       description: ""
       operationId: "testAmbariDatabaseUtil"
@@ -5507,11 +5643,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/AmbariDatabaseTestResult"
-      x-swagger-router-controller: "Util"
-  /util/ldap:
+      x-swagger-router-controller: "V1util"
+  /v1/util/ldap:
     post:
       tags:
-      - "util"
+      - "v1util"
       summary: "tests an LDAP connection"
       description: ""
       operationId: "testLdapConnectionUtil"
@@ -5533,11 +5669,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/RdsTestResult"
-      x-swagger-router-controller: "Util"
-  /util/ldap/{id}:
+      x-swagger-router-controller: "V1util"
+  /v1/util/ldap/{id}:
     get:
       tags:
-      - "util"
+      - "v1util"
       summary: "tests an already exists LDAP connection"
       description: ""
       operationId: "testLdapConnectionByIdUtil"
@@ -5559,11 +5695,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/RdsTestResult"
-      x-swagger-router-controller: "Util"
-  /util/rds:
+      x-swagger-router-controller: "V1util"
+  /v1/util/rds:
     post:
       tags:
-      - "util"
+      - "v1util"
       summary: "tests an RDS connection"
       description: ""
       operationId: "testRdsConnectionUtil"
@@ -5585,11 +5721,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/RdsTestResult"
-      x-swagger-router-controller: "Util"
-  /util/rds-database:
+      x-swagger-router-controller: "V1util"
+  /v1/util/rds-database:
     post:
       tags:
-      - "util"
+      - "v1util"
       summary: "create a database connection parameters"
       description: ""
       operationId: "createRDSDatabaseUtil"
@@ -5618,11 +5754,11 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/RdsBuildResult"
-      x-swagger-router-controller: "Util"
-  /util/rds/{id}:
+      x-swagger-router-controller: "V1util"
+  /v1/util/rds/{id}:
     get:
       tags:
-      - "util"
+      - "v1util"
       summary: "tests an already exists RDS connection"
       description: ""
       operationId: "testRdsConnectionByIdUtil"
@@ -5644,7 +5780,577 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/RdsTestResult"
-      x-swagger-router-controller: "Util"
+      x-swagger-router-controller: "V1util"
+  /v2/stacks/account:
+    get:
+      tags:
+      - "v2stacks"
+      summary: "retrieve public and private (owned) stacks"
+      description: "Stacks are template instances - a running cloud infrastructure\
+        \ created based on a template. Stacks are always launched on behalf of a cloud\
+        \ user account. Stacks support a wide range of resources, allowing you to\
+        \ build a highly available, reliable, and scalable infrastructure for your\
+        \ application needs."
+      operationId: "getPublicsStackV2"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            uniqueItems: true
+            items:
+              $ref: "#/definitions/StackResponse"
+      x-swagger-router-controller: "V2stacks"
+    post:
+      tags:
+      - "v2stacks"
+      summary: "create stack as public resource"
+      description: "Stacks are template instances - a running cloud infrastructure\
+        \ created based on a template. Stacks are always launched on behalf of a cloud\
+        \ user account. Stacks support a wide range of resources, allowing you to\
+        \ build a highly available, reliable, and scalable infrastructure for your\
+        \ application needs."
+      operationId: "postPublicStackV2"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/StackV2Request"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/StackResponse"
+      x-swagger-router-controller: "V2stacks"
+  /v2/stacks/account/{name}:
+    get:
+      tags:
+      - "v2stacks"
+      summary: "retrieve a public or private (owned) stack by name"
+      description: "Stacks are template instances - a running cloud infrastructure\
+        \ created based on a template. Stacks are always launched on behalf of a cloud\
+        \ user account. Stacks support a wide range of resources, allowing you to\
+        \ build a highly available, reliable, and scalable infrastructure for your\
+        \ application needs."
+      operationId: "getPublicStackV2"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "name"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "entry"
+        in: "query"
+        required: false
+        type: "array"
+        items:
+          type: "string"
+        collectionFormat: "multi"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/StackResponse"
+      x-swagger-router-controller: "V2stacks"
+    delete:
+      tags:
+      - "v2stacks"
+      summary: "delete public (owned) or private stack by name"
+      description: "Stacks are template instances - a running cloud infrastructure\
+        \ created based on a template. Stacks are always launched on behalf of a cloud\
+        \ user account. Stacks support a wide range of resources, allowing you to\
+        \ build a highly available, reliable, and scalable infrastructure for your\
+        \ application needs."
+      operationId: "deletePublicStackV2"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "name"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "forced"
+        in: "query"
+        required: false
+        type: "boolean"
+        default: false
+      - name: "deleteDependencies"
+        in: "query"
+        required: false
+        type: "boolean"
+        default: false
+      responses:
+        default:
+          description: "successful operation"
+      x-swagger-router-controller: "V2stacks"
+  /v2/stacks/all:
+    get:
+      tags:
+      - "v2stacks"
+      summary: "retrieve all stacks"
+      description: "Stacks are template instances - a running cloud infrastructure\
+        \ created based on a template. Stacks are always launched on behalf of a cloud\
+        \ user account. Stacks support a wide range of resources, allowing you to\
+        \ build a highly available, reliable, and scalable infrastructure for your\
+        \ application needs."
+      operationId: "getAllStackV2"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            uniqueItems: true
+            items:
+              $ref: "#/definitions/AutoscaleStackResponse"
+      x-swagger-router-controller: "V2stacks"
+  /v2/stacks/ambari:
+    post:
+      tags:
+      - "v2stacks"
+      summary: "retrieve stack by ambari address"
+      description: "Stacks are template instances - a running cloud infrastructure\
+        \ created based on a template. Stacks are always launched on behalf of a cloud\
+        \ user account. Stacks support a wide range of resources, allowing you to\
+        \ build a highly available, reliable, and scalable infrastructure for your\
+        \ application needs."
+      operationId: "getStackForAmbariV2"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/AmbariAddress"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/StackResponse"
+      x-swagger-router-controller: "V2stacks"
+  /v2/stacks/platformVariants:
+    get:
+      tags:
+      - "v2stacks"
+      summary: "retrieve available platform variants"
+      description: "Stacks are template instances - a running cloud infrastructure\
+        \ created based on a template. Stacks are always launched on behalf of a cloud\
+        \ user account. Stacks support a wide range of resources, allowing you to\
+        \ build a highly available, reliable, and scalable infrastructure for your\
+        \ application needs."
+      operationId: "variantsStackV2"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/PlatformVariantsJson"
+      x-swagger-router-controller: "V2stacks"
+  /v2/stacks/user:
+    get:
+      tags:
+      - "v2stacks"
+      summary: "retrieve private stack"
+      description: "Stacks are template instances - a running cloud infrastructure\
+        \ created based on a template. Stacks are always launched on behalf of a cloud\
+        \ user account. Stacks support a wide range of resources, allowing you to\
+        \ build a highly available, reliable, and scalable infrastructure for your\
+        \ application needs."
+      operationId: "getPrivatesStackV2"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            uniqueItems: true
+            items:
+              $ref: "#/definitions/StackResponse"
+      x-swagger-router-controller: "V2stacks"
+    post:
+      tags:
+      - "v2stacks"
+      summary: "create stack as private resource"
+      description: "Stacks are template instances - a running cloud infrastructure\
+        \ created based on a template. Stacks are always launched on behalf of a cloud\
+        \ user account. Stacks support a wide range of resources, allowing you to\
+        \ build a highly available, reliable, and scalable infrastructure for your\
+        \ application needs."
+      operationId: "postPrivateStackV2"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/StackV2Request"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/StackResponse"
+      x-swagger-router-controller: "V2stacks"
+  /v2/stacks/user/{name}:
+    get:
+      tags:
+      - "v2stacks"
+      summary: "retrieve a private stack by name"
+      description: "Stacks are template instances - a running cloud infrastructure\
+        \ created based on a template. Stacks are always launched on behalf of a cloud\
+        \ user account. Stacks support a wide range of resources, allowing you to\
+        \ build a highly available, reliable, and scalable infrastructure for your\
+        \ application needs."
+      operationId: "getPrivateStackV2"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "name"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "entry"
+        in: "query"
+        required: false
+        type: "array"
+        items:
+          type: "string"
+        collectionFormat: "multi"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/StackResponse"
+      x-swagger-router-controller: "V2stacks"
+    delete:
+      tags:
+      - "v2stacks"
+      summary: "delete private stack by name"
+      description: "Stacks are template instances - a running cloud infrastructure\
+        \ created based on a template. Stacks are always launched on behalf of a cloud\
+        \ user account. Stacks support a wide range of resources, allowing you to\
+        \ build a highly available, reliable, and scalable infrastructure for your\
+        \ application needs."
+      operationId: "deletePrivateStackV2"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "name"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "forced"
+        in: "query"
+        required: false
+        type: "boolean"
+        default: false
+      - name: "deleteDependencies"
+        in: "query"
+        required: false
+        type: "boolean"
+        default: false
+      responses:
+        default:
+          description: "successful operation"
+      x-swagger-router-controller: "V2stacks"
+  /v2/stacks/validate:
+    post:
+      tags:
+      - "v2stacks"
+      summary: "validate stack"
+      description: "Stacks are template instances - a running cloud infrastructure\
+        \ created based on a template. Stacks are always launched on behalf of a cloud\
+        \ user account. Stacks support a wide range of resources, allowing you to\
+        \ build a highly available, reliable, and scalable infrastructure for your\
+        \ application needs."
+      operationId: "validateStackV2"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/StackValidationRequest"
+      responses:
+        default:
+          description: "successful operation"
+      x-swagger-router-controller: "V2stacks"
+  /v2/stacks/{id}:
+    get:
+      tags:
+      - "v2stacks"
+      summary: "retrieve stack by id"
+      description: "Stacks are template instances - a running cloud infrastructure\
+        \ created based on a template. Stacks are always launched on behalf of a cloud\
+        \ user account. Stacks support a wide range of resources, allowing you to\
+        \ build a highly available, reliable, and scalable infrastructure for your\
+        \ application needs."
+      operationId: "getStackV2"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "entry"
+        in: "query"
+        required: false
+        type: "array"
+        items:
+          type: "string"
+        collectionFormat: "multi"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/StackResponse"
+      x-swagger-router-controller: "V2stacks"
+    put:
+      tags:
+      - "v2stacks"
+      summary: "update stack by id"
+      description: "Stacks are template instances - a running cloud infrastructure\
+        \ created based on a template. Stacks are always launched on behalf of a cloud\
+        \ user account. Stacks support a wide range of resources, allowing you to\
+        \ build a highly available, reliable, and scalable infrastructure for your\
+        \ application needs."
+      operationId: "putStackV2"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/UpdateStack"
+      responses:
+        default:
+          description: "successful operation"
+      x-swagger-router-controller: "V2stacks"
+    delete:
+      tags:
+      - "v2stacks"
+      summary: "delete stack by id"
+      description: "Stacks are template instances - a running cloud infrastructure\
+        \ created based on a template. Stacks are always launched on behalf of a cloud\
+        \ user account. Stacks support a wide range of resources, allowing you to\
+        \ build a highly available, reliable, and scalable infrastructure for your\
+        \ application needs."
+      operationId: "deleteStackV2"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "forced"
+        in: "query"
+        required: false
+        type: "boolean"
+        default: false
+      - name: "deleteDependencies"
+        in: "query"
+        required: false
+        type: "boolean"
+        default: false
+      responses:
+        default:
+          description: "successful operation"
+      x-swagger-router-controller: "V2stacks"
+  /v2/stacks/{id}/certificate:
+    get:
+      tags:
+      - "v2stacks"
+      summary: "retrieves the TLS certificate used by the gateway"
+      description: "Stacks are template instances - a running cloud infrastructure\
+        \ created based on a template. Stacks are always launched on behalf of a cloud\
+        \ user account. Stacks support a wide range of resources, allowing you to\
+        \ build a highly available, reliable, and scalable infrastructure for your\
+        \ application needs."
+      operationId: "getCertificateStackV2"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/CertificateResponse"
+      x-swagger-router-controller: "V2stacks"
+  /v2/stacks/{id}/status:
+    get:
+      tags:
+      - "v2stacks"
+      summary: "retrieve stack status by stack id"
+      description: "Stacks are template instances - a running cloud infrastructure\
+        \ created based on a template. Stacks are always launched on behalf of a cloud\
+        \ user account. Stacks support a wide range of resources, allowing you to\
+        \ build a highly available, reliable, and scalable infrastructure for your\
+        \ application needs."
+      operationId: "statusStackV2"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "object"
+            additionalProperties:
+              type: "object"
+              properties: {}
+      x-swagger-router-controller: "V2stacks"
+  /v2/stacks/{stackId}/{instanceId}:
+    delete:
+      tags:
+      - "v2stacks"
+      summary: "delete instance resource from stack"
+      description: "Stacks are template instances - a running cloud infrastructure\
+        \ created based on a template. Stacks are always launched on behalf of a cloud\
+        \ user account. Stacks support a wide range of resources, allowing you to\
+        \ build a highly available, reliable, and scalable infrastructure for your\
+        \ application needs."
+      operationId: "deleteInstanceStackV2"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "stackId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "instanceId"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        default:
+          description: "successful operation"
+      x-swagger-router-controller: "V2stacks"
 definitions:
   ConstraintTemplateResponse:
     type: "object"
@@ -5690,52 +6396,58 @@ definitions:
         type: "boolean"
         description: "resource is visible in account"
         default: false
-  PlatformRegionsJson:
+  instanceGroupsV2:
     type: "object"
+    required:
+    - "group"
+    - "nodeCount"
     properties:
-      regions:
+      nodeCount:
+        type: "integer"
+        format: "int32"
+        description: "number of nodes"
+        minimum: 0.0
+        maximum: 100000.0
+      group:
+        type: "string"
+        description: "name of the instance group"
+      type:
+        type: "string"
+        description: "type of the instance group"
+        enum:
+        - "GATEWAY"
+        - "CORE"
+      parameters:
         type: "object"
-        description: "regions"
-        additionalProperties:
-          type: "array"
-          items:
-            type: "string"
-      displayNames:
-        type: "object"
-        description: "regions with displayNames"
+        description: "cloud specific parameters for instance group"
         additionalProperties:
           type: "object"
-          additionalProperties:
-            type: "string"
-      availabilityZones:
-        type: "object"
-        description: "availability zones"
-        additionalProperties:
-          type: "object"
-          additionalProperties:
-            type: "array"
-            items:
-              type: "string"
-      defaultRegions:
-        type: "object"
-        description: "default regions"
-        additionalProperties:
+          properties: {}
+      template:
+        description: "instancegroup related template"
+        $ref: "#/definitions/TemplateV2Request"
+      securityGroup:
+        description: "instancegroup related securitygroup"
+        $ref: "#/definitions/SecurityGroupV2Request"
+      recipeNames:
+        type: "array"
+        description: "referenced recipe names"
+        uniqueItems: true
+        items:
           type: "string"
-  PlatformImagesJson:
-    type: "object"
-    properties:
-      images:
-        type: "object"
-        description: "default images"
-        additionalProperties:
-          type: "object"
-          additionalProperties:
-            type: "string"
-      imagesRegex:
-        type: "object"
-        description: "images regex"
-        additionalProperties:
-          type: "string"
+      recipeIds:
+        type: "array"
+        description: "referenced recipe ids"
+        uniqueItems: true
+        items:
+          type: "integer"
+          format: "int64"
+      recoveryMode:
+        type: "string"
+        description: "recovery mode of the hostgroup's nodes"
+        enum:
+        - "MANUAL"
+        - "AUTO"
   ClusterRequest:
     type: "object"
     required:
@@ -5753,6 +6465,9 @@ definitions:
         type: "integer"
         format: "int64"
         description: "blueprint id for the cluster"
+      blueprintName:
+        type: "string"
+        description: "blueprint name for the cluster"
       blueprint:
         description: "blueprint for the cluster"
         $ref: "#/definitions/BlueprintRequest"
@@ -5910,6 +6625,52 @@ definitions:
       connectionPassword:
         type: "string"
         description: "Password to use for the jdbc connection"
+  PlatformRegionsJson:
+    type: "object"
+    properties:
+      regions:
+        type: "object"
+        description: "regions"
+        additionalProperties:
+          type: "array"
+          items:
+            type: "string"
+      displayNames:
+        type: "object"
+        description: "regions with displayNames"
+        additionalProperties:
+          type: "object"
+          additionalProperties:
+            type: "string"
+      availabilityZones:
+        type: "object"
+        description: "availability zones"
+        additionalProperties:
+          type: "object"
+          additionalProperties:
+            type: "array"
+            items:
+              type: "string"
+      defaultRegions:
+        type: "object"
+        description: "default regions"
+        additionalProperties:
+          type: "string"
+  PlatformImagesJson:
+    type: "object"
+    properties:
+      images:
+        type: "object"
+        description: "default images"
+        additionalProperties:
+          type: "object"
+          additionalProperties:
+            type: "string"
+      imagesRegex:
+        type: "object"
+        description: "images regex"
+        additionalProperties:
+          type: "string"
   SecurityGroupResponse:
     type: "object"
     required:
@@ -6100,6 +6861,18 @@ definitions:
         type: "integer"
         format: "int64"
         description: "creation time of the stack in long"
+  IpPoolJson:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      id:
+        type: "string"
+      properties:
+        type: "object"
+        additionalProperties:
+          type: "object"
+          properties: {}
   AmbariDatabaseTestResult:
     type: "object"
     required:
@@ -6120,6 +6893,16 @@ definitions:
         additionalProperties:
           type: "object"
           properties: {}
+  PlatformIpPoolsResponse:
+    type: "object"
+    properties:
+      ippools:
+        type: "object"
+        additionalProperties:
+          type: "array"
+          uniqueItems: true
+          items:
+            $ref: "#/definitions/IpPoolJson"
   TemplateRequest:
     type: "object"
     required:
@@ -6340,12 +7123,6 @@ definitions:
         description: "stack related default tags"
         additionalProperties:
           type: "string"
-      loginUserName:
-        type: "string"
-        description: "authentication name for machines"
-      publicKey:
-        type: "string"
-        description: "public key for accessing instances"
       orchestrator:
         description: "the details of the container orchestrator api to use"
         $ref: "#/definitions/OrchestratorRequest"
@@ -6360,6 +7137,9 @@ definitions:
       credential:
         description: "stack related credential"
         $ref: "#/definitions/CredentialRequest"
+      stackAuthentication:
+        description: "stack related authentication"
+        $ref: "#/definitions/StackAuthentication"
       network:
         description: "stack related network"
         $ref: "#/definitions/NetworkRequest"
@@ -6376,6 +7156,9 @@ definitions:
       credentialSource:
         description: "source credential object for cloning"
         $ref: "#/definitions/CredentialSourceRequest"
+      credentialName:
+        type: "string"
+        description: "credential resource name for the stack"
       clusterRequest:
         description: "cluster request object on stack"
         $ref: "#/definitions/ClusterRequest"
@@ -6428,17 +7211,6 @@ definitions:
         type: "boolean"
         description: "whether to verify or not the repo url"
         default: false
-  TagSpecificationsJson:
-    type: "object"
-    properties:
-      specifications:
-        type: "object"
-        description: "tag specifications"
-        additionalProperties:
-          type: "object"
-          additionalProperties:
-            type: "object"
-            properties: {}
   FlexUsageControllerJson:
     type: "object"
     properties:
@@ -6454,6 +7226,17 @@ definitions:
         type: "string"
       userName:
         type: "string"
+  TagSpecificationsJson:
+    type: "object"
+    properties:
+      specifications:
+        type: "object"
+        description: "tag specifications"
+        additionalProperties:
+          type: "object"
+          additionalProperties:
+            type: "object"
+            properties: {}
   RdsBuildResult:
     type: "object"
     required:
@@ -6464,6 +7247,37 @@ definitions:
         description: "name of the created dbs"
         additionalProperties:
           type: "string"
+  RecommendationRequestJson:
+    type: "object"
+    properties:
+      credentialId:
+        type: "integer"
+        format: "int64"
+        description: "credential resource id for the request"
+      credentialName:
+        type: "string"
+        description: "credential resource name for the request"
+      region:
+        type: "string"
+        description: "Related region"
+      platformVariant:
+        type: "string"
+        description: "cloud provider api variant"
+      filters:
+        type: "object"
+        description: "filter for resources"
+        additionalProperties:
+          type: "string"
+      availabilityZone:
+        type: "string"
+        description: "related availability zone"
+      blueprintName:
+        type: "string"
+        description: "name that could indentify an existing blueprint"
+      blueprintId:
+        type: "integer"
+        format: "int64"
+        description: "id that could indentify an existing blueprint"
   CustomContainerResponse:
     type: "object"
     properties:
@@ -6532,6 +7346,47 @@ definitions:
         type: "integer"
         format: "int64"
         description: "id of the resource"
+  HostGroupResponse:
+    type: "object"
+    required:
+    - "constraint"
+    - "name"
+    properties:
+      name:
+        type: "string"
+        description: "name of the resource"
+      constraint:
+        description: "instance group or resource constraint for a hostgroup"
+        $ref: "#/definitions/Constraint"
+      recipeIds:
+        type: "array"
+        description: "referenced recipe ids"
+        uniqueItems: true
+        items:
+          type: "integer"
+          format: "int64"
+      recoveryMode:
+        type: "string"
+        description: "recovery mode of the hostgroup's nodes"
+        enum:
+        - "MANUAL"
+        - "AUTO"
+      id:
+        type: "integer"
+        format: "int64"
+        description: "id of the resource"
+      recipes:
+        type: "array"
+        description: "referenced recipes"
+        uniqueItems: true
+        items:
+          $ref: "#/definitions/RecipeResponse"
+      metadata:
+        type: "array"
+        description: "metadata of hosts"
+        uniqueItems: true
+        items:
+          $ref: "#/definitions/HostMetadata"
   LdapConfigResponse:
     type: "object"
     required:
@@ -6604,47 +7459,6 @@ definitions:
         type: "boolean"
         description: "resource is visible in account"
         default: false
-  HostGroupResponse:
-    type: "object"
-    required:
-    - "constraint"
-    - "name"
-    properties:
-      name:
-        type: "string"
-        description: "name of the resource"
-      constraint:
-        description: "instance group or resource constraint for a hostgroup"
-        $ref: "#/definitions/Constraint"
-      recipeIds:
-        type: "array"
-        description: "referenced recipe ids"
-        uniqueItems: true
-        items:
-          type: "integer"
-          format: "int64"
-      recoveryMode:
-        type: "string"
-        description: "recovery mode of the hostgroup's nodes"
-        enum:
-        - "MANUAL"
-        - "AUTO"
-      id:
-        type: "integer"
-        format: "int64"
-        description: "id of the resource"
-      recipes:
-        type: "array"
-        description: "referenced recipes"
-        uniqueItems: true
-        items:
-          $ref: "#/definitions/RecipeResponse"
-      metadata:
-        type: "array"
-        description: "metadata of hosts"
-        uniqueItems: true
-        items:
-          $ref: "#/definitions/HostMetadata"
   HostMetadata:
     type: "object"
     required:
@@ -6664,6 +7478,27 @@ definitions:
       state:
         type: "string"
         description: "state of the host"
+  VirtualMachinesResponse:
+    type: "object"
+    properties:
+      virtualMachines:
+        type: "array"
+        description: "virtual machines"
+        uniqueItems: true
+        items:
+          $ref: "#/definitions/VmTypeJson"
+      defaultVirtualMachine:
+        description: "default virtual machines"
+        $ref: "#/definitions/VmTypeJson"
+  BlueprintParameter:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      description:
+        type: "string"
+      referenceConfiguration:
+        type: "string"
   SecurityRuleRequest:
     type: "object"
     required:
@@ -6687,15 +7522,22 @@ definitions:
         type: "boolean"
         description: "flag for making the rule modifiable"
         default: false
-  BlueprintParameter:
+  AmbariRepoDetails:
     type: "object"
+    required:
+    - "baseUrl"
+    - "gpgKeyUrl"
+    - "version"
     properties:
-      name:
+      version:
         type: "string"
-      description:
+        description: "version of the Ambari"
+      baseUrl:
         type: "string"
-      referenceConfiguration:
+        description: "url of the Ambari repository"
+      gpgKeyUrl:
         type: "string"
+        description: "gpg key of the Ambari repository"
   TopologyRequest:
     type: "object"
     required:
@@ -6721,22 +7563,18 @@ definitions:
         description: "topology mapping"
         additionalProperties:
           type: "string"
-  AmbariRepoDetails:
+  CloudGatewayJson:
     type: "object"
-    required:
-    - "baseUrl"
-    - "gpgKeyUrl"
-    - "version"
     properties:
-      version:
+      name:
         type: "string"
-        description: "version of the Ambari"
-      baseUrl:
+      id:
         type: "string"
-        description: "url of the Ambari repository"
-      gpgKeyUrl:
-        type: "string"
-        description: "gpg key of the Ambari repository"
+      properties:
+        type: "object"
+        additionalProperties:
+          type: "object"
+          properties: {}
   ConfigsRequest:
     type: "object"
     required:
@@ -6800,19 +7638,6 @@ definitions:
         type: "boolean"
         description: "resource is visible in account"
         default: false
-  UserProfileRequest:
-    type: "object"
-    properties:
-      credentialName:
-        type: "string"
-      credentialId:
-        type: "integer"
-        format: "int64"
-      uiProperties:
-        type: "object"
-        additionalProperties:
-          type: "object"
-          properties: {}
   AmbariDatabaseDetails:
     type: "object"
     required:
@@ -6854,6 +7679,61 @@ definitions:
         type: "string"
         description: "password for the Ambari database"
         pattern: "^[^']+$"
+  UserProfileRequest:
+    type: "object"
+    properties:
+      credentialName:
+        type: "string"
+      credentialId:
+        type: "integer"
+        format: "int64"
+      uiProperties:
+        type: "object"
+        additionalProperties:
+          type: "object"
+          properties: {}
+  ClusterV2Request:
+    type: "object"
+    properties:
+      emailNeeded:
+        type: "boolean"
+        description: "send email about the result of the cluster installation"
+        default: false
+      emailTo:
+        type: "string"
+        description: "send email to the requested address"
+      ldapConfigId:
+        type: "integer"
+        format: "int64"
+        description: "LDAP config id for the cluster"
+      rdsConfigIds:
+        type: "array"
+        description: "RDS configuration ids for the cluster"
+        uniqueItems: true
+        items:
+          type: "integer"
+          format: "int64"
+      rdsConfigJsons:
+        type: "array"
+        description: "details of the external database for Hadoop components"
+        uniqueItems: true
+        items:
+          $ref: "#/definitions/RDSConfig"
+      fileSystem:
+        description: "external file system configuration"
+        $ref: "#/definitions/FileSystem"
+      executorType:
+        type: "string"
+        description: "executor type of cluster"
+        enum:
+        - "CONTAINER"
+        - "DEFAULT"
+      ambariRequest:
+        description: "ambari specific requests for cluster"
+        $ref: "#/definitions/AmbariV2Request"
+      byosRequest:
+        description: "byos specific requests for cluster"
+        $ref: "#/definitions/ByosV2Request"
   GatewayJson:
     type: "object"
     properties:
@@ -6907,6 +7787,26 @@ definitions:
       status:
         type: "string"
         description: "status of the cluster"
+        enum:
+        - "REQUESTED"
+        - "CREATE_IN_PROGRESS"
+        - "AVAILABLE"
+        - "UPDATE_IN_PROGRESS"
+        - "UPDATE_REQUESTED"
+        - "UPDATE_FAILED"
+        - "CREATE_FAILED"
+        - "ENABLE_SECURITY_FAILED"
+        - "DELETE_IN_PROGRESS"
+        - "DELETE_FAILED"
+        - "DELETE_COMPLETED"
+        - "STOPPED"
+        - "STOP_REQUESTED"
+        - "START_REQUESTED"
+        - "STOP_IN_PROGRESS"
+        - "START_IN_PROGRESS"
+        - "START_FAILED"
+        - "STOP_FAILED"
+        - "WAIT_FOR_SYNC"
       hoursUp:
         type: "integer"
         format: "int32"
@@ -7036,6 +7936,26 @@ definitions:
       status:
         type: "string"
         description: "status of the cluster"
+        enum:
+        - "REQUESTED"
+        - "CREATE_IN_PROGRESS"
+        - "AVAILABLE"
+        - "UPDATE_IN_PROGRESS"
+        - "UPDATE_REQUESTED"
+        - "UPDATE_FAILED"
+        - "CREATE_FAILED"
+        - "ENABLE_SECURITY_FAILED"
+        - "DELETE_IN_PROGRESS"
+        - "DELETE_FAILED"
+        - "DELETE_COMPLETED"
+        - "STOPPED"
+        - "STOP_REQUESTED"
+        - "START_REQUESTED"
+        - "STOP_IN_PROGRESS"
+        - "START_IN_PROGRESS"
+        - "START_FAILED"
+        - "STOP_FAILED"
+        - "WAIT_FOR_SYNC"
       hoursUp:
         type: "integer"
         format: "int32"
@@ -7149,13 +8069,6 @@ definitions:
       customQueue:
         type: "string"
         description: "custom queue for yarn orchestrator"
-  VmTypeJson:
-    type: "object"
-    properties:
-      value:
-        type: "string"
-      vmTypeMetaJson:
-        $ref: "#/definitions/VmTypeMetaJson"
   RdsConfigProperty:
     type: "object"
     properties:
@@ -7163,6 +8076,13 @@ definitions:
         type: "string"
       value:
         type: "string"
+  VmTypeJson:
+    type: "object"
+    properties:
+      value:
+        type: "string"
+      vmTypeMetaJson:
+        $ref: "#/definitions/VmTypeMetaJson"
   PlatformOrchestratorsJson:
     type: "object"
     properties:
@@ -7198,6 +8118,18 @@ definitions:
         type: "integer"
         format: "int64"
         description: "id of the resource"
+  RecommendationResponse:
+    type: "object"
+    properties:
+      recommendations:
+        type: "object"
+        additionalProperties:
+          $ref: "#/definitions/VmTypeJson"
+      virtualMachines:
+        type: "array"
+        uniqueItems: true
+        items:
+          $ref: "#/definitions/VmTypeJson"
   BlueprintRequest:
     type: "object"
     required:
@@ -7235,6 +8167,15 @@ definitions:
             type: "object"
             additionalProperties:
               type: "string"
+  ByosV2Request:
+    type: "object"
+    properties:
+      customContainer:
+        description: "custom containers"
+        $ref: "#/definitions/CustomContainerRequest"
+      customQueue:
+        type: "string"
+        description: "custom queue for yarn orchestrator"
   AmbariAddress:
     type: "object"
     required:
@@ -7243,8 +8184,84 @@ definitions:
       ambariAddress:
         type: "string"
         description: "ambari server address"
-  JsonEntity:
+  NetworkV2Request:
     type: "object"
+    properties:
+      subnetCIDR:
+        type: "string"
+        description: "the subnet definition of the network in CIDR format"
+      parameters:
+        type: "object"
+        description: "provider specific parameters of the specified network"
+        additionalProperties:
+          type: "object"
+          properties: {}
+  AmbariV2Request:
+    type: "object"
+    required:
+    - "password"
+    - "userName"
+    properties:
+      blueprintId:
+        type: "integer"
+        format: "int64"
+        description: "blueprint id for the cluster"
+      blueprintName:
+        type: "string"
+        description: "blueprint name for the cluster"
+      gateway:
+        $ref: "#/definitions/GatewayJson"
+      enableSecurity:
+        type: "boolean"
+        description: "enable Kerberos security"
+        default: false
+      userName:
+        type: "string"
+        description: "ambari username"
+        minLength: 5
+        maxLength: 15
+        pattern: "([a-z][-a-z0-9]*[a-z0-9])"
+      password:
+        type: "string"
+        description: "ambari password"
+        minLength: 5
+        maxLength: 100
+      kerberos:
+        $ref: "#/definitions/KerberosRequest"
+      validateBlueprint:
+        type: "boolean"
+        description: "validate blueprint"
+        default: false
+      ambariStackDetails:
+        description: "details of the Ambari stack"
+        $ref: "#/definitions/AmbariStackDetails"
+      ambariRepoDetailsJson:
+        description: "details of the Ambari package repository"
+        $ref: "#/definitions/AmbariRepoDetails"
+      ambariDatabaseDetails:
+        description: "details of the external Ambari database"
+        $ref: "#/definitions/AmbariDatabaseDetails"
+      configStrategy:
+        type: "string"
+        description: "config recommendation strategy"
+        enum:
+        - "NEVER_APPLY"
+        - "ONLY_STACK_DEFAULTS_APPLY"
+        - "ALWAYS_APPLY"
+        - "ALWAYS_APPLY_DONT_OVERRIDE_CUSTOM_VALUES"
+      blueprintInputs:
+        type: "array"
+        description: "blueprint inputs in the cluster"
+        uniqueItems: true
+        items:
+          $ref: "#/definitions/BlueprintInput"
+      blueprintCustomProperties:
+        type: "string"
+        description: "blueprint custom properties"
+      connectedCluster:
+        description: "cluster can connect to a datalake you can define the parameters\
+          \ here"
+        $ref: "#/definitions/ConnectedClusterRequest"
   Constraint:
     type: "object"
     required:
@@ -7298,6 +8315,12 @@ definitions:
         uniqueItems: true
         items:
           $ref: "#/definitions/RecipeRequest"
+      recipeNames:
+        type: "array"
+        description: "referenced recipe names"
+        uniqueItems: true
+        items:
+          type: "string"
   UpdateStack:
     type: "object"
     properties:
@@ -7310,24 +8333,13 @@ definitions:
         - "REPAIR_FAILED_NODES"
         - "STOPPED"
         - "STARTED"
+      withClusterEvent:
+        type: "boolean"
+        description: "on stack update, update cluster too"
+        default: false
       instanceGroupAdjustment:
         description: "instance group adjustment"
         $ref: "#/definitions/InstanceGroupAdjustment"
-  PlatformVariantsJson:
-    type: "object"
-    properties:
-      platformToVariants:
-        type: "object"
-        description: "platform variants"
-        additionalProperties:
-          type: "array"
-          items:
-            type: "string"
-      defaultVariants:
-        type: "object"
-        description: "default variants"
-        additionalProperties:
-          type: "string"
   HostGroupAdjustment:
     type: "object"
     required:
@@ -7349,6 +8361,21 @@ definitions:
         type: "boolean"
         description: "validate node count during downscale"
         default: false
+  PlatformVariantsJson:
+    type: "object"
+    properties:
+      platformToVariants:
+        type: "object"
+        description: "platform variants"
+        additionalProperties:
+          type: "array"
+          items:
+            type: "string"
+      defaultVariants:
+        type: "object"
+        description: "default variants"
+        additionalProperties:
+          type: "string"
   VmTypeMetaJson:
     type: "object"
     properties:
@@ -7360,6 +8387,17 @@ definitions:
         type: "object"
         additionalProperties:
           type: "string"
+  SecurityGroupV2Request:
+    type: "object"
+    properties:
+      securityGroupId:
+        type: "string"
+        description: "Exisiting security group id"
+      securityRules:
+        type: "array"
+        description: "list of security rules that relates to the security group"
+        items:
+          $ref: "#/definitions/SecurityRuleRequest"
   FileSystem:
     type: "object"
     required:
@@ -7386,6 +8424,31 @@ definitions:
         description: "configuration of the filesystem access as key-value pairs"
         additionalProperties:
           type: "string"
+  TemplateV2Request:
+    type: "object"
+    required:
+    - "instanceType"
+    properties:
+      volumeCount:
+        type: "integer"
+        format: "int32"
+        description: "number of volumes"
+      volumeSize:
+        type: "integer"
+        format: "int32"
+        description: "size of volumes"
+      parameters:
+        type: "object"
+        description: "cloud specific parameters for template"
+        additionalProperties:
+          type: "object"
+          properties: {}
+      volumeType:
+        type: "string"
+        description: "type of the volumes"
+      instanceType:
+        type: "string"
+        description: "type of the instance"
   TopologyResponse:
     type: "object"
     required:
@@ -7415,6 +8478,25 @@ definitions:
         type: "integer"
         format: "int64"
         description: "id of the resource"
+  StackAuthenticationResponse:
+    type: "object"
+    properties:
+      publicKey:
+        type: "string"
+        description: "public key for accessing instances"
+      publicKeyId:
+        type: "string"
+        description: "public key id for accessing instances"
+      loginUserName:
+        type: "string"
+        description: "authentication name for machines"
+  PlatformVmtypesResponse:
+    type: "object"
+    properties:
+      vmTypes:
+        type: "object"
+        additionalProperties:
+          $ref: "#/definitions/VirtualMachinesResponse"
   UserNamePassword:
     type: "object"
     required:
@@ -7453,6 +8535,30 @@ definitions:
         - "EXACT"
         - "PERCENTAGE"
         - "BEST_EFFORT"
+  RegionResponse:
+    type: "object"
+    properties:
+      regions:
+        type: "array"
+        description: "regions"
+        uniqueItems: true
+        items:
+          type: "string"
+      displayNames:
+        type: "object"
+        description: "regions with displayNames"
+        additionalProperties:
+          type: "string"
+      availabilityZones:
+        type: "object"
+        description: "availability zones"
+        additionalProperties:
+          type: "array"
+          items:
+            type: "string"
+      defaultRegion:
+        type: "string"
+        description: "default regions"
   StackValidationRequest:
     type: "object"
     required:
@@ -7604,27 +8710,6 @@ definitions:
         type: "boolean"
         description: "resource is visible in account"
         default: false
-  PlatformResourceRequestJson:
-    type: "object"
-    properties:
-      credentialId:
-        type: "integer"
-        format: "int64"
-        description: "credential resource id for the request"
-      credentialName:
-        type: "string"
-        description: "credential resource name for the request"
-      region:
-        type: "string"
-        description: "Related region"
-      platformVariant:
-        type: "string"
-        description: "cloud provider api variant"
-      filters:
-        type: "object"
-        description: "filter for resources"
-        additionalProperties:
-          type: "string"
   BlueprintResponse:
     type: "object"
     required:
@@ -7669,6 +8754,19 @@ definitions:
         type: "boolean"
         description: "resource is visible in account"
         default: false
+  InstanceGroupAdjustment:
+    type: "object"
+    required:
+    - "instanceGroup"
+    - "scalingAdjustment"
+    properties:
+      instanceGroup:
+        type: "string"
+        description: "name of the instance group"
+      scalingAdjustment:
+        type: "integer"
+        format: "int32"
+        description: "scaling adjustment of the instance groups"
   CredentialSourceRequest:
     type: "object"
     required:
@@ -7688,23 +8786,30 @@ definitions:
         additionalProperties:
           type: "object"
           properties: {}
-  InstanceGroupAdjustment:
+  PlatformResourceRequestJson:
     type: "object"
-    required:
-    - "instanceGroup"
-    - "scalingAdjustment"
     properties:
-      instanceGroup:
-        type: "string"
-        description: "name of the instance group"
-      scalingAdjustment:
+      credentialId:
         type: "integer"
-        format: "int32"
-        description: "scaling adjustment of the instance groups"
-      withClusterEvent:
-        type: "boolean"
-        description: "on stack update, update cluster too"
-        default: false
+        format: "int64"
+        description: "credential resource id for the request"
+      credentialName:
+        type: "string"
+        description: "credential resource name for the request"
+      region:
+        type: "string"
+        description: "Related region"
+      platformVariant:
+        type: "string"
+        description: "cloud provider api variant"
+      filters:
+        type: "object"
+        description: "filter for resources"
+        additionalProperties:
+          type: "string"
+      availabilityZone:
+        type: "string"
+        description: "related availability zone"
   FlexUsageComponentJson:
     type: "object"
     properties:
@@ -7813,6 +8918,22 @@ definitions:
       securityGroup:
         description: "instancegroup related securitygroup"
         $ref: "#/definitions/SecurityGroupRequest"
+  ClusterTemplateRequest:
+    type: "object"
+    required:
+    - "name"
+    properties:
+      name:
+        type: "string"
+        description: "name of the cluster template"
+      template:
+        type: "string"
+        description: "stringified template JSON"
+      type:
+        type: "string"
+        description: "type of the cluster template"
+        enum:
+        - "QUICK_START"
   PlatformDisksJson:
     type: "object"
     properties:
@@ -7842,22 +8963,6 @@ definitions:
           type: "object"
           additionalProperties:
             type: "string"
-  ClusterTemplateRequest:
-    type: "object"
-    required:
-    - "name"
-    properties:
-      name:
-        type: "string"
-        description: "name of the cluster template"
-      template:
-        type: "string"
-        description: "stringified template JSON"
-      type:
-        type: "string"
-        description: "type of the cluster template"
-        enum:
-        - "QUICK_START"
   ConstraintTemplateRequest:
     type: "object"
     required:
@@ -7959,6 +9064,16 @@ definitions:
       ambariStackDetails:
         description: "details of the Ambari stack"
         $ref: "#/definitions/AmbariStackDetails"
+  FailureReport:
+    type: "object"
+    required:
+    - "failedNodes"
+    properties:
+      failedNodes:
+        type: "array"
+        description: "List of failed nodes"
+        items:
+          type: "string"
   CredentialRequest:
     type: "object"
     required:
@@ -7989,16 +9104,18 @@ definitions:
         type: "integer"
         format: "int64"
         description: "id of the topology the resource belongs to"
-  FailureReport:
+  StackAuthentication:
     type: "object"
-    required:
-    - "failedNodes"
     properties:
-      failedNodes:
-        type: "array"
-        description: "List of failed nodes"
-        items:
-          type: "string"
+      publicKey:
+        type: "string"
+        description: "public key for accessing instances"
+      publicKeyId:
+        type: "string"
+        description: "public key id for accessing instances"
+      loginUserName:
+        type: "string"
+        description: "authentication name for machines"
   User:
     type: "object"
     properties:
@@ -8232,12 +9349,134 @@ definitions:
         description: "url of the endpoint"
         pattern: "^(https?:\\/\\/)((([\\da-z\\.-]+)\\.([a-z]{2,6}))|localhost|[1-9][0-9]{0,2}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3})(:[1-9][0-9]{1,4})?\\\
           /([\\/\\w\\.-]*)\\/?$"
+  StackV2Request:
+    type: "object"
+    required:
+    - "instanceGroups"
+    - "name"
+    properties:
+      name:
+        type: "string"
+        description: "name of the stack"
+        minLength: 5
+        maxLength: 40
+        pattern: "([a-z][-a-z0-9]*[a-z0-9])"
+      availabilityZone:
+        type: "string"
+        description: "availability zone of the stack"
+      region:
+        type: "string"
+        description: "region of the stack"
+      platformVariant:
+        type: "string"
+        description: "cloud provider api variant"
+      credentialId:
+        type: "integer"
+        format: "int64"
+        description: "credential resource id for the stack"
+      onFailureAction:
+        type: "string"
+        description: "action on failure"
+        enum:
+        - "ROLLBACK"
+        - "DO_NOTHING"
+      networkId:
+        type: "integer"
+        format: "int64"
+        description: "network resource id for the stack"
+      ambariVersion:
+        type: "string"
+        description: "specific version of ambari"
+      hdpVersion:
+        type: "string"
+        description: "specific version of HDP"
+      parameters:
+        type: "object"
+        description: "additional cloud specific parameters for stack"
+        additionalProperties:
+          type: "string"
+      customDomain:
+        type: "string"
+        description: "custom domain name for the nodes in the stack"
+      customHostname:
+        type: "string"
+        description: "custom hostname for nodes in the stack"
+      clusterNameAsSubdomain:
+        type: "boolean"
+        description: "using the cluster name to create subdomain"
+        default: false
+      hostgroupNameAsHostname:
+        type: "boolean"
+        description: "using the hostgroup names to create hostnames"
+        default: false
+      applicationTags:
+        type: "object"
+        description: "stack related application tags"
+        additionalProperties:
+          type: "string"
+      userDefinedTags:
+        type: "object"
+        description: "stack related userdefined tags"
+        additionalProperties:
+          type: "string"
+      defaultTags:
+        type: "object"
+        description: "stack related default tags"
+        additionalProperties:
+          type: "string"
+      orchestrator:
+        description: "the details of the container orchestrator api to use"
+        $ref: "#/definitions/OrchestratorRequest"
+      instanceGroups:
+        type: "array"
+        description: "collection of instance groupst"
+        items:
+          $ref: "#/definitions/instanceGroupsV2"
+      failurePolicy:
+        description: "failure policy in case of failures"
+        $ref: "#/definitions/FailurePolicyRequest"
+      stackAuthentication:
+        description: "stack related authentication"
+        $ref: "#/definitions/StackAuthentication"
+      network:
+        description: "stack related network"
+        $ref: "#/definitions/NetworkV2Request"
+      imageCatalog:
+        type: "string"
+        description: "custom image catalog URL"
+      customImage:
+        type: "string"
+        description: "custom image for the cluster"
+      flexId:
+        type: "integer"
+        format: "int64"
+        description: "id of the related flex subscription"
+      credentialName:
+        type: "string"
+        description: "credential resource name for the stack"
+      clusterRequest:
+        description: "cluster request object on stack"
+        $ref: "#/definitions/ClusterV2Request"
+      cloudPlatform:
+        type: "string"
+        description: "type of cloud provider"
+        readOnly: true
   ImageJson:
     type: "object"
     properties:
       imageName:
         type: "string"
         description: "name of the image"
+  PlatformGatewaysResponse:
+    type: "object"
+    properties:
+      gateways:
+        type: "object"
+        additionalProperties:
+          type: "array"
+          uniqueItems: true
+          items:
+            $ref: "#/definitions/CloudGatewayJson"
   LdapValidationRequest:
     type: "object"
     required:
@@ -8265,16 +9504,6 @@ definitions:
       bindPassword:
         type: "string"
         description: "password for the provided bind DN"
-  PlatformSshKeyResponse:
-    type: "object"
-    properties:
-      name:
-        type: "string"
-      properties:
-        type: "object"
-        additionalProperties:
-          type: "object"
-          properties: {}
   ClusterTemplateResponse:
     type: "object"
     required:
@@ -8295,6 +9524,16 @@ definitions:
         type: "integer"
         format: "int64"
         description: "id of the resource"
+  PlatformSshKeyResponse:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      properties:
+        type: "object"
+        additionalProperties:
+          type: "object"
+          properties: {}
   RecipeResponse:
     type: "object"
     required:
@@ -8572,6 +9811,13 @@ definitions:
       tcpAllowed:
         type: "boolean"
         default: false
+  BlueprintInput:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      propertyValue:
+        type: "string"
   LdapConfigRequest:
     type: "object"
     required:
@@ -8642,13 +9888,6 @@ definitions:
       bindPassword:
         type: "string"
         description: "password for the provided bind DN"
-  BlueprintInput:
-    type: "object"
-    properties:
-      name:
-        type: "string"
-      propertyValue:
-        type: "string"
   ClusterRepairRequest:
     type: "object"
     required:
@@ -8664,6 +9903,51 @@ definitions:
         description: "If true, the failed nodes will only be removed, otherwise the\
           \ failed nodes will be removed and new nodes will be started."
         default: false
+  AccountPreference:
+    type: "object"
+    required:
+    - "clusterTimeToLive"
+    - "userTimeToLive"
+    properties:
+      maxNumberOfClusters:
+        type: "integer"
+        format: "int64"
+        description: "max number of clusters in the account (0 when unlimited)"
+        minimum: 0.0
+      maxNumberOfNodesPerCluster:
+        type: "integer"
+        format: "int64"
+        description: "max number of vms in a cluster of account (0 when unlimited)"
+        minimum: 0.0
+      maxNumberOfClustersPerUser:
+        type: "integer"
+        format: "int64"
+        description: "max number of clusters for user within the account (0 when unlimited)"
+        minimum: 0.0
+      allowedInstanceTypes:
+        type: "array"
+        description: "allowed instance types in the account (empty list for no restriction)"
+        items:
+          type: "string"
+      clusterTimeToLive:
+        type: "integer"
+        format: "int64"
+        description: "lifecycle of the cluster in hours (0 for immortal clusters)"
+        minimum: 0.0
+      userTimeToLive:
+        type: "integer"
+        format: "int64"
+        description: "lifecycle of the account and its clusters in hours (0 for immortal\
+          \ account)"
+        minimum: 0.0
+      platforms:
+        type: "string"
+        description: "list of the cloudplatforms visible on the UI"
+      defaultTags:
+        type: "object"
+        description: "default tags for the resources created"
+        additionalProperties:
+          type: "string"
   StackResponse:
     type: "object"
     required:
@@ -8738,12 +10022,6 @@ definitions:
         description: "stack related default tags"
         additionalProperties:
           type: "string"
-      loginUserName:
-        type: "string"
-        description: "authentication name for machines"
-      publicKey:
-        type: "string"
-        description: "public key for accessing instances"
       id:
         type: "integer"
         format: "int64"
@@ -8815,6 +10093,9 @@ definitions:
       flexSubscription:
         description: "the related flex subscription"
         $ref: "#/definitions/FlexSubscriptionResponse"
+      stackAuthentication:
+        description: "stack related authentication"
+        $ref: "#/definitions/StackAuthenticationResponse"
       nodeCount:
         type: "integer"
         format: "int32"
@@ -8843,48 +10124,3 @@ definitions:
         type: "boolean"
         description: "resource is visible in account"
         default: false
-  AccountPreference:
-    type: "object"
-    required:
-    - "clusterTimeToLive"
-    - "userTimeToLive"
-    properties:
-      maxNumberOfClusters:
-        type: "integer"
-        format: "int64"
-        description: "max number of clusters in the account (0 when unlimited)"
-        minimum: 0.0
-      maxNumberOfNodesPerCluster:
-        type: "integer"
-        format: "int64"
-        description: "max number of vms in a cluster of account (0 when unlimited)"
-        minimum: 0.0
-      maxNumberOfClustersPerUser:
-        type: "integer"
-        format: "int64"
-        description: "max number of clusters for user within the account (0 when unlimited)"
-        minimum: 0.0
-      allowedInstanceTypes:
-        type: "array"
-        description: "allowed instance types in the account (empty list for no restriction)"
-        items:
-          type: "string"
-      clusterTimeToLive:
-        type: "integer"
-        format: "int64"
-        description: "lifecycle of the cluster in hours (0 for immortal clusters)"
-        minimum: 0.0
-      userTimeToLive:
-        type: "integer"
-        format: "int64"
-        description: "lifecycle of the account and its clusters in hours (0 for immortal\
-          \ account)"
-        minimum: 0.0
-      platforms:
-        type: "string"
-        description: "list of the cloudplatforms visible on the UI"
-      defaultTags:
-        type: "object"
-        description: "default tags for the resources created"
-        additionalProperties:
-          type: "string"

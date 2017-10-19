@@ -2,28 +2,28 @@
 
 var url = require('url');
 
-var Util = require('./UtilService');
+var V1util = require('./V1utilService');
 
 module.exports.createRDSDatabaseUtil = function createRDSDatabaseUtil (req, res, next) {
-  Util.createRDSDatabaseUtil(req.swagger.params, res, next);
+  V1util.createRDSDatabaseUtil(req.swagger.params, res, next);
 };
 
 module.exports.testAmbariDatabaseUtil = function testAmbariDatabaseUtil (req, res, next) {
-  Util.testAmbariDatabaseUtil(req.swagger.params, res, next);
+  V1util.testAmbariDatabaseUtil(req.swagger.params, res, next);
 };
 
 module.exports.testLdapConnectionByIdUtil = function testLdapConnectionByIdUtil (req, res, next) {
-  Util.testLdapConnectionByIdUtil(req.swagger.params, res, next);
+  V1util.testLdapConnectionByIdUtil(req.swagger.params, res, next);
 };
 
 module.exports.testLdapConnectionUtil = function testLdapConnectionUtil (req, res, next) {
-  Util.testLdapConnectionUtil(req.swagger.params, res, next);
+  V1util.testLdapConnectionUtil(req.swagger.params, res, next);
 };
 
 module.exports.testRdsConnectionByIdUtil = function testRdsConnectionByIdUtil (req, res, next) {
-  Util.testRdsConnectionByIdUtil(req.swagger.params, res, next);
+  V1util.testRdsConnectionByIdUtil(req.swagger.params, res, next);
 };
 
 module.exports.testRdsConnectionUtil = function testRdsConnectionUtil (req, res, next) {
-  Util.testRdsConnectionUtil(req.swagger.params, res, next);
+  V1util.testRdsConnectionUtil(req.swagger.params, res, next);
 };

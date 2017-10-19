@@ -2,8 +2,8 @@
 
 var url = require('url');
 
-var Subscriptions = require('./SubscriptionsService');
+var V1subscriptions = require('./V1subscriptionsService');
 
 module.exports.subscribeSubscription = function subscribeSubscription (req, res, next) {
-  Subscriptions.subscribeSubscription(req.swagger.params, res, next);
+  V1subscriptions.subscribeSubscription(req.swagger.params, res, next);
 };
