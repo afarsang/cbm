@@ -152,7 +152,8 @@ exports.getPublicsCredential = function(args, res, next) {
    * returns List
    **/
   var examples = {};
-  examples['application/json'] = [ {
+  examples['application/json'] = [{"name":"openstack","cloudPlatform":"OPENSTACK","parameters":{"facing":"internal","endpoint":"http://openstack.eng.hortonworks.com:5000/v2.0","selector":"cb-keystone-v2","keystoneVersion":"cb-keystone-v2","userName":"cloudbreak","tenantName":"cloudbreak"},"description":"1","topologyId":null,"id":1,"public":false}];
+/*[ {
   "cloudPlatform" : "aeiou",
   "public" : true,
   "name" : "aeiou",
@@ -162,7 +163,7 @@ exports.getPublicsCredential = function(args, res, next) {
   "parameters" : {
     "key" : "{}"
   }
-} ];
+} ];*/
   if (Object.keys(examples).length > 0) {
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(examples[Object.keys(examples)[0]] || {}, null, 2));
