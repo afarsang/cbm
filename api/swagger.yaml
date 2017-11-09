@@ -14,34 +14,35 @@ info:
     \ Ambari, Docker lightweight containers, Swarm and Consul.\nFor further product\
     \ documentation follow the link: <a href=\"http://hortonworks.com/apache/cloudbreak/\"\
     >http://hortonworks.com/apache/cloudbreak/</a>"
-  version: "1.15.0-dev.199"
+  version: "2.1.0-dev.410"
   title: "Cloudbreak API"
 basePath: "/cb/api"
 tags:
-- name: "v1flexsubscriptions"
-- name: "v1usages"
-- name: "cluster"
-- name: "v1blueprints"
-- name: "v1smartsensesubscriptions"
-- name: "v1ldap"
 - name: "v1accountpreferences"
-- name: "v1networks"
-- name: "v1topologies"
-- name: "v1users"
-- name: "v1util"
-- name: "v1rdsconfigs"
 - name: "v1recipes"
-- name: "v1stacks"
-- name: "v1securitygroups"
-- name: "v1settings"
-- name: "v1subscriptions"
-- name: "v2stacks"
-- name: "v1templates"
-- name: "v1clustertemplates"
-- name: "v1credentials"
-- name: "v1constraints"
+- name: "v1ldap"
+- name: "v2connectors"
+- name: "v1topologies"
 - name: "v1connectors"
+- name: "v1networks"
+- name: "v1usages"
+- name: "v1settings"
+- name: "v1credentials"
+- name: "v1stacks"
+- name: "v1subscriptions"
+- name: "v1rdsconfigs"
+- name: "v1smartsensesubscriptions"
 - name: "v1events"
+- name: "v1templates"
+- name: "v1constraints"
+- name: "v1blueprints"
+- name: "v1util"
+- name: "v1clustertemplates"
+- name: "v2stacks"
+- name: "v1securitygroups"
+- name: "v1flexsubscriptions"
+- name: "v1users"
+- name: "cluster"
 schemes:
 - "http"
 - "https"
@@ -1209,60 +1210,6 @@ paths:
           schema:
             $ref: "#/definitions/TagSpecificationsJson"
       x-swagger-router-controller: "V1connectors"
-  /v1/connectors/v2/regions:
-    post:
-      tags:
-      - "v1connectors"
-      summary: "retrive regions by type"
-      description: "Each cloud provider has it's own specific resources like instance\
-        \ types and disk types. These endpoints are collecting them."
-      operationId: "getRegionsByCredentialId"
-      schemes:
-      - "http"
-      - "https"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        required: false
-        schema:
-          $ref: "#/definitions/PlatformResourceRequestJson"
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/RegionResponse"
-      x-swagger-router-controller: "V1connectors"
-  /v1/connectors/v2/vmtypes:
-    post:
-      tags:
-      - "v1connectors"
-      summary: "retrive vmtype properties by credential"
-      description: "Each cloud provider has it's own specific resources like instance\
-        \ types and disk types. These endpoints are collecting them."
-      operationId: "getVmTypesByCredentialId"
-      schemes:
-      - "http"
-      - "https"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        required: false
-        schema:
-          $ref: "#/definitions/PlatformResourceRequestJson"
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/PlatformVmtypesResponse"
-      x-swagger-router-controller: "V1connectors"
   /v1/connectors/variants:
     get:
       tags:
@@ -2038,6 +1985,55 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/CloudbreakEvent"
+      x-swagger-router-controller: "V1events"
+  /v1/events/struct/zip/{stackId}:
+    get:
+      tags:
+      - "v1events"
+      operationId: "getStructuredEventsZip"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/octet-stream"
+      parameters:
+      - name: "stackId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        default:
+          description: "successful operation"
+      x-swagger-router-controller: "V1events"
+  /v1/events/struct/{stackId}:
+    get:
+      tags:
+      - "v1events"
+      operationId: "getStructuredEvents"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "stackId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/StructuredEvent"
+          headers: {}
       x-swagger-router-controller: "V1events"
   /v1/events/{stackId}:
     get:
@@ -5781,6 +5777,60 @@ paths:
           schema:
             $ref: "#/definitions/RdsTestResult"
       x-swagger-router-controller: "V1util"
+  /v2/connectors/regions:
+    post:
+      tags:
+      - "v2connectors"
+      summary: "retrive regions by type"
+      description: "Each cloud provider has it's own specific resources like instance\
+        \ types and disk types. These endpoints are collecting them."
+      operationId: "getRegionsByCredentialId"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/PlatformResourceRequestJson"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/RegionResponse"
+      x-swagger-router-controller: "V2connectors"
+  /v2/connectors/vmtypes:
+    post:
+      tags:
+      - "v2connectors"
+      summary: "retrive vmtype properties by credential"
+      description: "Each cloud provider has it's own specific resources like instance\
+        \ types and disk types. These endpoints are collecting them."
+      operationId: "getVmTypesByCredentialId"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/PlatformResourceRequestJson"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/PlatformVmtypesResponse"
+      x-swagger-router-controller: "V2connectors"
   /v2/stacks/account:
     get:
       tags:
@@ -5968,6 +6018,38 @@ paths:
           schema:
             $ref: "#/definitions/StackResponse"
       x-swagger-router-controller: "V2stacks"
+  /v2/stacks/ambari_password/{name}:
+    put:
+      tags:
+      - "v2stacks"
+      summary: "update stack by name"
+      description: "Stacks are template instances - a running cloud infrastructure\
+        \ created based on a template. Stacks are always launched on behalf of a cloud\
+        \ user account. Stacks support a wide range of resources, allowing you to\
+        \ build a highly available, reliable, and scalable infrastructure for your\
+        \ application needs."
+      operationId: "putpasswordStackV2"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "name"
+        in: "path"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/UserNamePassword"
+      responses:
+        default:
+          description: "successful operation"
+      x-swagger-router-controller: "V2stacks"
   /v2/stacks/platformVariants:
     get:
       tags:
@@ -5992,6 +6074,178 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/PlatformVariantsJson"
+      x-swagger-router-controller: "V2stacks"
+  /v2/stacks/reinstall/{name}:
+    put:
+      tags:
+      - "v2stacks"
+      summary: "update stack by name"
+      description: "Stacks are template instances - a running cloud infrastructure\
+        \ created based on a template. Stacks are always launched on behalf of a cloud\
+        \ user account. Stacks support a wide range of resources, allowing you to\
+        \ build a highly available, reliable, and scalable infrastructure for your\
+        \ application needs."
+      operationId: "putreinstallStackV2"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "name"
+        in: "path"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/ReinstallRequestV2"
+      responses:
+        default:
+          description: "successful operation"
+      x-swagger-router-controller: "V2stacks"
+  /v2/stacks/repair/{name}:
+    put:
+      tags:
+      - "v2stacks"
+      summary: "update stack by name"
+      description: "Stacks are template instances - a running cloud infrastructure\
+        \ created based on a template. Stacks are always launched on behalf of a cloud\
+        \ user account. Stacks support a wide range of resources, allowing you to\
+        \ build a highly available, reliable, and scalable infrastructure for your\
+        \ application needs."
+      operationId: "putrepairStackV2"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "name"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        default:
+          description: "successful operation"
+      x-swagger-router-controller: "V2stacks"
+  /v2/stacks/scaling/{name}:
+    put:
+      tags:
+      - "v2stacks"
+      summary: "update stack by name"
+      description: "Stacks are template instances - a running cloud infrastructure\
+        \ created based on a template. Stacks are always launched on behalf of a cloud\
+        \ user account. Stacks support a wide range of resources, allowing you to\
+        \ build a highly available, reliable, and scalable infrastructure for your\
+        \ application needs."
+      operationId: "putscalingStackV2"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "name"
+        in: "path"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/StackScaleRequestV2"
+      responses:
+        default:
+          description: "successful operation"
+      x-swagger-router-controller: "V2stacks"
+  /v2/stacks/start/{name}:
+    put:
+      tags:
+      - "v2stacks"
+      summary: "update stack by name"
+      description: "Stacks are template instances - a running cloud infrastructure\
+        \ created based on a template. Stacks are always launched on behalf of a cloud\
+        \ user account. Stacks support a wide range of resources, allowing you to\
+        \ build a highly available, reliable, and scalable infrastructure for your\
+        \ application needs."
+      operationId: "putstartStackV2"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "name"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        default:
+          description: "successful operation"
+      x-swagger-router-controller: "V2stacks"
+  /v2/stacks/stop/{name}:
+    put:
+      tags:
+      - "v2stacks"
+      summary: "update stack by name"
+      description: "Stacks are template instances - a running cloud infrastructure\
+        \ created based on a template. Stacks are always launched on behalf of a cloud\
+        \ user account. Stacks support a wide range of resources, allowing you to\
+        \ build a highly available, reliable, and scalable infrastructure for your\
+        \ application needs."
+      operationId: "putstopStackV2"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "name"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        default:
+          description: "successful operation"
+      x-swagger-router-controller: "V2stacks"
+  /v2/stacks/sync/{name}:
+    put:
+      tags:
+      - "v2stacks"
+      summary: "update stack by name"
+      description: "Stacks are template instances - a running cloud infrastructure\
+        \ created based on a template. Stacks are always launched on behalf of a cloud\
+        \ user account. Stacks support a wide range of resources, allowing you to\
+        \ build a highly available, reliable, and scalable infrastructure for your\
+        \ application needs."
+      operationId: "putsyncStackV2"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "name"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        default:
+          description: "successful operation"
       x-swagger-router-controller: "V2stacks"
   /v2/stacks/user:
     get:
@@ -6186,38 +6440,6 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/StackResponse"
-      x-swagger-router-controller: "V2stacks"
-    put:
-      tags:
-      - "v2stacks"
-      summary: "update stack by id"
-      description: "Stacks are template instances - a running cloud infrastructure\
-        \ created based on a template. Stacks are always launched on behalf of a cloud\
-        \ user account. Stacks support a wide range of resources, allowing you to\
-        \ build a highly available, reliable, and scalable infrastructure for your\
-        \ application needs."
-      operationId: "putStackV2"
-      schemes:
-      - "http"
-      - "https"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "id"
-        in: "path"
-        required: true
-        type: "integer"
-        format: "int64"
-      - in: "body"
-        name: "body"
-        required: false
-        schema:
-          $ref: "#/definitions/UpdateStack"
-      responses:
-        default:
-          description: "successful operation"
       x-swagger-router-controller: "V2stacks"
     delete:
       tags:
@@ -6435,19 +6657,58 @@ definitions:
         uniqueItems: true
         items:
           type: "string"
-      recipeIds:
-        type: "array"
-        description: "referenced recipe ids"
-        uniqueItems: true
-        items:
-          type: "integer"
-          format: "int64"
       recoveryMode:
         type: "string"
         description: "recovery mode of the hostgroup's nodes"
         enum:
         - "MANUAL"
         - "AUTO"
+  PlatformRegionsJson:
+    type: "object"
+    properties:
+      regions:
+        type: "object"
+        description: "regions"
+        additionalProperties:
+          type: "array"
+          items:
+            type: "string"
+      displayNames:
+        type: "object"
+        description: "regions with displayNames"
+        additionalProperties:
+          type: "object"
+          additionalProperties:
+            type: "string"
+      availabilityZones:
+        type: "object"
+        description: "availability zones"
+        additionalProperties:
+          type: "object"
+          additionalProperties:
+            type: "array"
+            items:
+              type: "string"
+      defaultRegions:
+        type: "object"
+        description: "default regions"
+        additionalProperties:
+          type: "string"
+  PlatformImagesJson:
+    type: "object"
+    properties:
+      images:
+        type: "object"
+        description: "default images"
+        additionalProperties:
+          type: "object"
+          additionalProperties:
+            type: "string"
+      imagesRegex:
+        type: "object"
+        description: "images regex"
+        additionalProperties:
+          type: "string"
   ClusterRequest:
     type: "object"
     required:
@@ -6625,52 +6886,6 @@ definitions:
       connectionPassword:
         type: "string"
         description: "Password to use for the jdbc connection"
-  PlatformRegionsJson:
-    type: "object"
-    properties:
-      regions:
-        type: "object"
-        description: "regions"
-        additionalProperties:
-          type: "array"
-          items:
-            type: "string"
-      displayNames:
-        type: "object"
-        description: "regions with displayNames"
-        additionalProperties:
-          type: "object"
-          additionalProperties:
-            type: "string"
-      availabilityZones:
-        type: "object"
-        description: "availability zones"
-        additionalProperties:
-          type: "object"
-          additionalProperties:
-            type: "array"
-            items:
-              type: "string"
-      defaultRegions:
-        type: "object"
-        description: "default regions"
-        additionalProperties:
-          type: "string"
-  PlatformImagesJson:
-    type: "object"
-    properties:
-      images:
-        type: "object"
-        description: "default images"
-        additionalProperties:
-          type: "object"
-          additionalProperties:
-            type: "string"
-      imagesRegex:
-        type: "object"
-        description: "images regex"
-        additionalProperties:
-          type: "string"
   SecurityGroupResponse:
     type: "object"
     required:
@@ -6760,6 +6975,23 @@ definitions:
         format: "int64"
       sourceClusterName:
         type: "string"
+  ReinstallRequestV2:
+    type: "object"
+    required:
+    - "blueprintName"
+    properties:
+      instanceGroups:
+        type: "array"
+        description: "collection of instance groupst"
+        uniqueItems: true
+        items:
+          $ref: "#/definitions/instanceGroupsV2"
+      ambariStackDetails:
+        description: "details of the Ambari stack"
+        $ref: "#/definitions/AmbariStackDetails"
+      blueprintName:
+        type: "string"
+        description: "blueprint name for the cluster"
   OrchestratorRequest:
     type: "object"
     required:
@@ -7211,6 +7443,17 @@ definitions:
         type: "boolean"
         description: "whether to verify or not the repo url"
         default: false
+  TagSpecificationsJson:
+    type: "object"
+    properties:
+      specifications:
+        type: "object"
+        description: "tag specifications"
+        additionalProperties:
+          type: "object"
+          additionalProperties:
+            type: "object"
+            properties: {}
   FlexUsageControllerJson:
     type: "object"
     properties:
@@ -7226,27 +7469,19 @@ definitions:
         type: "string"
       userName:
         type: "string"
-  TagSpecificationsJson:
-    type: "object"
-    properties:
-      specifications:
-        type: "object"
-        description: "tag specifications"
-        additionalProperties:
-          type: "object"
-          additionalProperties:
-            type: "object"
-            properties: {}
-  RdsBuildResult:
+  StackScaleRequestV2:
     type: "object"
     required:
-    - "results"
+    - "desiredCount"
+    - "group"
     properties:
-      results:
-        type: "object"
-        description: "name of the created dbs"
-        additionalProperties:
-          type: "string"
+      group:
+        type: "string"
+        description: "name of the instance group"
+      desiredCount:
+        type: "integer"
+        format: "int32"
+        description: "scaling adjustment of the instance groups"
   RecommendationRequestJson:
     type: "object"
     properties:
@@ -7278,13 +7513,25 @@ definitions:
         type: "integer"
         format: "int64"
         description: "id that could indentify an existing blueprint"
-  CustomContainerResponse:
+  RdsBuildResult:
     type: "object"
+    required:
+    - "results"
     properties:
-      definitions:
+      results:
         type: "object"
+        description: "name of the created dbs"
         additionalProperties:
           type: "string"
+  DiskResponse:
+    type: "object"
+    properties:
+      type:
+        type: "string"
+      name:
+        type: "string"
+      displayName:
+        type: "string"
   NetworkResponse:
     type: "object"
     required:
@@ -7325,6 +7572,13 @@ definitions:
         description: "resource is visible in account"
         readOnly: true
         default: false
+  CustomContainerResponse:
+    type: "object"
+    properties:
+      definitions:
+        type: "object"
+        additionalProperties:
+          type: "string"
   RDSBuildRequest:
     type: "object"
     required:
@@ -7346,47 +7600,6 @@ definitions:
         type: "integer"
         format: "int64"
         description: "id of the resource"
-  HostGroupResponse:
-    type: "object"
-    required:
-    - "constraint"
-    - "name"
-    properties:
-      name:
-        type: "string"
-        description: "name of the resource"
-      constraint:
-        description: "instance group or resource constraint for a hostgroup"
-        $ref: "#/definitions/Constraint"
-      recipeIds:
-        type: "array"
-        description: "referenced recipe ids"
-        uniqueItems: true
-        items:
-          type: "integer"
-          format: "int64"
-      recoveryMode:
-        type: "string"
-        description: "recovery mode of the hostgroup's nodes"
-        enum:
-        - "MANUAL"
-        - "AUTO"
-      id:
-        type: "integer"
-        format: "int64"
-        description: "id of the resource"
-      recipes:
-        type: "array"
-        description: "referenced recipes"
-        uniqueItems: true
-        items:
-          $ref: "#/definitions/RecipeResponse"
-      metadata:
-        type: "array"
-        description: "metadata of hosts"
-        uniqueItems: true
-        items:
-          $ref: "#/definitions/HostMetadata"
   LdapConfigResponse:
     type: "object"
     required:
@@ -7459,6 +7672,47 @@ definitions:
         type: "boolean"
         description: "resource is visible in account"
         default: false
+  HostGroupResponse:
+    type: "object"
+    required:
+    - "constraint"
+    - "name"
+    properties:
+      name:
+        type: "string"
+        description: "name of the resource"
+      constraint:
+        description: "instance group or resource constraint for a hostgroup"
+        $ref: "#/definitions/Constraint"
+      recipeIds:
+        type: "array"
+        description: "referenced recipe ids"
+        uniqueItems: true
+        items:
+          type: "integer"
+          format: "int64"
+      recoveryMode:
+        type: "string"
+        description: "recovery mode of the hostgroup's nodes"
+        enum:
+        - "MANUAL"
+        - "AUTO"
+      id:
+        type: "integer"
+        format: "int64"
+        description: "id of the resource"
+      recipes:
+        type: "array"
+        description: "referenced recipes"
+        uniqueItems: true
+        items:
+          $ref: "#/definitions/RecipeResponse"
+      metadata:
+        type: "array"
+        description: "metadata of hosts"
+        uniqueItems: true
+        items:
+          $ref: "#/definitions/HostMetadata"
   HostMetadata:
     type: "object"
     required:
@@ -7478,6 +7732,13 @@ definitions:
       state:
         type: "string"
         description: "state of the host"
+  StructuredEvent:
+    type: "object"
+    properties:
+      type:
+        type: "string"
+      operation:
+        $ref: "#/definitions/OperationDetails"
   VirtualMachinesResponse:
     type: "object"
     properties:
@@ -7522,22 +7783,6 @@ definitions:
         type: "boolean"
         description: "flag for making the rule modifiable"
         default: false
-  AmbariRepoDetails:
-    type: "object"
-    required:
-    - "baseUrl"
-    - "gpgKeyUrl"
-    - "version"
-    properties:
-      version:
-        type: "string"
-        description: "version of the Ambari"
-      baseUrl:
-        type: "string"
-        description: "url of the Ambari repository"
-      gpgKeyUrl:
-        type: "string"
-        description: "gpg key of the Ambari repository"
   TopologyRequest:
     type: "object"
     required:
@@ -7563,6 +7808,22 @@ definitions:
         description: "topology mapping"
         additionalProperties:
           type: "string"
+  AmbariRepoDetails:
+    type: "object"
+    required:
+    - "baseUrl"
+    - "gpgKeyUrl"
+    - "version"
+    properties:
+      version:
+        type: "string"
+        description: "version of the Ambari"
+      baseUrl:
+        type: "string"
+        description: "url of the Ambari repository"
+      gpgKeyUrl:
+        type: "string"
+        description: "gpg key of the Ambari repository"
   CloudGatewayJson:
     type: "object"
     properties:
@@ -7729,7 +7990,7 @@ definitions:
         - "CONTAINER"
         - "DEFAULT"
       ambariRequest:
-        description: "ambari specific requests for cluster"
+        description: "ambari specific requests"
         $ref: "#/definitions/AmbariV2Request"
       byosRequest:
         description: "byos specific requests for cluster"
@@ -8069,13 +8330,6 @@ definitions:
       customQueue:
         type: "string"
         description: "custom queue for yarn orchestrator"
-  RdsConfigProperty:
-    type: "object"
-    properties:
-      name:
-        type: "string"
-      value:
-        type: "string"
   VmTypeJson:
     type: "object"
     properties:
@@ -8083,6 +8337,13 @@ definitions:
         type: "string"
       vmTypeMetaJson:
         $ref: "#/definitions/VmTypeMetaJson"
+  RdsConfigProperty:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      value:
+        type: "string"
   PlatformOrchestratorsJson:
     type: "object"
     properties:
@@ -8130,6 +8391,11 @@ definitions:
         uniqueItems: true
         items:
           $ref: "#/definitions/VmTypeJson"
+      diskResponses:
+        type: "array"
+        uniqueItems: true
+        items:
+          $ref: "#/definitions/DiskResponse"
   BlueprintRequest:
     type: "object"
     required:
@@ -8340,6 +8606,21 @@ definitions:
       instanceGroupAdjustment:
         description: "instance group adjustment"
         $ref: "#/definitions/InstanceGroupAdjustment"
+  PlatformVariantsJson:
+    type: "object"
+    properties:
+      platformToVariants:
+        type: "object"
+        description: "platform variants"
+        additionalProperties:
+          type: "array"
+          items:
+            type: "string"
+      defaultVariants:
+        type: "object"
+        description: "default variants"
+        additionalProperties:
+          type: "string"
   HostGroupAdjustment:
     type: "object"
     required:
@@ -8361,21 +8642,27 @@ definitions:
         type: "boolean"
         description: "validate node count during downscale"
         default: false
-  PlatformVariantsJson:
+  OperationDetails:
     type: "object"
     properties:
-      platformToVariants:
-        type: "object"
-        description: "platform variants"
-        additionalProperties:
-          type: "array"
-          items:
-            type: "string"
-      defaultVariants:
-        type: "object"
-        description: "default variants"
-        additionalProperties:
-          type: "string"
+      eventType:
+        type: "string"
+      resourceId:
+        type: "integer"
+        format: "int64"
+      resourceType:
+        type: "string"
+      timestamp:
+        type: "integer"
+        format: "int64"
+      account:
+        type: "string"
+      userId:
+        type: "string"
+      cloudbreakId:
+        type: "string"
+      cloudbreakVersion:
+        type: "string"
   VmTypeMetaJson:
     type: "object"
     properties:
@@ -8710,6 +8997,30 @@ definitions:
         type: "boolean"
         description: "resource is visible in account"
         default: false
+  PlatformResourceRequestJson:
+    type: "object"
+    properties:
+      credentialId:
+        type: "integer"
+        format: "int64"
+        description: "credential resource id for the request"
+      credentialName:
+        type: "string"
+        description: "credential resource name for the request"
+      region:
+        type: "string"
+        description: "Related region"
+      platformVariant:
+        type: "string"
+        description: "cloud provider api variant"
+      filters:
+        type: "object"
+        description: "filter for resources"
+        additionalProperties:
+          type: "string"
+      availabilityZone:
+        type: "string"
+        description: "related availability zone"
   BlueprintResponse:
     type: "object"
     required:
@@ -8754,19 +9065,6 @@ definitions:
         type: "boolean"
         description: "resource is visible in account"
         default: false
-  InstanceGroupAdjustment:
-    type: "object"
-    required:
-    - "instanceGroup"
-    - "scalingAdjustment"
-    properties:
-      instanceGroup:
-        type: "string"
-        description: "name of the instance group"
-      scalingAdjustment:
-        type: "integer"
-        format: "int32"
-        description: "scaling adjustment of the instance groups"
   CredentialSourceRequest:
     type: "object"
     required:
@@ -8786,30 +9084,19 @@ definitions:
         additionalProperties:
           type: "object"
           properties: {}
-  PlatformResourceRequestJson:
+  InstanceGroupAdjustment:
     type: "object"
+    required:
+    - "instanceGroup"
+    - "scalingAdjustment"
     properties:
-      credentialId:
+      instanceGroup:
+        type: "string"
+        description: "name of the instance group"
+      scalingAdjustment:
         type: "integer"
-        format: "int64"
-        description: "credential resource id for the request"
-      credentialName:
-        type: "string"
-        description: "credential resource name for the request"
-      region:
-        type: "string"
-        description: "Related region"
-      platformVariant:
-        type: "string"
-        description: "cloud provider api variant"
-      filters:
-        type: "object"
-        description: "filter for resources"
-        additionalProperties:
-          type: "string"
-      availabilityZone:
-        type: "string"
-        description: "related availability zone"
+        format: "int32"
+        description: "scaling adjustment of the instance groups"
   FlexUsageComponentJson:
     type: "object"
     properties:
@@ -8918,22 +9205,6 @@ definitions:
       securityGroup:
         description: "instancegroup related securitygroup"
         $ref: "#/definitions/SecurityGroupRequest"
-  ClusterTemplateRequest:
-    type: "object"
-    required:
-    - "name"
-    properties:
-      name:
-        type: "string"
-        description: "name of the cluster template"
-      template:
-        type: "string"
-        description: "stringified template JSON"
-      type:
-        type: "string"
-        description: "type of the cluster template"
-        enum:
-        - "QUICK_START"
   PlatformDisksJson:
     type: "object"
     properties:
@@ -8963,6 +9234,22 @@ definitions:
           type: "object"
           additionalProperties:
             type: "string"
+  ClusterTemplateRequest:
+    type: "object"
+    required:
+    - "name"
+    properties:
+      name:
+        type: "string"
+        description: "name of the cluster template"
+      template:
+        type: "string"
+        description: "stringified template JSON"
+      type:
+        type: "string"
+        description: "type of the cluster template"
+        enum:
+        - "QUICK_START"
   ConstraintTemplateRequest:
     type: "object"
     required:
@@ -9064,16 +9351,6 @@ definitions:
       ambariStackDetails:
         description: "details of the Ambari stack"
         $ref: "#/definitions/AmbariStackDetails"
-  FailureReport:
-    type: "object"
-    required:
-    - "failedNodes"
-    properties:
-      failedNodes:
-        type: "array"
-        description: "List of failed nodes"
-        items:
-          type: "string"
   CredentialRequest:
     type: "object"
     required:
@@ -9104,6 +9381,16 @@ definitions:
         type: "integer"
         format: "int64"
         description: "id of the topology the resource belongs to"
+  FailureReport:
+    type: "object"
+    required:
+    - "failedNodes"
+    properties:
+      failedNodes:
+        type: "array"
+        description: "List of failed nodes"
+        items:
+          type: "string"
   StackAuthentication:
     type: "object"
     properties:
@@ -9370,20 +9657,12 @@ definitions:
       platformVariant:
         type: "string"
         description: "cloud provider api variant"
-      credentialId:
-        type: "integer"
-        format: "int64"
-        description: "credential resource id for the stack"
       onFailureAction:
         type: "string"
         description: "action on failure"
         enum:
         - "ROLLBACK"
         - "DO_NOTHING"
-      networkId:
-        type: "integer"
-        format: "int64"
-        description: "network resource id for the stack"
       ambariVersion:
         type: "string"
         description: "specific version of ambari"
@@ -9457,10 +9736,6 @@ definitions:
       clusterRequest:
         description: "cluster request object on stack"
         $ref: "#/definitions/ClusterV2Request"
-      cloudPlatform:
-        type: "string"
-        description: "type of cloud provider"
-        readOnly: true
   ImageJson:
     type: "object"
     properties:
@@ -9504,6 +9779,16 @@ definitions:
       bindPassword:
         type: "string"
         description: "password for the provided bind DN"
+  PlatformSshKeyResponse:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      properties:
+        type: "object"
+        additionalProperties:
+          type: "object"
+          properties: {}
   ClusterTemplateResponse:
     type: "object"
     required:
@@ -9524,16 +9809,6 @@ definitions:
         type: "integer"
         format: "int64"
         description: "id of the resource"
-  PlatformSshKeyResponse:
-    type: "object"
-    properties:
-      name:
-        type: "string"
-      properties:
-        type: "object"
-        additionalProperties:
-          type: "object"
-          properties: {}
   RecipeResponse:
     type: "object"
     required:
@@ -9652,15 +9927,6 @@ definitions:
         items:
           type: "string"
           format: "byte"
-  FlexUsageProductJson:
-    type: "object"
-    properties:
-      productId:
-        type: "string"
-      components:
-        type: "array"
-        items:
-          $ref: "#/definitions/FlexUsageComponentJson"
   RecipeRequest:
     type: "object"
     required:
@@ -9691,6 +9957,15 @@ definitions:
       uri:
         type: "string"
         description: "recipe uri"
+  FlexUsageProductJson:
+    type: "object"
+    properties:
+      productId:
+        type: "string"
+      components:
+        type: "array"
+        items:
+          $ref: "#/definitions/FlexUsageComponentJson"
   FlexUsageComponentInstanceJson:
     type: "object"
     properties:
@@ -9811,13 +10086,6 @@ definitions:
       tcpAllowed:
         type: "boolean"
         default: false
-  BlueprintInput:
-    type: "object"
-    properties:
-      name:
-        type: "string"
-      propertyValue:
-        type: "string"
   LdapConfigRequest:
     type: "object"
     required:
@@ -9888,6 +10156,13 @@ definitions:
       bindPassword:
         type: "string"
         description: "password for the provided bind DN"
+  BlueprintInput:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      propertyValue:
+        type: "string"
   ClusterRepairRequest:
     type: "object"
     required:

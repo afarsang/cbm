@@ -60,8 +60,32 @@ module.exports.postPublicStackV2 = function postPublicStackV2 (req, res, next) {
   V2stacks.postPublicStackV2(req.swagger.params, res, next);
 };
 
-module.exports.putStackV2 = function putStackV2 (req, res, next) {
-  V2stacks.putStackV2(req.swagger.params, res, next);
+module.exports.putpasswordStackV2 = function putpasswordStackV2 (req, res, next) {
+  V2stacks.putpasswordStackV2(req.swagger.params, res, next);
+};
+
+module.exports.putreinstallStackV2 = function putreinstallStackV2 (req, res, next) {
+  V2stacks.putreinstallStackV2(req.swagger.params, res, next);
+};
+
+module.exports.putrepairStackV2 = function putrepairStackV2 (req, res, next) {
+  V2stacks.putrepairStackV2(req.swagger.params, res, next);
+};
+
+module.exports.putscalingStackV2 = function putscalingStackV2 (req, res, next) {
+  V2stacks.putscalingStackV2(req.swagger.params, res, next);
+};
+
+module.exports.putstartStackV2 = function putstartStackV2 (req, res, next) {
+  V2stacks.putstartStackV2(req.swagger.params, res, next);
+};
+
+module.exports.putstopStackV2 = function putstopStackV2 (req, res, next) {
+  V2stacks.putstopStackV2(req.swagger.params, res, next);
+};
+
+module.exports.putsyncStackV2 = function putsyncStackV2 (req, res, next) {
+  V2stacks.putsyncStackV2(req.swagger.params, res, next);
 };
 
 module.exports.statusStackV2 = function statusStackV2 (req, res, next) {

@@ -76,10 +76,6 @@ module.exports.getRegions = function getRegions (req, res, next) {
   V1connectors.getRegions(req.swagger.params, res, next);
 };
 
-module.exports.getRegionsByCredentialId = function getRegionsByCredentialId (req, res, next) {
-  V1connectors.getRegionsByCredentialId(req.swagger.params, res, next);
-};
-
 module.exports.getSpecialProperties = function getSpecialProperties (req, res, next) {
   V1connectors.getSpecialProperties(req.swagger.params, res, next);
 };
@@ -90,10 +86,6 @@ module.exports.getTagSpecifications = function getTagSpecifications (req, res, n
 
 module.exports.getVmTypes = function getVmTypes (req, res, next) {
   V1connectors.getVmTypes(req.swagger.params, res, next);
-};
-
-module.exports.getVmTypesByCredentialId = function getVmTypesByCredentialId (req, res, next) {
-  V1connectors.getVmTypesByCredentialId(req.swagger.params, res, next);
 };
 
 module.exports.getVmTypesByType = function getVmTypesByType (req, res, next) {

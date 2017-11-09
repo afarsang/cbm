@@ -74,3 +74,40 @@ exports.getEventsBySTackId = function(args, res, next) {
   }
 }
 
+exports.getStructuredEvents = function(args, res, next) {
+  /**
+   *
+   * stackId Long 
+   * returns List
+   **/
+  var examples = {};
+  examples['application/json'] = [ {
+  "type" : "aeiou",
+  "operation" : {
+    "resourceId" : 123456789,
+    "eventType" : "aeiou",
+    "cloudbreakVersion" : "aeiou",
+    "userId" : "aeiou",
+    "account" : "aeiou",
+    "resourceType" : "aeiou",
+    "timestamp" : 123456789,
+    "cloudbreakId" : "aeiou"
+  }
+} ];
+  if (Object.keys(examples).length > 0) {
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(examples[Object.keys(examples)[0]] || {}, null, 2));
+  } else {
+    res.end();
+  }
+}
+
+exports.getStructuredEventsZip = function(args, res, next) {
+  /**
+   *
+   * stackId Long 
+   * no response value expected for this operation
+   **/
+  res.end();
+}
+

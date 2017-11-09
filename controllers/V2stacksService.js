@@ -1206,7 +1206,9 @@ exports.getPublicsStackV2 = function(args, res, next) {
    * returns List
    **/
   var examples = {};
-  examples['application/json'] = [ {
+  examples['application/json'] = [{"name":"af-cl-1","availabilityZone":"nova","region":"RegionOne","platformVariant":"HEAT","credentialId":1,"onFailureAction":"DO_NOTHING","networkId":1,"ambariVersion":null,"hdpVersion":null,"parameters":{},"customDomain":null,"customHostname":null,"clusterNameAsSubdomain":false,"hostgroupNameAsHostname":false,"applicationTags":{},"userDefinedTags":{},"defaultTags":{},"id":1,"owner":"a0b0fac8-c28c-4215-b575-54a30f175441","account":"seq1234567","status":"CREATE_IN_PROGRESS","cluster":{"id":null,"name":null,"status":null,"hoursUp":0,"minutesUp":0,"cluster":null,"blueprintId":null,"blueprint":null,"description":null,"statusReason":null,"ambariServerIp":null,"ambariServerUrl":null,"userName":null,"secure":false,"hostGroups":[],"rdsConfigIds":[],"rdsConfigs":[],"serviceEndPoints":{},"configStrategy":null,"ldapConfigId":null,"ldapConfig":null,"attributes":{},"blueprintInputs":[],"blueprintCustomProperties":null,"executorType":null,"gateway":null,"customContainers":null,"ambariStackDetails":null,"ambariRepoDetailsJson":null,"ambariDatabaseDetails":null,"customQueue":null},"statusReason":"Image setup","credential":{"name":"openstack","cloudPlatform":"OPENSTACK","parameters":{"facing":"internal","endpoint":"http://openstack.eng.hortonworks.com:5000/v2.0","selector":"cb-keystone-v2","keystoneVersion":"cb-keystone-v2","userName":"cloudbreak","tenantName":"cloudbreak"},"description":"1","topologyId":null,"id":1,"public":false},"network":{"description":null,"subnetCIDR":null,"cloudPlatform":"OPENSTACK","parameters":{"networkId":"a5ad7a1d-d3a6-4180-8d61-07a23f6fb449","subnetId":"0404bf21-db5f-4987-8576-e65a4a99b14e"},"topologyId":null,"name":"neb1ee5ca-681d-4984-a310-decddd84031d","id":1,"publicInAccount":false},"instanceGroups":[{"templateId":3,"securityGroupId":3,"nodeCount":1,"group":"worker","type":"CORE","parameters":{},"template":{"cloudPlatform":"OPENSTACK","parameters":{"sshLocation":"0.0.0.0/0","encrypted":false},"description":"","volumeType":"HDD","instanceType":"cloudbreak","topologyId":null,"name":"t388246f7-4271-46ad-a71a-65d70a8c88cc","id":3,"volumeCount":1,"volumeSize":100,"public":false},"securityGroup":{"description":null,"securityGroupId":null,"cloudPlatform":"OPENSTACK","name":"sg29826c66-5431-494f-bddf-87add83d1ecb","id":3,"owner":"a0b0fac8-c28c-4215-b575-54a30f175441","account":"seq1234567","securityRules":[{"subnet":"0.0.0.0/0","ports":"22","protocol":"tcp","modifiable":false,"id":5}],"publicInAccount":false},"id":3,"metadata":[]},{"templateId":2,"securityGroupId":2,"nodeCount":0,"group":"compute","type":"CORE","parameters":{},"template":{"cloudPlatform":"OPENSTACK","parameters":{"sshLocation":"0.0.0.0/0","encrypted":false},"description":"","volumeType":"HDD","instanceType":"cloudbreak","topologyId":null,"name":"t9fbb91cc-403a-40e2-b73f-5aa9fca3de5b","id":2,"volumeCount":1,"volumeSize":100,"public":false},"securityGroup":{"description":null,"securityGroupId":null,"cloudPlatform":"OPENSTACK","name":"sg36aef581-3797-49a1-84f9-de48c9d5da37","id":2,"owner":"a0b0fac8-c28c-4215-b575-54a30f175441","account":"seq1234567","securityRules":[{"subnet":"0.0.0.0/0","ports":"22","protocol":"tcp","modifiable":false,"id":4}],"publicInAccount":false},"id":2,"metadata":[]},{"templateId":1,"securityGroupId":1,"nodeCount":1,"group":"master","type":"GATEWAY","parameters":{},"template":{"cloudPlatform":"OPENSTACK","parameters":{"sshLocation":"0.0.0.0/0","encrypted":false},"description":"","volumeType":"HDD","instanceType":"cloudbreak","topologyId":null,"name":"tdd0076a0-eb56-4c0a-b7c9-30427527455b","id":1,"volumeCount":1,"volumeSize":100,"public":false},"securityGroup":{"description":null,"securityGroupId":null,"cloudPlatform":"OPENSTACK","name":"sg9c9be545-5922-4c68-ae1f-927283487ad7","id":1,"owner":"a0b0fac8-c28c-4215-b575-54a30f175441","account":"seq1234567","securityRules":[{"subnet":"0.0.0.0/0","ports":"22","protocol":"tcp","modifiable":false,"id":1},{"subnet":"0.0.0.0/0","ports":"443","protocol":"tcp","modifiable":false,"id":2},{"subnet":"0.0.0.0/0","ports":"9443","protocol":"tcp","modifiable":false,"id":3}],"publicInAccount":false},"id":1,"metadata":[]}],"failurePolicy":null,"orchestrator":{"parameters":{},"apiEndpoint":null,"type":"SALT"},"created":1510244820369,"gatewayPort":9443,"image":{"imageName":"hdc-hdp--1710161226"},"cloudbreakDetails":{"version":"2.1.0-dev.410"},"flexSubscription":null,"stackAuthentication":{"publicKey":null,"publicKeyId":"seq-master","loginUserName":"cloudbreak"},"nodeCount":2,"hardwareInfos":[],"cloudbreakEvents":[],"cloudbreakUsages":[],"cloudPlatform":"OPENSTACK","public":false}];
+
+/*[ {
   "cluster" : {
     "cluster" : "aeiou",
     "ambariRepoDetailsJson" : {
@@ -1553,7 +1555,7 @@ exports.getPublicsStackV2 = function(args, res, next) {
   },
   "account" : "aeiou",
   "status" : "aeiou"
-} ];
+} ];*/
   if (Object.keys(examples).length > 0) {
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(examples[Object.keys(examples)[0]] || {}, null, 2));
@@ -2302,7 +2304,9 @@ exports.postPrivateStackV2 = function(args, res, next) {
    * returns StackResponse
    **/
   var examples = {};
-  examples['application/json'] = {
+  examples['application/json'] = {"name":"af-cl-1","availabilityZone":"nova","region":"RegionOne","platformVariant":"HEAT","credentialId":1,"onFailureAction":"DO_NOTHING","networkId":1,"ambariVersion":"2.5.1.0","hdpVersion":"2.6.1.0","parameters":{},"customDomain":null,"customHostname":null,"clusterNameAsSubdomain":false,"hostgroupNameAsHostname":false,"applicationTags":{},"userDefinedTags":{},"defaultTags":{},"id":1,"owner":"a0b0fac8-c28c-4215-b575-54a30f175441","account":"seq1234567","status":"REQUESTED","cluster":{"id":1,"name":"af-cl-1","status":"REQUESTED","hoursUp":0,"minutesUp":0,"cluster":null,"blueprintId":3,"blueprint":{"ambariBlueprint":"eyJCbHVlcHJpbnRzIjp7ImJsdWVwcmludF9uYW1lIjoiaGRwMjYtZWR3LWFuYWx5dGljcyIsInN0YWNrX25hbWUiOiJIRFAiLCJzdGFja192ZXJzaW9uIjoiMi42In0sInNldHRpbmdzIjpbeyJyZWNvdmVyeV9zZXR0aW5ncyI6W119LHsic2VydmljZV9zZXR0aW5ncyI6W3sibmFtZSI6IkhJVkUiLCJjcmVkZW50aWFsX3N0b3JlX2VuYWJsZWQiOiJmYWxzZSJ9XX0seyJjb21wb25lbnRfc2V0dGluZ3MiOltdfV0sImNvbmZpZ3VyYXRpb25zIjpbeyJoaXZlLWludGVyYWN0aXZlLWVudiI6eyJlbmFibGVfaGl2ZV9pbnRlcmFjdGl2ZSI6InRydWUifX0seyJjb3JlLXNpdGUiOnsiZnMudHJhc2guaW50ZXJ2YWwiOiI0MzIwIn19LHsiaGRmcy1zaXRlIjp7ImRmcy5uYW1lbm9kZS5zYWZlbW9kZS50aHJlc2hvbGQtcGN0IjoiMC45OSJ9fSx7ImhpdmUtaW50ZXJhY3RpdmUtc2l0ZSI6eyJoaXZlLmV4ZWMub3JjLnNwbGl0LnN0cmF0ZWd5IjoiQkkiLCJoaXZlLnN0YXRzLmZldGNoLmJpdHZlY3RvciI6InRydWUiLCJoaXZlLm1ldGFzdG9yZS5yYXdzdG9yZS5pbXBsIjoib3JnLmFwYWNoZS5oYWRvb3AuaGl2ZS5tZXRhc3RvcmUuY2FjaGUuQ2FjaGVkU3RvcmUifX0seyJoaXZlLXNpdGUiOnsiaGl2ZS5leGVjLmNvbXByZXNzLm91dHB1dCI6InRydWUiLCJoaXZlLm1lcmdlLm1hcGZpbGVzIjoidHJ1ZSIsImhpdmUuc2VydmVyMi50ZXouaW5pdGlhbGl6ZS5kZWZhdWx0LnNlc3Npb25zIjoidHJ1ZSIsImhpdmUuc2VydmVyMi50cmFuc3BvcnQubW9kZSI6Imh0dHAifX0seyJtYXByZWQtc2l0ZSI6eyJtYXByZWR1Y2Uuam9iLnJlZHVjZS5zbG93c3RhcnQuY29tcGxldGVkbWFwcyI6IjAuNyIsIm1hcHJlZHVjZS5tYXAub3V0cHV0LmNvbXByZXNzIjoidHJ1ZSIsIm1hcHJlZHVjZS5vdXRwdXQuZmlsZW91dHB1dGZvcm1hdC5jb21wcmVzcyI6InRydWUifX0seyJ0ZXotc2l0ZSI6eyJ0ZXoucnVudGltZS5zaHVmZmxlLnBhcmFsbGVsLmNvcGllcyI6IjQiLCJ0ZXoucnVudGltZS5lbmFibGUuZmluYWwtbWVyZ2UuaW4ub3V0cHV0IjoiZmFsc2UiLCJ0ZXouYW0uYW0tcm0uaGVhcnRiZWF0LmludGVydmFsLW1zLm1heCI6IjIwMDAifX0seyJ5YXJuLXNpdGUiOnsieWFybi5hY2wuZW5hYmxlIjoidHJ1ZSJ9fV0sImhvc3RfZ3JvdXBzIjpbeyJuYW1lIjoibWFzdGVyIiwiY29uZmlndXJhdGlvbnMiOltdLCJjb21wb25lbnRzIjpbeyJuYW1lIjoiQVBQX1RJTUVMSU5FX1NFUlZFUiJ9LHsibmFtZSI6IkhDQVQifSx7Im5hbWUiOiJIREZTX0NMSUVOVCJ9LHsibmFtZSI6IkhJU1RPUllTRVJWRVIifSx7Im5hbWUiOiJISVZFX0NMSUVOVCJ9LHsibmFtZSI6IkhJVkVfTUVUQVNUT1JFIn0seyJuYW1lIjoiSElWRV9TRVJWRVIifSx7Im5hbWUiOiJISVZFX1NFUlZFUl9JTlRFUkFDVElWRSJ9LHsibmFtZSI6IkpPVVJOQUxOT0RFIn0seyJuYW1lIjoiTElWWV9TRVJWRVIifSx7Im5hbWUiOiJNQVBSRURVQ0UyX0NMSUVOVCJ9LHsibmFtZSI6Ik1FVFJJQ1NfQ09MTEVDVE9SIn0seyJuYW1lIjoiTUVUUklDU19NT05JVE9SIn0seyJuYW1lIjoiTVlTUUxfU0VSVkVSIn0seyJuYW1lIjoiTkFNRU5PREUifSx7Im5hbWUiOiJQSUcifSx7Im5hbWUiOiJSRVNPVVJDRU1BTkFHRVIifSx7Im5hbWUiOiJTRUNPTkRBUllfTkFNRU5PREUifSx7Im5hbWUiOiJTTElERVIifSx7Im5hbWUiOiJTUEFSS19DTElFTlQifSx7Im5hbWUiOiJTUEFSS19KT0JISVNUT1JZU0VSVkVSIn0seyJuYW1lIjoiVEVaX0NMSUVOVCJ9LHsibmFtZSI6IldFQkhDQVRfU0VSVkVSIn0seyJuYW1lIjoiWUFSTl9DTElFTlQifSx7Im5hbWUiOiJaRVBQRUxJTl9NQVNURVIifSx7Im5hbWUiOiJaT09LRUVQRVJfQ0xJRU5UIn0seyJuYW1lIjoiWk9PS0VFUEVSX1NFUlZFUiJ9XSwiY2FyZGluYWxpdHkiOiIxIn0seyJuYW1lIjoid29ya2VyIiwiY29uZmlndXJhdGlvbnMiOltdLCJjb21wb25lbnRzIjpbeyJuYW1lIjoiSElWRV9DTElFTlQifSx7Im5hbWUiOiJURVpfQ0xJRU5UIn0seyJuYW1lIjoiU1BBUktfQ0xJRU5UIn0seyJuYW1lIjoiREFUQU5PREUifSx7Im5hbWUiOiJNRVRSSUNTX01PTklUT1IifSx7Im5hbWUiOiJOT0RFTUFOQUdFUiJ9XSwiY2FyZGluYWxpdHkiOiIxKyJ9LHsibmFtZSI6ImNvbXB1dGUiLCJjb25maWd1cmF0aW9ucyI6W10sImNvbXBvbmVudHMiOlt7Im5hbWUiOiJISVZFX0NMSUVOVCJ9LHsibmFtZSI6IlRFWl9DTElFTlQifSx7Im5hbWUiOiJTUEFSS19DTElFTlQifSx7Im5hbWUiOiJNRVRSSUNTX01PTklUT1IifSx7Im5hbWUiOiJOT0RFTUFOQUdFUiJ9XSwiY2FyZGluYWxpdHkiOiIxKyJ9XX0=","description":"EDW-Analytics: Apache Hive 2 LLAP, Apache Zeppelin 0.7.0","inputs":[],"name":"EDW-Analytics: Apache Hive 2 LLAP, Apache Zeppelin 0.7.0","id":3,"blueprintName":"hdp26-edw-analytics","hostGroupCount":3,"status":"DEFAULT","public":true},"description":"","statusReason":null,"ambariServerIp":null,"ambariServerUrl":null,"userName":"admin","secure":false,"hostGroups":[{"name":"compute","constraint":{"instanceGroupName":"compute","constraintTemplateName":null,"hostCount":0},"recipeIds":[],"recoveryMode":"AUTO","id":2,"recipes":[],"metadata":[]},{"name":"worker","constraint":{"instanceGroupName":"worker","constraintTemplateName":null,"hostCount":1},"recipeIds":[],"recoveryMode":"AUTO","id":3,"recipes":[],"metadata":[]},{"name":"master","constraint":{"instanceGroupName":"master","constraintTemplateName":null,"hostCount":1},"recipeIds":[],"recoveryMode":"AUTO","id":1,"recipes":[],"metadata":[]}],"rdsConfigIds":[],"rdsConfigs":[],"serviceEndPoints":{},"configStrategy":"ALWAYS_APPLY_DONT_OVERRIDE_CUSTOM_VALUES","ldapConfigId":null,"ldapConfig":null,"attributes":{},"blueprintInputs":[],"blueprintCustomProperties":null,"executorType":"DEFAULT","gateway":{"enableGateway":false,"path":"af-cl-1","topologyName":"services","exposedServices":[],"ssoProvider":null,"signCert":"-----BEGIN CERTIFICATE-----\nMIICnTCCAYWgAwIBAgIBATANBgkqhkiG9w0BAQsFADASMRAwDgYDVQQDDAdzaWdu\naW5nMB4XDTE3MTEwOTE2MjcwNloXDTI3MTEwOTE2MjcwNlowEjEQMA4GA1UEAxMH\nc2lnbmluZzCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAIiLdUBqTKhF\nNtBKynUgSspTEYLE9Li4EVFgvJ07wP06C6UimfoyRFXJlhCtL+H3ACxk3aGMUg8V\nufpM+xo0RDoghLn/0K7H7ryf1Myg2yQaC3pvPAWrp15Uq1LhKnrxyP0VQpn+O0Y3\n6+3sxb6TG2wkozKIsbx0SLG9g95nG5h9YYqfIwkhH9Wn6vbHZojabDi4kUDPnKi4\nUBMyk0l/jy9jokSEK2HxuZ7kV7+AMOQUIXyMciDyBeExE40LatInJewzuehcFhc9\nrPcWENQNcXvZ8bG83dPFARTUtnE669VCm7PH4uKSoy5fpf5dCM4ppSYt3w/Olfs2\nPbAfqdVNInMCAwEAATANBgkqhkiG9w0BAQsFAAOCAQEAl64zzFSKRRHkgg5o2UZw\nTwxK+8iL/StESok1UqrIPtBNIVFOW93hZZAi4qGJiBJ/Dr8Fx6JaO+9Z84vVLnDC\ntn3NtOVB+S/d34N41Pmlv9y32DXPujoNCeW/724Nvrw4ut3VoBlJO4Xxm5e2LjhJ\ns7V6LYdMqmCMjeDn46Lxgik17Le9W2++zFDfz86/sZpCQZimDMgzA7NWf9cwF36P\nBSwgqWzKae2oMsuq9QEqAn3JHDr3qBEeWDdIgC78porxedOXXAYfDKebNu9DjwGq\nEHxBn4fgHnZMOAyGHq7FEfdAADeKKhwzCfyMwIpFq61S9cCB5ircWoFs+ZX2ttzR\naA==\n-----END CERTIFICATE-----\n","signPub":"-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiIt1QGpMqEU20ErKdSBK\nylMRgsT0uLgRUWC8nTvA/ToLpSKZ+jJEVcmWEK0v4fcALGTdoYxSDxW5+kz7GjRE\nOiCEuf/QrsfuvJ/UzKDbJBoLem88BaunXlSrUuEqevHI/RVCmf47Rjfr7ezFvpMb\nbCSjMoixvHRIsb2D3mcbmH1hip8jCSEf1afq9sdmiNpsOLiRQM+cqLhQEzKTSX+P\nL2OiRIQrYfG5nuRXv4Aw5BQhfIxyIPIF4TETjQtq0icl7DO56FwWFz2s9xYQ1A1x\ne9nxsbzd08UBFNS2cTrr1UKbs8fi4pKjLl+l/l0IzimlJi3fD86V+zY9sB+p1U0i\ncwIDAQAB\n-----END PUBLIC KEY-----\n","gatewayType":"INDIVIDUAL","ssoType":"NONE"},"customContainers":{"definitions":{}},"ambariStackDetails":null,"ambariRepoDetailsJson":{"version":"2.5.1.0","baseUrl":"http://public-repo-1.hortonworks.com/ambari/centos6/2.x/updates/2.5.1.0","gpgKeyUrl":"http://public-repo-1.hortonworks.com/ambari/centos6/RPM-GPG-KEY/RPM-GPG-KEY-Jenkins"},"ambariDatabaseDetails":{"vendor":null,"name":"postgres","host":"localhost","port":5432,"userName":null,"password":null},"customQueue":"default"},"statusReason":"","credential":{"name":"openstack","cloudPlatform":"OPENSTACK","parameters":{"facing":"internal","endpoint":"http://openstack.eng.hortonworks.com:5000/v2.0","selector":"cb-keystone-v2","keystoneVersion":"cb-keystone-v2","userName":"cloudbreak","tenantName":"cloudbreak"},"description":"1","topologyId":null,"id":1,"public":false},"network":{"description":null,"subnetCIDR":null,"cloudPlatform":"OPENSTACK","parameters":{"networkId":"a5ad7a1d-d3a6-4180-8d61-07a23f6fb449","subnetId":"0404bf21-db5f-4987-8576-e65a4a99b14e"},"topologyId":null,"name":"neb1ee5ca-681d-4984-a310-decddd84031d","id":1,"publicInAccount":false},"instanceGroups":[{"templateId":1,"securityGroupId":1,"nodeCount":1,"group":"master","type":"GATEWAY","parameters":{},"template":{"cloudPlatform":"OPENSTACK","parameters":{"sshLocation":"0.0.0.0/0","encrypted":false},"description":"","volumeType":"HDD","instanceType":"cloudbreak","topologyId":null,"name":"tdd0076a0-eb56-4c0a-b7c9-30427527455b","id":1,"volumeCount":1,"volumeSize":100,"public":false},"securityGroup":{"description":null,"securityGroupId":null,"cloudPlatform":"OPENSTACK","name":"sg9c9be545-5922-4c68-ae1f-927283487ad7","id":1,"owner":"a0b0fac8-c28c-4215-b575-54a30f175441","account":"seq1234567","securityRules":[{"subnet":"0.0.0.0/0","ports":"22","protocol":"tcp","modifiable":false,"id":1},{"subnet":"0.0.0.0/0","ports":"443","protocol":"tcp","modifiable":false,"id":2},{"subnet":"0.0.0.0/0","ports":"9443","protocol":"tcp","modifiable":false,"id":3}],"publicInAccount":false},"id":1,"metadata":[]},{"templateId":2,"securityGroupId":2,"nodeCount":0,"group":"compute","type":"CORE","parameters":{},"template":{"cloudPlatform":"OPENSTACK","parameters":{"sshLocation":"0.0.0.0/0","encrypted":false},"description":"","volumeType":"HDD","instanceType":"cloudbreak","topologyId":null,"name":"t9fbb91cc-403a-40e2-b73f-5aa9fca3de5b","id":2,"volumeCount":1,"volumeSize":100,"public":false},"securityGroup":{"description":null,"securityGroupId":null,"cloudPlatform":"OPENSTACK","name":"sg36aef581-3797-49a1-84f9-de48c9d5da37","id":2,"owner":"a0b0fac8-c28c-4215-b575-54a30f175441","account":"seq1234567","securityRules":[{"subnet":"0.0.0.0/0","ports":"22","protocol":"tcp","modifiable":false,"id":4}],"publicInAccount":false},"id":2,"metadata":[]},{"templateId":3,"securityGroupId":3,"nodeCount":1,"group":"worker","type":"CORE","parameters":{},"template":{"cloudPlatform":"OPENSTACK","parameters":{"sshLocation":"0.0.0.0/0","encrypted":false},"description":"","volumeType":"HDD","instanceType":"cloudbreak","topologyId":null,"name":"t388246f7-4271-46ad-a71a-65d70a8c88cc","id":3,"volumeCount":1,"volumeSize":100,"public":false},"securityGroup":{"description":null,"securityGroupId":null,"cloudPlatform":"OPENSTACK","name":"sg29826c66-5431-494f-bddf-87add83d1ecb","id":3,"owner":"a0b0fac8-c28c-4215-b575-54a30f175441","account":"seq1234567","securityRules":[{"subnet":"0.0.0.0/0","ports":"22","protocol":"tcp","modifiable":false,"id":5}],"publicInAccount":false},"id":3,"metadata":[]}],"failurePolicy":null,"orchestrator":{"parameters":{},"apiEndpoint":null,"type":"SALT"},"created":1510244820369,"gatewayPort":9443,"image":{"imageName":"hdc-hdp--1710161226"},"cloudbreakDetails":{"version":"2.1.0-dev.410"},"flexSubscription":null,"stackAuthentication":{"publicKey":null,"publicKeyId":"seq-master","loginUserName":"cloudbreak"},"nodeCount":2,"hardwareInfos":[],"cloudbreakEvents":[],"cloudbreakUsages":[],"cloudPlatform":"OPENSTACK","public":false};
+
+/*{
   "cluster" : {
     "cluster" : "aeiou",
     "ambariRepoDetailsJson" : {
@@ -2649,7 +2653,7 @@ exports.postPrivateStackV2 = function(args, res, next) {
   },
   "account" : "aeiou",
   "status" : "aeiou"
-};
+};*/
   if (Object.keys(examples).length > 0) {
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(examples[Object.keys(examples)[0]] || {}, null, 2));
@@ -3023,13 +3027,81 @@ exports.postPublicStackV2 = function(args, res, next) {
   }
 }
 
-exports.putStackV2 = function(args, res, next) {
+exports.putpasswordStackV2 = function(args, res, next) {
   /**
-   * update stack by id
+   * update stack by name
    * Stacks are template instances - a running cloud infrastructure created based on a template. Stacks are always launched on behalf of a cloud user account. Stacks support a wide range of resources, allowing you to build a highly available, reliable, and scalable infrastructure for your application needs.
    *
-   * id Long 
-   * body UpdateStack  (optional)
+   * name String 
+   * body UserNamePassword  (optional)
+   * no response value expected for this operation
+   **/
+  res.end();
+}
+
+exports.putreinstallStackV2 = function(args, res, next) {
+  /**
+   * update stack by name
+   * Stacks are template instances - a running cloud infrastructure created based on a template. Stacks are always launched on behalf of a cloud user account. Stacks support a wide range of resources, allowing you to build a highly available, reliable, and scalable infrastructure for your application needs.
+   *
+   * name String 
+   * body ReinstallRequestV2  (optional)
+   * no response value expected for this operation
+   **/
+  res.end();
+}
+
+exports.putrepairStackV2 = function(args, res, next) {
+  /**
+   * update stack by name
+   * Stacks are template instances - a running cloud infrastructure created based on a template. Stacks are always launched on behalf of a cloud user account. Stacks support a wide range of resources, allowing you to build a highly available, reliable, and scalable infrastructure for your application needs.
+   *
+   * name String 
+   * no response value expected for this operation
+   **/
+  res.end();
+}
+
+exports.putscalingStackV2 = function(args, res, next) {
+  /**
+   * update stack by name
+   * Stacks are template instances - a running cloud infrastructure created based on a template. Stacks are always launched on behalf of a cloud user account. Stacks support a wide range of resources, allowing you to build a highly available, reliable, and scalable infrastructure for your application needs.
+   *
+   * name String 
+   * body StackScaleRequestV2  (optional)
+   * no response value expected for this operation
+   **/
+  res.end();
+}
+
+exports.putstartStackV2 = function(args, res, next) {
+  /**
+   * update stack by name
+   * Stacks are template instances - a running cloud infrastructure created based on a template. Stacks are always launched on behalf of a cloud user account. Stacks support a wide range of resources, allowing you to build a highly available, reliable, and scalable infrastructure for your application needs.
+   *
+   * name String 
+   * no response value expected for this operation
+   **/
+  res.end();
+}
+
+exports.putstopStackV2 = function(args, res, next) {
+  /**
+   * update stack by name
+   * Stacks are template instances - a running cloud infrastructure created based on a template. Stacks are always launched on behalf of a cloud user account. Stacks support a wide range of resources, allowing you to build a highly available, reliable, and scalable infrastructure for your application needs.
+   *
+   * name String 
+   * no response value expected for this operation
+   **/
+  res.end();
+}
+
+exports.putsyncStackV2 = function(args, res, next) {
+  /**
+   * update stack by name
+   * Stacks are template instances - a running cloud infrastructure created based on a template. Stacks are always launched on behalf of a cloud user account. Stacks support a wide range of resources, allowing you to build a highly available, reliable, and scalable infrastructure for your application needs.
+   *
+   * name String 
    * no response value expected for this operation
    **/
   res.end();

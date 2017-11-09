@@ -118,7 +118,8 @@ exports.getPublicsRecipe = function(args, res, next) {
    * returns List
    **/
   var examples = {};
-  examples['application/json'] = [ {
+  examples['application/json'] = [{"name":"recipe","description":"alma","recipeType":"PRE","content":"echo nothing to do","uri":null,"id":1,"public":true}];
+/*[ {
   "recipeType" : "aeiou",
   "public" : true,
   "name" : "aeiou",
@@ -126,7 +127,7 @@ exports.getPublicsRecipe = function(args, res, next) {
   "id" : 123456789,
   "uri" : "aeiou",
   "content" : "aeiou"
-} ];
+} ];*/
   if (Object.keys(examples).length > 0) {
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(examples[Object.keys(examples)[0]] || {}, null, 2));
