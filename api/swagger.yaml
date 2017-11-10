@@ -8728,8 +8728,7 @@ definitions:
         type: "object"
         description: "cloud specific parameters for template"
         additionalProperties:
-          type: "object"
-          properties: {}
+          type: "string"
       volumeType:
         type: "string"
         description: "type of the volumes"
