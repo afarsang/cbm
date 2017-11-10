@@ -46,7 +46,8 @@ exports.getUserProfile = function(args, res, next) {
    * returns UserProfileResponse
    **/
   var examples = {};
-  examples['application/json'] = {
+  examples['application/json'] = {"credential":{"name":"openstack","cloudPlatform":"OPENSTACK","parameters":{"facing":"internal","endpoint":"http://openstack.eng.hortonworks.com:5000/v2.0","selector":"cb-keystone-v2","keystoneVersion":"cb-keystone-v2","userName":"cloudbreak","tenantName":"cloudbreak"},"description":"1","topologyId":null,"id":1,"public":false},"owner":"a0b0fac8-c28c-4215-b575-54a30f175441","account":"seq1234567","uiProperties":{}};
+/*{
   "owner" : "aeiou",
   "credential" : {
     "cloudPlatform" : "aeiou",
@@ -63,7 +64,7 @@ exports.getUserProfile = function(args, res, next) {
     "key" : "{}"
   },
   "account" : "aeiou"
-};
+};*/
   if (Object.keys(examples).length > 0) {
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(examples[Object.keys(examples)[0]] || {}, null, 2));

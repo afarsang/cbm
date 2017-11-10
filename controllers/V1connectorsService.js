@@ -492,13 +492,14 @@ exports.getTagSpecifications = function(args, res, next) {
    * returns TagSpecificationsJson
    **/
   var examples = {};
-  examples['application/json'] = {
+  examples['application/json'] = {"specifications":{"AZURE":{"keyLength":512,"valueLength":256,"maxAmount":15,"valueValidator":"^(?!(?i)microsoft|azure|windows)[^,]*$","keyValidator":"^(?!(?i)microsoft|azure|windows)[^,]*$"},"OPENSTACK":{"keyLength":127,"valueLength":255,"maxAmount":50,"valueValidator":"^([\\w\\d+-=._:/@\\s]+)$","keyValidator":"^([\\w\\d+-=._:/@\\s]+)$"},"BYOS":{},"GCP":{"keyLength":63,"valueLength":63,"maxAmount":64,"valueValidator":"^([a-z]+)([a-z\\d-]+)$","keyValidator":"^([a-z]+)([a-z\\d-]+)$"},"AWS":{"keyLength":127,"valueLength":255,"maxAmount":50,"valueValidator":"^(?!aws)([\\w\\d+-=._:/@\\s]+)$","keyValidator":"^(?!aws)([\\w\\d+-=._:/@\\s]+)$"},"MOCK":{}}};
+/*{
   "specifications" : {
     "key" : {
       "key" : "{}"
     }
   }
-};
+};*/
   if (Object.keys(examples).length > 0) {
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(examples[Object.keys(examples)[0]] || {}, null, 2));
