@@ -14,35 +14,36 @@ info:
     \ Ambari, Docker lightweight containers, Swarm and Consul.\nFor further product\
     \ documentation follow the link: <a href=\"http://hortonworks.com/apache/cloudbreak/\"\
     >http://hortonworks.com/apache/cloudbreak/</a>"
-  version: "2.1.0-dev.410"
+  version: "2.1.0-rc.8"
   title: "Cloudbreak API"
 basePath: "/cb/api"
 tags:
-- name: "v1accountpreferences"
-- name: "v1recipes"
-- name: "v1ldap"
-- name: "v2connectors"
-- name: "v1topologies"
-- name: "v1connectors"
-- name: "v1networks"
 - name: "v1usages"
-- name: "v1settings"
-- name: "v1credentials"
-- name: "v1stacks"
-- name: "v1subscriptions"
+- name: "v2connectors"
+- name: "v1clustertemplates"
+- name: "v1templates"
+- name: "v1ldap"
+- name: "v2stacks"
 - name: "v1rdsconfigs"
 - name: "v1smartsensesubscriptions"
-- name: "v1events"
-- name: "v1templates"
-- name: "v1constraints"
-- name: "v1blueprints"
-- name: "v1util"
-- name: "v1clustertemplates"
-- name: "v2stacks"
-- name: "v1securitygroups"
+- name: "v1networks"
+- name: "v1connectors"
 - name: "v1flexsubscriptions"
-- name: "v1users"
+- name: "v1credentials"
+- name: "v1util"
+- name: "v1settings"
+- name: "v1blueprints"
 - name: "cluster"
+- name: "v1users"
+- name: "v1constraints"
+- name: "v1events"
+- name: "v1accountpreferences"
+- name: "v1securitygroups"
+- name: "v1imagecatalogs"
+- name: "v1subscriptions"
+- name: "v1recipes"
+- name: "v1stacks"
+- name: "v1topologies"
 schemes:
 - "http"
 - "https"
@@ -856,56 +857,6 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/PlatformGatewaysResponse"
-      x-swagger-router-controller: "V1connectors"
-  /v1/connectors/images:
-    get:
-      tags:
-      - "v1connectors"
-      summary: "retrive available images"
-      description: "Each cloud provider has it's own specific resources like instance\
-        \ types and disk types. These endpoints are collecting them."
-      operationId: "getImages"
-      schemes:
-      - "http"
-      - "https"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      parameters: []
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/PlatformImagesJson"
-      x-swagger-router-controller: "V1connectors"
-  /v1/connectors/images/{type}:
-    get:
-      tags:
-      - "v1connectors"
-      summary: "retrive images by type"
-      description: "Each cloud provider has it's own specific resources like instance\
-        \ types and disk types. These endpoints are collecting them."
-      operationId: "getImagesByType"
-      schemes:
-      - "http"
-      - "https"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "type"
-        in: "path"
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            type: "object"
-            additionalProperties:
-              type: "string"
       x-swagger-router-controller: "V1connectors"
   /v1/connectors/ippools:
     post:
@@ -2398,6 +2349,33 @@ paths:
         default:
           description: "successful operation"
       x-swagger-router-controller: "V1flexsubscriptions"
+  /v1/imagecatalogs/{platform}:
+    get:
+      tags:
+      - "v1imagecatalogs"
+      summary: "determines available images for the Cloudbreak version by the given\
+        \ provider"
+      description: "Provides an interface to determine available Virtual Machine images\
+        \ for the given version of Cloudbreak."
+      operationId: "getImagesByProvider"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "platform"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/ImagesResponse"
+      x-swagger-router-controller: "V1imagecatalogs"
   /v1/ldap/account:
     get:
       tags:
@@ -6663,6 +6641,54 @@ definitions:
         enum:
         - "MANUAL"
         - "AUTO"
+  RDSConfig:
+    type: "object"
+    required:
+    - "connectionPassword"
+    - "connectionURL"
+    - "connectionUserName"
+    - "databaseType"
+    - "hdpVersion"
+    - "name"
+    properties:
+      connectionURL:
+        type: "string"
+        description: "JDBC connection URL in the form of jdbc:<db-type>://<address>:<port>/<db>"
+        pattern: "^jdbc:postgresql://[-\\w\\.]*:\\d{1,5}/?\\w*"
+      databaseType:
+        type: "string"
+        description: "Type of the external database (allowed values: MYSQL, POSTGRES)"
+        enum:
+        - "POSTGRES"
+      hdpVersion:
+        type: "string"
+        description: "HDP version for the RDS configuration"
+      validated:
+        type: "boolean"
+        description: "If true, then the RDS configuration will be validated"
+        default: false
+      type:
+        type: "string"
+        description: "Type of rds (HIVE or RANGER)"
+        enum:
+        - "HIVE"
+        - "RANGER"
+        - "DRUID"
+      properties:
+        type: "array"
+        description: "custom properties for rds connection"
+        uniqueItems: true
+        items:
+          $ref: "#/definitions/RdsConfigProperty"
+      name:
+        type: "string"
+        description: "Name of the RDS configuration resource"
+      connectionUserName:
+        type: "string"
+        description: "Username to use for the jdbc connection"
+      connectionPassword:
+        type: "string"
+        description: "Password to use for the jdbc connection"
   PlatformRegionsJson:
     type: "object"
     properties:
@@ -6692,21 +6718,6 @@ definitions:
       defaultRegions:
         type: "object"
         description: "default regions"
-        additionalProperties:
-          type: "string"
-  PlatformImagesJson:
-    type: "object"
-    properties:
-      images:
-        type: "object"
-        description: "default images"
-        additionalProperties:
-          type: "object"
-          additionalProperties:
-            type: "string"
-      imagesRegex:
-        type: "object"
-        description: "images regex"
         additionalProperties:
           type: "string"
   ClusterRequest:
@@ -6838,54 +6849,6 @@ definitions:
         description: "cluster can connect to a datalake you can define the parameters\
           \ here"
         $ref: "#/definitions/ConnectedClusterRequest"
-  RDSConfig:
-    type: "object"
-    required:
-    - "connectionPassword"
-    - "connectionURL"
-    - "connectionUserName"
-    - "databaseType"
-    - "hdpVersion"
-    - "name"
-    properties:
-      connectionURL:
-        type: "string"
-        description: "JDBC connection URL in the form of jdbc:<db-type>://<address>:<port>/<db>"
-        pattern: "^jdbc:postgresql://[-\\w\\.]*:\\d{1,5}/?\\w*"
-      databaseType:
-        type: "string"
-        description: "Type of the external database (allowed values: MYSQL, POSTGRES)"
-        enum:
-        - "POSTGRES"
-      hdpVersion:
-        type: "string"
-        description: "HDP version for the RDS configuration"
-      validated:
-        type: "boolean"
-        description: "If true, then the RDS configuration will be validated"
-        default: false
-      type:
-        type: "string"
-        description: "Type of rds (HIVE or RANGER)"
-        enum:
-        - "HIVE"
-        - "RANGER"
-        - "DRUID"
-      properties:
-        type: "array"
-        description: "custom properties for rds connection"
-        uniqueItems: true
-        items:
-          $ref: "#/definitions/RdsConfigProperty"
-      name:
-        type: "string"
-        description: "Name of the RDS configuration resource"
-      connectionUserName:
-        type: "string"
-        description: "Username to use for the jdbc connection"
-      connectionPassword:
-        type: "string"
-        description: "Password to use for the jdbc connection"
   SecurityGroupResponse:
     type: "object"
     required:
@@ -6958,6 +6921,21 @@ definitions:
       type:
         type: "string"
         description: "type of the orchestrator"
+  StackRepoDetailsJson:
+    type: "object"
+    properties:
+      stack:
+        type: "object"
+        additionalProperties:
+          type: "string"
+      util:
+        type: "object"
+        additionalProperties:
+          type: "string"
+      knox:
+        type: "object"
+        additionalProperties:
+          type: "string"
   HardwareInfoResponse:
     type: "object"
     properties:
@@ -7280,6 +7258,13 @@ definitions:
         - "START_FAILED"
         - "STOP_FAILED"
         - "WAIT_FOR_SYNC"
+  StackDetailsJson:
+    type: "object"
+    properties:
+      version:
+        type: "string"
+      repo:
+        $ref: "#/definitions/StackRepoDetailsJson"
   StackRequest:
     type: "object"
     required:
@@ -7378,9 +7363,10 @@ definitions:
       imageCatalog:
         type: "string"
         description: "custom image catalog URL"
-      customImage:
+      imageId:
         type: "string"
-        description: "custom image for the cluster"
+        description: "virtual machine image id from ImageCatalog, machines of the\
+          \ cluster will be started from this image"
       flexId:
         type: "integer"
         format: "int64"
@@ -7443,17 +7429,6 @@ definitions:
         type: "boolean"
         description: "whether to verify or not the repo url"
         default: false
-  TagSpecificationsJson:
-    type: "object"
-    properties:
-      specifications:
-        type: "object"
-        description: "tag specifications"
-        additionalProperties:
-          type: "object"
-          additionalProperties:
-            type: "object"
-            properties: {}
   FlexUsageControllerJson:
     type: "object"
     properties:
@@ -7469,6 +7444,17 @@ definitions:
         type: "string"
       userName:
         type: "string"
+  TagSpecificationsJson:
+    type: "object"
+    properties:
+      specifications:
+        type: "object"
+        description: "tag specifications"
+        additionalProperties:
+          type: "object"
+          additionalProperties:
+            type: "object"
+            properties: {}
   StackScaleRequestV2:
     type: "object"
     required:
@@ -7523,15 +7509,13 @@ definitions:
         description: "name of the created dbs"
         additionalProperties:
           type: "string"
-  DiskResponse:
+  CustomContainerResponse:
     type: "object"
     properties:
-      type:
-        type: "string"
-      name:
-        type: "string"
-      displayName:
-        type: "string"
+      definitions:
+        type: "object"
+        additionalProperties:
+          type: "string"
   NetworkResponse:
     type: "object"
     required:
@@ -7572,13 +7556,15 @@ definitions:
         description: "resource is visible in account"
         readOnly: true
         default: false
-  CustomContainerResponse:
+  DiskResponse:
     type: "object"
     properties:
-      definitions:
-        type: "object"
-        additionalProperties:
-          type: "string"
+      type:
+        type: "string"
+      name:
+        type: "string"
+      displayName:
+        type: "string"
   RDSBuildRequest:
     type: "object"
     required:
@@ -7783,6 +7769,22 @@ definitions:
         type: "boolean"
         description: "flag for making the rule modifiable"
         default: false
+  AmbariRepoDetails:
+    type: "object"
+    required:
+    - "baseUrl"
+    - "gpgKeyUrl"
+    - "version"
+    properties:
+      version:
+        type: "string"
+        description: "version of the Ambari"
+      baseUrl:
+        type: "string"
+        description: "url of the Ambari repository"
+      gpgKeyUrl:
+        type: "string"
+        description: "gpg key of the Ambari repository"
   TopologyRequest:
     type: "object"
     required:
@@ -7808,22 +7810,6 @@ definitions:
         description: "topology mapping"
         additionalProperties:
           type: "string"
-  AmbariRepoDetails:
-    type: "object"
-    required:
-    - "baseUrl"
-    - "gpgKeyUrl"
-    - "version"
-    properties:
-      version:
-        type: "string"
-        description: "version of the Ambari"
-      baseUrl:
-        type: "string"
-        description: "url of the Ambari repository"
-      gpgKeyUrl:
-        type: "string"
-        description: "gpg key of the Ambari repository"
   CloudGatewayJson:
     type: "object"
     properties:
@@ -7847,6 +7833,31 @@ definitions:
         uniqueItems: true
         items:
           $ref: "#/definitions/BlueprintParameter"
+  ImageResponse:
+    type: "object"
+    properties:
+      date:
+        type: "string"
+      description:
+        type: "string"
+      os:
+        type: "string"
+      uuid:
+        type: "string"
+      version:
+        type: "string"
+      repo:
+        type: "object"
+        additionalProperties:
+          type: "string"
+      images:
+        type: "object"
+        additionalProperties:
+          type: "object"
+          additionalProperties:
+            type: "string"
+      stackDetails:
+        $ref: "#/definitions/StackDetailsJson"
   TemplateResponse:
     type: "object"
     required:
@@ -7995,6 +8006,21 @@ definitions:
       byosRequest:
         description: "byos specific requests for cluster"
         $ref: "#/definitions/ByosV2Request"
+  ImagesResponse:
+    type: "object"
+    properties:
+      baseImages:
+        type: "array"
+        items:
+          $ref: "#/definitions/BaseImageResponse"
+      hdpImages:
+        type: "array"
+        items:
+          $ref: "#/definitions/ImageResponse"
+      hdfImages:
+        type: "array"
+        items:
+          $ref: "#/definitions/ImageResponse"
   GatewayJson:
     type: "object"
     properties:
@@ -8396,6 +8422,15 @@ definitions:
         uniqueItems: true
         items:
           $ref: "#/definitions/DiskResponse"
+  ByosV2Request:
+    type: "object"
+    properties:
+      customContainer:
+        description: "custom containers"
+        $ref: "#/definitions/CustomContainerRequest"
+      customQueue:
+        type: "string"
+        description: "custom queue for yarn orchestrator"
   BlueprintRequest:
     type: "object"
     required:
@@ -8433,15 +8468,6 @@ definitions:
             type: "object"
             additionalProperties:
               type: "string"
-  ByosV2Request:
-    type: "object"
-    properties:
-      customContainer:
-        description: "custom containers"
-        $ref: "#/definitions/CustomContainerRequest"
-      customQueue:
-        type: "string"
-        description: "custom queue for yarn orchestrator"
   AmbariAddress:
     type: "object"
     required:
@@ -8728,13 +8754,26 @@ definitions:
         type: "object"
         description: "cloud specific parameters for template"
         additionalProperties:
-          type: "string"
+          type: "object"
+          properties: {}
       volumeType:
         type: "string"
         description: "type of the volumes"
       instanceType:
         type: "string"
         description: "type of the instance"
+  StackAuthenticationResponse:
+    type: "object"
+    properties:
+      publicKey:
+        type: "string"
+        description: "public key for accessing instances"
+      publicKeyId:
+        type: "string"
+        description: "public key id for accessing instances"
+      loginUserName:
+        type: "string"
+        description: "authentication name for machines"
   TopologyResponse:
     type: "object"
     required:
@@ -8764,18 +8803,6 @@ definitions:
         type: "integer"
         format: "int64"
         description: "id of the resource"
-  StackAuthenticationResponse:
-    type: "object"
-    properties:
-      publicKey:
-        type: "string"
-        description: "public key for accessing instances"
-      publicKeyId:
-        type: "string"
-        description: "public key id for accessing instances"
-      loginUserName:
-        type: "string"
-        description: "authentication name for machines"
   PlatformVmtypesResponse:
     type: "object"
     properties:
@@ -8996,6 +9023,39 @@ definitions:
         type: "boolean"
         description: "resource is visible in account"
         default: false
+  BaseImageResponse:
+    type: "object"
+    properties:
+      hdpStacks:
+        type: "array"
+        items:
+          $ref: "#/definitions/StackDetailsJson"
+      hdfStacks:
+        type: "array"
+        items:
+          $ref: "#/definitions/StackDetailsJson"
+      date:
+        type: "string"
+      description:
+        type: "string"
+      os:
+        type: "string"
+      uuid:
+        type: "string"
+      version:
+        type: "string"
+      repo:
+        type: "object"
+        additionalProperties:
+          type: "string"
+      images:
+        type: "object"
+        additionalProperties:
+          type: "object"
+          additionalProperties:
+            type: "string"
+      stackDetails:
+        $ref: "#/definitions/StackDetailsJson"
   PlatformResourceRequestJson:
     type: "object"
     properties:
@@ -9204,6 +9264,22 @@ definitions:
       securityGroup:
         description: "instancegroup related securitygroup"
         $ref: "#/definitions/SecurityGroupRequest"
+  ClusterTemplateRequest:
+    type: "object"
+    required:
+    - "name"
+    properties:
+      name:
+        type: "string"
+        description: "name of the cluster template"
+      template:
+        type: "string"
+        description: "stringified template JSON"
+      type:
+        type: "string"
+        description: "type of the cluster template"
+        enum:
+        - "QUICK_START"
   PlatformDisksJson:
     type: "object"
     properties:
@@ -9233,22 +9309,6 @@ definitions:
           type: "object"
           additionalProperties:
             type: "string"
-  ClusterTemplateRequest:
-    type: "object"
-    required:
-    - "name"
-    properties:
-      name:
-        type: "string"
-        description: "name of the cluster template"
-      template:
-        type: "string"
-        description: "stringified template JSON"
-      type:
-        type: "string"
-        description: "type of the cluster template"
-        enum:
-        - "QUICK_START"
   ConstraintTemplateRequest:
     type: "object"
     required:
@@ -9625,16 +9685,6 @@ definitions:
       stackUuid:
         type: "string"
         description: "unique id of the cluster"
-  SubscriptionRequest:
-    type: "object"
-    required:
-    - "endpointUrl"
-    properties:
-      endpointUrl:
-        type: "string"
-        description: "url of the endpoint"
-        pattern: "^(https?:\\/\\/)((([\\da-z\\.-]+)\\.([a-z]{2,6}))|localhost|[1-9][0-9]{0,2}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3})(:[1-9][0-9]{1,4})?\\\
-          /([\\/\\w\\.-]*)\\/?$"
   StackV2Request:
     type: "object"
     required:
@@ -9722,9 +9772,10 @@ definitions:
       imageCatalog:
         type: "string"
         description: "custom image catalog URL"
-      customImage:
+      imageId:
         type: "string"
-        description: "custom image for the cluster"
+        description: "virtual machine image id from ImageCatalog, machines of the\
+          \ cluster will be started from this image"
       flexId:
         type: "integer"
         format: "int64"
@@ -9735,6 +9786,16 @@ definitions:
       clusterRequest:
         description: "cluster request object on stack"
         $ref: "#/definitions/ClusterV2Request"
+  SubscriptionRequest:
+    type: "object"
+    required:
+    - "endpointUrl"
+    properties:
+      endpointUrl:
+        type: "string"
+        description: "url of the endpoint"
+        pattern: "^(https?:\\/\\/)((([\\da-z\\.-]+)\\.([a-z]{2,6}))|localhost|[1-9][0-9]{0,2}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3})(:[1-9][0-9]{1,4})?\\\
+          /([\\/\\w\\.-]*)\\/?$"
   ImageJson:
     type: "object"
     properties:
@@ -9778,16 +9839,6 @@ definitions:
       bindPassword:
         type: "string"
         description: "password for the provided bind DN"
-  PlatformSshKeyResponse:
-    type: "object"
-    properties:
-      name:
-        type: "string"
-      properties:
-        type: "object"
-        additionalProperties:
-          type: "object"
-          properties: {}
   ClusterTemplateResponse:
     type: "object"
     required:
@@ -9808,6 +9859,16 @@ definitions:
         type: "integer"
         format: "int64"
         description: "id of the resource"
+  PlatformSshKeyResponse:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      properties:
+        type: "object"
+        additionalProperties:
+          type: "object"
+          properties: {}
   RecipeResponse:
     type: "object"
     required:
@@ -9926,6 +9987,15 @@ definitions:
         items:
           type: "string"
           format: "byte"
+  FlexUsageProductJson:
+    type: "object"
+    properties:
+      productId:
+        type: "string"
+      components:
+        type: "array"
+        items:
+          $ref: "#/definitions/FlexUsageComponentJson"
   RecipeRequest:
     type: "object"
     required:
@@ -9956,15 +10026,6 @@ definitions:
       uri:
         type: "string"
         description: "recipe uri"
-  FlexUsageProductJson:
-    type: "object"
-    properties:
-      productId:
-        type: "string"
-      components:
-        type: "array"
-        items:
-          $ref: "#/definitions/FlexUsageComponentJson"
   FlexUsageComponentInstanceJson:
     type: "object"
     properties:
@@ -10177,51 +10238,6 @@ definitions:
         description: "If true, the failed nodes will only be removed, otherwise the\
           \ failed nodes will be removed and new nodes will be started."
         default: false
-  AccountPreference:
-    type: "object"
-    required:
-    - "clusterTimeToLive"
-    - "userTimeToLive"
-    properties:
-      maxNumberOfClusters:
-        type: "integer"
-        format: "int64"
-        description: "max number of clusters in the account (0 when unlimited)"
-        minimum: 0.0
-      maxNumberOfNodesPerCluster:
-        type: "integer"
-        format: "int64"
-        description: "max number of vms in a cluster of account (0 when unlimited)"
-        minimum: 0.0
-      maxNumberOfClustersPerUser:
-        type: "integer"
-        format: "int64"
-        description: "max number of clusters for user within the account (0 when unlimited)"
-        minimum: 0.0
-      allowedInstanceTypes:
-        type: "array"
-        description: "allowed instance types in the account (empty list for no restriction)"
-        items:
-          type: "string"
-      clusterTimeToLive:
-        type: "integer"
-        format: "int64"
-        description: "lifecycle of the cluster in hours (0 for immortal clusters)"
-        minimum: 0.0
-      userTimeToLive:
-        type: "integer"
-        format: "int64"
-        description: "lifecycle of the account and its clusters in hours (0 for immortal\
-          \ account)"
-        minimum: 0.0
-      platforms:
-        type: "string"
-        description: "list of the cloudplatforms visible on the UI"
-      defaultTags:
-        type: "object"
-        description: "default tags for the resources created"
-        additionalProperties:
-          type: "string"
   StackResponse:
     type: "object"
     required:
@@ -10398,3 +10414,48 @@ definitions:
         type: "boolean"
         description: "resource is visible in account"
         default: false
+  AccountPreference:
+    type: "object"
+    required:
+    - "clusterTimeToLive"
+    - "userTimeToLive"
+    properties:
+      maxNumberOfClusters:
+        type: "integer"
+        format: "int64"
+        description: "max number of clusters in the account (0 when unlimited)"
+        minimum: 0.0
+      maxNumberOfNodesPerCluster:
+        type: "integer"
+        format: "int64"
+        description: "max number of vms in a cluster of account (0 when unlimited)"
+        minimum: 0.0
+      maxNumberOfClustersPerUser:
+        type: "integer"
+        format: "int64"
+        description: "max number of clusters for user within the account (0 when unlimited)"
+        minimum: 0.0
+      allowedInstanceTypes:
+        type: "array"
+        description: "allowed instance types in the account (empty list for no restriction)"
+        items:
+          type: "string"
+      clusterTimeToLive:
+        type: "integer"
+        format: "int64"
+        description: "lifecycle of the cluster in hours (0 for immortal clusters)"
+        minimum: 0.0
+      userTimeToLive:
+        type: "integer"
+        format: "int64"
+        description: "lifecycle of the account and its clusters in hours (0 for immortal\
+          \ account)"
+        minimum: 0.0
+      platforms:
+        type: "string"
+        description: "list of the cloudplatforms visible on the UI"
+      defaultTags:
+        type: "object"
+        description: "default tags for the resources created"
+        additionalProperties:
+          type: "string"
