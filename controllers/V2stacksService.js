@@ -3074,7 +3074,7 @@ exports.putscalingStackV2 = function(args, res, next) {
   res.end();
 }
 
-exports.putstartStackV2 = function(args, res, next, params) {
+exports.putstartStackV2 = function(args, res, next) {
   /**
    * update stack by name
    * Stacks are template instances - a running cloud infrastructure created based on a template. Stacks are always launched on behalf of a cloud user account. Stacks support a wide range of resources, allowing you to build a highly available, reliable, and scalable infrastructure for your application needs.
@@ -3082,14 +3082,14 @@ exports.putstartStackV2 = function(args, res, next, params) {
    * name String 
    * no response value expected for this operation
    **/
-  if (params.name.value === 'azstatus') {
+  if (args.name.value === 'azstatus') {
       res.statusCode=400
       res.end({"message":"Cannot update the status of stack 'x' to STARTED, because something something dark side"}, null, 2);
   }
   res.end();
 }
 
-exports.putstopStackV2 = function(args, res, next, params) {
+exports.putstopStackV2 = function(args, res, next) {
   /**
    * update stack by name
    * Stacks are template instances - a running cloud infrastructure created based on a template. Stacks are always launched on behalf of a cloud user account. Stacks support a wide range of resources, allowing you to build a highly available, reliable, and scalable infrastructure for your application needs.
@@ -3097,7 +3097,7 @@ exports.putstopStackV2 = function(args, res, next, params) {
    * name String 
    * no response value expected for this operation
    **/
-  if (params.name.value === 'azstatus') {
+  if (args.name.value === 'azstatus') {
       res.statusCode=400
       res.end({"message":"Cannot update the status of stack 'x' to STOPPED, because something something dark side"}, null, 2);
   }
