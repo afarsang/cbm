@@ -37,7 +37,7 @@ module.exports.getPrivatesStack = function getPrivatesStack (req, res, next) {
 };
 
 module.exports.getPublicStack = function getPublicStack (req, res, next) {
-  V1stacks.getPublicStack(req.swagger.params, res, next, req.swagger.params);
+  V1stacks.getPublicStack(req.swagger.params, res, next);
 };
 
 module.exports.getPublicsStack = function getPublicsStack (req, res, next) {
