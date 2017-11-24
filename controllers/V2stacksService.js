@@ -3084,9 +3084,10 @@ exports.putstartStackV2 = function(args, res, next) {
    **/
   if (args.name.value === 'azstatus') {
       res.statusCode=400
-      res.end({"message":"Cannot update the status of stack 'x' to STARTED, because something something dark side"}, null, 2);
+      res.end(JSON.stringify({"message":"Cannot update the status of stack 'x' to STARTED, because something something dark side"}));
+  } else {
+      res.end();
   }
-  res.end();
 }
 
 exports.putstopStackV2 = function(args, res, next) {
@@ -3099,9 +3100,10 @@ exports.putstopStackV2 = function(args, res, next) {
    **/
   if (args.name.value === 'azstatus') {
       res.statusCode=400
-      res.end({"message":"Cannot update the status of stack 'x' to STOPPED, because something something dark side"}, null, 2);
+      res.end(JSON.stringify({"message":"Cannot update the status of stack 'x' to STOPPED, because something something dark side"}));
+  } else {
+      res.end();
   }
-  res.end();
 }
 
 exports.putsyncStackV2 = function(args, res, next, params) {
