@@ -53,9 +53,7 @@ exports.platformEnablement = function(args, res, next) {
    * returns Map
    **/
   var examples = {};
-  examples['application/json'] = {
-  "key" : true
-};
+  examples['application/json'] = {"AZURE":true,"OPENSTACK":true,"BYOS":true,"GCP":true,"AWS":true,"MOCK":true};
   if (Object.keys(examples).length > 0) {
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(examples[Object.keys(examples)[0]] || {}, null, 2));
