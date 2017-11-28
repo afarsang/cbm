@@ -47,6 +47,25 @@ exports.isPlatformSelectionDisabled = function(args, res, next) {
   }
 }
 
+exports.platformEnablement = function(args, res, next) {
+  /**
+   * is platform selection enabled
+   * Account related preferences that could be managed by the account admins and different restrictions could be added to Cloudbreak resources.
+   *
+   * returns Map
+   **/
+  var examples = {};
+  examples['application/json'] = {
+  "key" : true
+};
+  if (Object.keys(examples).length > 0) {
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(examples[Object.keys(examples)[0]] || {}, null, 2));
+  } else {
+    res.end();
+  }
+}
+
 exports.postAccountPreferencesEndpoint = function(args, res, next) {
   /**
    * post account preferences of admin user
