@@ -14,36 +14,37 @@ info:
     \ Ambari, Docker lightweight containers, Swarm and Consul.\nFor further product\
     \ documentation follow the link: <a href=\"http://hortonworks.com/apache/cloudbreak/\"\
     >http://hortonworks.com/apache/cloudbreak/</a>"
-  version: "2.1.0-rc.8"
+  version: "2.2.0-dev.79"
   title: "Cloudbreak API"
-basePath: "/cb/api"
+basePath: "/api"
 tags:
-- name: "v1usages"
-- name: "v2connectors"
-- name: "v1clustertemplates"
-- name: "v1templates"
 - name: "v1ldap"
-- name: "v2stacks"
-- name: "v1rdsconfigs"
-- name: "v1smartsensesubscriptions"
-- name: "v1networks"
-- name: "v1connectors"
-- name: "v1flexsubscriptions"
-- name: "v1credentials"
-- name: "v1util"
-- name: "v1settings"
-- name: "v1blueprints"
-- name: "cluster"
-- name: "v1users"
-- name: "v1constraints"
+- name: "v1topologies"
 - name: "v1events"
 - name: "v1accountpreferences"
-- name: "v1securitygroups"
-- name: "v1imagecatalogs"
-- name: "v1subscriptions"
+- name: "v1credentials"
+- name: "v1usages"
+- name: "v1users"
+- name: "cluster"
+- name: "v1constraints"
+- name: "v1blueprints"
+- name: "v1templates"
 - name: "v1recipes"
+- name: "v1imagecatalogs"
+- name: "v1networks"
+- name: "v1smartsensesubscriptions"
+- name: "v1securityrules"
+- name: "v2connectors"
+- name: "v2stacks"
+- name: "v1securitygroups"
 - name: "v1stacks"
-- name: "v1topologies"
+- name: "v1clustertemplates"
+- name: "v1flexsubscriptions"
+- name: "v1util"
+- name: "v1rdsconfigs"
+- name: "v1subscriptions"
+- name: "v1connectors"
+- name: "v1settings"
 schemes:
 - "http"
 - "https"
@@ -130,6 +131,30 @@ paths:
       description: "Account related preferences that could be managed by the account\
         \ admins and different restrictions could be added to Cloudbreak resources."
       operationId: "isPlatformSelectionDisabled"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "object"
+            additionalProperties:
+              type: "boolean"
+      x-swagger-router-controller: "V1accountpreferences"
+  /v1/accountpreferences/platformenabled:
+    get:
+      tags:
+      - "v1accountpreferences"
+      summary: "is platform selection enabled"
+      description: "Account related preferences that could be managed by the account\
+        \ admins and different restrictions could be added to Cloudbreak resources."
+      operationId: "platformEnablement"
       schemes:
       - "http"
       - "https"
@@ -777,9 +802,7 @@ paths:
         200:
           description: "successful operation"
           schema:
-            type: "object"
-            additionalProperties:
-              type: "boolean"
+            $ref: "#/definitions/SpecialParametersJson"
       x-swagger-router-controller: "V1connectors"
   /v1/connectors/disktypes:
     get:
@@ -1275,7 +1298,7 @@ paths:
       description: "A constraint template tells Cloudbreak the resource constraints\
         \ (cpu, memory, disk) of the Ambari containers that will be deployed to the\
         \ cluster. A constraint template must be created onenvironments where there\
-        \ is no one-to-one mapping between containers and nodes, like Mesos."
+        \ is no one-to-one mapping between containers and nodes, like YARN."
       operationId: "getPublicsConstraint"
       schemes:
       - "http"
@@ -1301,7 +1324,7 @@ paths:
       description: "A constraint template tells Cloudbreak the resource constraints\
         \ (cpu, memory, disk) of the Ambari containers that will be deployed to the\
         \ cluster. A constraint template must be created onenvironments where there\
-        \ is no one-to-one mapping between containers and nodes, like Mesos."
+        \ is no one-to-one mapping between containers and nodes, like YARN."
       operationId: "postPublicConstraint"
       schemes:
       - "http"
@@ -1330,7 +1353,7 @@ paths:
       description: "A constraint template tells Cloudbreak the resource constraints\
         \ (cpu, memory, disk) of the Ambari containers that will be deployed to the\
         \ cluster. A constraint template must be created onenvironments where there\
-        \ is no one-to-one mapping between containers and nodes, like Mesos."
+        \ is no one-to-one mapping between containers and nodes, like YARN."
       operationId: "getPublicConstraint"
       schemes:
       - "http"
@@ -1357,7 +1380,7 @@ paths:
       description: "A constraint template tells Cloudbreak the resource constraints\
         \ (cpu, memory, disk) of the Ambari containers that will be deployed to the\
         \ cluster. A constraint template must be created onenvironments where there\
-        \ is no one-to-one mapping between containers and nodes, like Mesos."
+        \ is no one-to-one mapping between containers and nodes, like YARN."
       operationId: "deletePublicConstraint"
       schemes:
       - "http"
@@ -1383,7 +1406,7 @@ paths:
       description: "A constraint template tells Cloudbreak the resource constraints\
         \ (cpu, memory, disk) of the Ambari containers that will be deployed to the\
         \ cluster. A constraint template must be created onenvironments where there\
-        \ is no one-to-one mapping between containers and nodes, like Mesos."
+        \ is no one-to-one mapping between containers and nodes, like YARN."
       operationId: "getPrivatesConstraint"
       schemes:
       - "http"
@@ -1409,7 +1432,7 @@ paths:
       description: "A constraint template tells Cloudbreak the resource constraints\
         \ (cpu, memory, disk) of the Ambari containers that will be deployed to the\
         \ cluster. A constraint template must be created onenvironments where there\
-        \ is no one-to-one mapping between containers and nodes, like Mesos."
+        \ is no one-to-one mapping between containers and nodes, like YARN."
       operationId: "postPrivateConstraint"
       schemes:
       - "http"
@@ -1438,7 +1461,7 @@ paths:
       description: "A constraint template tells Cloudbreak the resource constraints\
         \ (cpu, memory, disk) of the Ambari containers that will be deployed to the\
         \ cluster. A constraint template must be created onenvironments where there\
-        \ is no one-to-one mapping between containers and nodes, like Mesos."
+        \ is no one-to-one mapping between containers and nodes, like YARN."
       operationId: "getPrivateConstraint"
       schemes:
       - "http"
@@ -1465,7 +1488,7 @@ paths:
       description: "A constraint template tells Cloudbreak the resource constraints\
         \ (cpu, memory, disk) of the Ambari containers that will be deployed to the\
         \ cluster. A constraint template must be created onenvironments where there\
-        \ is no one-to-one mapping between containers and nodes, like Mesos."
+        \ is no one-to-one mapping between containers and nodes, like YARN."
       operationId: "deletePrivateConstraint"
       schemes:
       - "http"
@@ -1491,7 +1514,7 @@ paths:
       description: "A constraint template tells Cloudbreak the resource constraints\
         \ (cpu, memory, disk) of the Ambari containers that will be deployed to the\
         \ cluster. A constraint template must be created onenvironments where there\
-        \ is no one-to-one mapping between containers and nodes, like Mesos."
+        \ is no one-to-one mapping between containers and nodes, like YARN."
       operationId: "getConstraint"
       schemes:
       - "http"
@@ -1519,7 +1542,7 @@ paths:
       description: "A constraint template tells Cloudbreak the resource constraints\
         \ (cpu, memory, disk) of the Ambari containers that will be deployed to the\
         \ cluster. A constraint template must be created onenvironments where there\
-        \ is no one-to-one mapping between containers and nodes, like Mesos."
+        \ is no one-to-one mapping between containers and nodes, like YARN."
       operationId: "deleteConstraint"
       schemes:
       - "http"
@@ -2349,12 +2372,221 @@ paths:
         default:
           description: "successful operation"
       x-swagger-router-controller: "V1flexsubscriptions"
+  /v1/imagecatalogs/account:
+    get:
+      tags:
+      - "v1imagecatalogs"
+      summary: "list available custom image catalogs as public resources"
+      description: "Provides an interface to determine available Virtual Machine images\
+        \ for the given version of Cloudbreak."
+      operationId: "getPublicsImageCatalogs"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ImageCatalogResponse"
+      x-swagger-router-controller: "V1imagecatalogs"
+    post:
+      tags:
+      - "v1imagecatalogs"
+      summary: "create Image Catalog as public resources"
+      description: "Provides an interface to determine available Virtual Machine images\
+        \ for the given version of Cloudbreak."
+      operationId: "postPublicImageCatalog"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/ImageCatalogRequest"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/ImageCatalogResponse"
+      x-swagger-router-controller: "V1imagecatalogs"
+    put:
+      tags:
+      - "v1imagecatalogs"
+      summary: "update public (owned) or private Image Catalog by id"
+      description: "Provides an interface to determine available Virtual Machine images\
+        \ for the given version of Cloudbreak."
+      operationId: "putPublicImageCatalog"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/UpdateImageCatalogRequest"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/ImageCatalogResponse"
+      x-swagger-router-controller: "V1imagecatalogs"
+  /v1/imagecatalogs/account/{name}:
+    get:
+      tags:
+      - "v1imagecatalogs"
+      summary: "get custom image catalog by name"
+      description: "Provides an interface to determine available Virtual Machine images\
+        \ for the given version of Cloudbreak."
+      operationId: "getPublicImageCatalogsById"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "name"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/ImageCatalogResponse"
+      x-swagger-router-controller: "V1imagecatalogs"
+    delete:
+      tags:
+      - "v1imagecatalogs"
+      summary: "delete public (owned) or private Image Catalog by id"
+      description: "Provides an interface to determine available Virtual Machine images\
+        \ for the given version of Cloudbreak."
+      operationId: "deletePublicImageCatalogByName"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "name"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        default:
+          description: "successful operation"
+      x-swagger-router-controller: "V1imagecatalogs"
+  /v1/imagecatalogs/account/{name}/{platform}:
+    get:
+      tags:
+      - "v1imagecatalogs"
+      summary: "determines available images for the Cloudbreak version by the given\
+        \ provider and given image catalog url"
+      description: "Provides an interface to determine available Virtual Machine images\
+        \ for the given version of Cloudbreak."
+      operationId: "getPublicImagesByProviderAndCustomImageCatalog"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "name"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "platform"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/ImagesResponse"
+      x-swagger-router-controller: "V1imagecatalogs"
+  /v1/imagecatalogs/setdefault/{name}:
+    put:
+      tags:
+      - "v1imagecatalogs"
+      summary: "update public (owned) or private Image Catalog by id"
+      description: "Provides an interface to determine available Virtual Machine images\
+        \ for the given version of Cloudbreak."
+      operationId: "putSetDefaultImageCatalogByName"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "name"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/ImageCatalogResponse"
+      x-swagger-router-controller: "V1imagecatalogs"
+  /v1/imagecatalogs/user:
+    post:
+      tags:
+      - "v1imagecatalogs"
+      summary: "create Image Catalog as private resources"
+      description: "Provides an interface to determine available Virtual Machine images\
+        \ for the given version of Cloudbreak."
+      operationId: "postPrivateImageCatalog"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/ImageCatalogRequest"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/ImageCatalogResponse"
+      x-swagger-router-controller: "V1imagecatalogs"
   /v1/imagecatalogs/{platform}:
     get:
       tags:
       - "v1imagecatalogs"
       summary: "determines available images for the Cloudbreak version by the given\
-        \ provider"
+        \ provider and default image catalog url"
       description: "Provides an interface to determine available Virtual Machine images\
         \ for the given version of Cloudbreak."
       operationId: "getImagesByProvider"
@@ -3631,6 +3863,27 @@ paths:
         default:
           description: "successful operation"
       x-swagger-router-controller: "V1securitygroups"
+  /v1/securityrules/defaultpublicips:
+    get:
+      tags:
+      - "v1securityrules"
+      summary: "get default public IPs"
+      description: "Security Rules operations"
+      operationId: "getPublicIps"
+      schemes:
+      - "http"
+      - "https"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/SecurityRulesResponse"
+      x-swagger-router-controller: "V1securityrules"
   /v1/settings/all:
     get:
       tags:
@@ -6601,6 +6854,7 @@ definitions:
     required:
     - "group"
     - "nodeCount"
+    - "template"
     properties:
       nodeCount:
         type: "integer"
@@ -6641,6 +6895,138 @@ definitions:
         enum:
         - "MANUAL"
         - "AUTO"
+  ClusterRequest:
+    type: "object"
+    required:
+    - "name"
+    - "password"
+    - "userName"
+    properties:
+      name:
+        type: "string"
+        description: "name of the resource"
+        minLength: 5
+        maxLength: 40
+        pattern: "([a-z][-a-z0-9]*[a-z0-9])"
+      blueprintId:
+        type: "integer"
+        format: "int64"
+        description: "blueprint id for the cluster"
+      blueprintName:
+        type: "string"
+        description: "blueprint name for the cluster"
+      blueprint:
+        description: "blueprint for the cluster"
+        $ref: "#/definitions/BlueprintRequest"
+      description:
+        type: "string"
+        description: "description of the resource"
+        minLength: 0
+        maxLength: 1000
+      hostGroups:
+        type: "array"
+        description: "collection of hostgroups"
+        uniqueItems: true
+        items:
+          $ref: "#/definitions/HostGroupRequest"
+      emailNeeded:
+        type: "boolean"
+        description: "send email about the result of the cluster installation"
+        default: false
+      emailTo:
+        type: "string"
+        description: "send email to the requested address"
+      gateway:
+        $ref: "#/definitions/GatewayJson"
+      enableSecurity:
+        type: "boolean"
+        description: "enable Kerberos security"
+        default: false
+      userName:
+        type: "string"
+        description: "ambari username"
+        minLength: 5
+        maxLength: 15
+        pattern: "([a-z][-a-z0-9]*[a-z0-9])"
+      password:
+        type: "string"
+        description: "ambari password"
+        minLength: 5
+        maxLength: 100
+      kerberos:
+        $ref: "#/definitions/KerberosRequest"
+      ldapConfigId:
+        type: "integer"
+        format: "int64"
+        description: "LDAP config id for the cluster"
+      ldapConfigName:
+        type: "string"
+        description: "LDAP config name for the cluster"
+      ldapConfig:
+        description: "LDAP config for the cluster"
+        $ref: "#/definitions/LdapConfigRequest"
+      validateBlueprint:
+        type: "boolean"
+        description: "validate blueprint"
+        default: false
+      ambariStackDetails:
+        description: "details of the Ambari stack"
+        $ref: "#/definitions/AmbariStackDetails"
+      ambariRepoDetailsJson:
+        description: "details of the Ambari package repository"
+        $ref: "#/definitions/AmbariRepoDetails"
+      rdsConfigIds:
+        type: "array"
+        description: "RDS configuration ids for the cluster"
+        uniqueItems: true
+        items:
+          type: "integer"
+          format: "int64"
+      ambariDatabaseDetails:
+        description: "details of the external Ambari database"
+        $ref: "#/definitions/AmbariDatabaseDetails"
+      rdsConfigJsons:
+        type: "array"
+        description: "details of the external database for Hadoop components"
+        uniqueItems: true
+        items:
+          $ref: "#/definitions/RDSConfig"
+      fileSystem:
+        description: "external file system configuration"
+        $ref: "#/definitions/FileSystem"
+      configStrategy:
+        type: "string"
+        description: "config recommendation strategy"
+        enum:
+        - "NEVER_APPLY"
+        - "ONLY_STACK_DEFAULTS_APPLY"
+        - "ALWAYS_APPLY"
+        - "ALWAYS_APPLY_DONT_OVERRIDE_CUSTOM_VALUES"
+      blueprintInputs:
+        type: "array"
+        description: "blueprint inputs in the cluster"
+        uniqueItems: true
+        items:
+          $ref: "#/definitions/BlueprintInput"
+      blueprintCustomProperties:
+        type: "string"
+        description: "blueprint custom properties"
+      customContainer:
+        description: "custom containers"
+        $ref: "#/definitions/CustomContainerRequest"
+      customQueue:
+        type: "string"
+        description: "custom queue for yarn orchestrator"
+      executorType:
+        type: "string"
+        description: "executor type of cluster"
+        enum:
+        - "CONTAINER"
+        - "DEFAULT"
+      connectedCluster:
+        description: "cluster can connect to a datalake you can define the parameters\
+          \ here"
+        $ref: "#/definitions/ConnectedClusterRequest"
   RDSConfig:
     type: "object"
     required:
@@ -6720,135 +7106,6 @@ definitions:
         description: "default regions"
         additionalProperties:
           type: "string"
-  ClusterRequest:
-    type: "object"
-    required:
-    - "name"
-    - "password"
-    - "userName"
-    properties:
-      name:
-        type: "string"
-        description: "name of the resource"
-        minLength: 5
-        maxLength: 40
-        pattern: "([a-z][-a-z0-9]*[a-z0-9])"
-      blueprintId:
-        type: "integer"
-        format: "int64"
-        description: "blueprint id for the cluster"
-      blueprintName:
-        type: "string"
-        description: "blueprint name for the cluster"
-      blueprint:
-        description: "blueprint for the cluster"
-        $ref: "#/definitions/BlueprintRequest"
-      description:
-        type: "string"
-        description: "description of the resource"
-        minLength: 0
-        maxLength: 1000
-      hostGroups:
-        type: "array"
-        description: "collection of hostgroups"
-        uniqueItems: true
-        items:
-          $ref: "#/definitions/HostGroupRequest"
-      emailNeeded:
-        type: "boolean"
-        description: "send email about the result of the cluster installation"
-        default: false
-      emailTo:
-        type: "string"
-        description: "send email to the requested address"
-      gateway:
-        $ref: "#/definitions/GatewayJson"
-      enableSecurity:
-        type: "boolean"
-        description: "enable Kerberos security"
-        default: false
-      userName:
-        type: "string"
-        description: "ambari username"
-        minLength: 5
-        maxLength: 15
-        pattern: "([a-z][-a-z0-9]*[a-z0-9])"
-      password:
-        type: "string"
-        description: "ambari password"
-        minLength: 5
-        maxLength: 100
-      kerberos:
-        $ref: "#/definitions/KerberosRequest"
-      ldapConfigId:
-        type: "integer"
-        format: "int64"
-        description: "LDAP config id for the cluster"
-      ldapConfig:
-        description: "LDAP config for the cluster"
-        $ref: "#/definitions/LdapConfigRequest"
-      validateBlueprint:
-        type: "boolean"
-        description: "validate blueprint"
-        default: false
-      ambariStackDetails:
-        description: "details of the Ambari stack"
-        $ref: "#/definitions/AmbariStackDetails"
-      ambariRepoDetailsJson:
-        description: "details of the Ambari package repository"
-        $ref: "#/definitions/AmbariRepoDetails"
-      rdsConfigIds:
-        type: "array"
-        description: "RDS configuration ids for the cluster"
-        uniqueItems: true
-        items:
-          type: "integer"
-          format: "int64"
-      ambariDatabaseDetails:
-        description: "details of the external Ambari database"
-        $ref: "#/definitions/AmbariDatabaseDetails"
-      rdsConfigJsons:
-        type: "array"
-        description: "details of the external database for Hadoop components"
-        uniqueItems: true
-        items:
-          $ref: "#/definitions/RDSConfig"
-      fileSystem:
-        description: "external file system configuration"
-        $ref: "#/definitions/FileSystem"
-      configStrategy:
-        type: "string"
-        description: "config recommendation strategy"
-        enum:
-        - "NEVER_APPLY"
-        - "ONLY_STACK_DEFAULTS_APPLY"
-        - "ALWAYS_APPLY"
-        - "ALWAYS_APPLY_DONT_OVERRIDE_CUSTOM_VALUES"
-      blueprintInputs:
-        type: "array"
-        description: "blueprint inputs in the cluster"
-        uniqueItems: true
-        items:
-          $ref: "#/definitions/BlueprintInput"
-      blueprintCustomProperties:
-        type: "string"
-        description: "blueprint custom properties"
-      customContainer:
-        description: "custom containers"
-        $ref: "#/definitions/CustomContainerRequest"
-      customQueue:
-        type: "string"
-        description: "custom queue for yarn orchestrator"
-      executorType:
-        type: "string"
-        description: "executor type of cluster"
-        enum:
-        - "CONTAINER"
-        - "DEFAULT"
-      connectedCluster:
-        description: "cluster can connect to a datalake you can define the parameters\
-          \ here"
-        $ref: "#/definitions/ConnectedClusterRequest"
   SecurityGroupResponse:
     type: "object"
     required:
@@ -6904,6 +7161,21 @@ definitions:
         additionalProperties:
           type: "object"
           properties: {}
+  StackRepoDetailsJson:
+    type: "object"
+    properties:
+      stack:
+        type: "object"
+        additionalProperties:
+          type: "string"
+      util:
+        type: "object"
+        additionalProperties:
+          type: "string"
+      knox:
+        type: "object"
+        additionalProperties:
+          type: "string"
   OrchestratorResponse:
     type: "object"
     required:
@@ -6921,21 +7193,6 @@ definitions:
       type:
         type: "string"
         description: "type of the orchestrator"
-  StackRepoDetailsJson:
-    type: "object"
-    properties:
-      stack:
-        type: "object"
-        additionalProperties:
-          type: "string"
-      util:
-        type: "object"
-        additionalProperties:
-          type: "string"
-      knox:
-        type: "object"
-        additionalProperties:
-          type: "string"
   HardwareInfoResponse:
     type: "object"
     properties:
@@ -6970,6 +7227,31 @@ definitions:
       blueprintName:
         type: "string"
         description: "blueprint name for the cluster"
+      kerberosPassword:
+        type: "string"
+        description: "kerberos admin password"
+        minLength: 5
+        maxLength: 50
+      kerberosPrincipal:
+        type: "string"
+        description: "kerberos principal"
+  UpdateImageCatalogRequest:
+    type: "object"
+    required:
+    - "id"
+    - "name"
+    - "url"
+    properties:
+      name:
+        type: "string"
+        description: "name of the resource"
+      url:
+        type: "string"
+        description: "custom image catalog's URL"
+      id:
+        type: "integer"
+        format: "int64"
+        description: "id of the resource"
   OrchestratorRequest:
     type: "object"
     required:
@@ -7117,7 +7399,6 @@ definitions:
     type: "object"
     required:
     - "cloudPlatform"
-    - "instanceType"
     - "name"
     properties:
       cloudPlatform:
@@ -7140,6 +7421,9 @@ definitions:
       instanceType:
         type: "string"
         description: "type of the instance"
+      customInstanceType:
+        description: "custom instancetype definition"
+        $ref: "#/definitions/CustomInstanceType"
       topologyId:
         type: "integer"
         format: "int64"
@@ -7265,6 +7549,15 @@ definitions:
         type: "string"
       repo:
         $ref: "#/definitions/StackRepoDetailsJson"
+  CustomInstanceType:
+    type: "object"
+    properties:
+      memory:
+        type: "integer"
+        format: "int32"
+      cpus:
+        type: "integer"
+        format: "int32"
   StackRequest:
     type: "object"
     required:
@@ -7397,10 +7690,6 @@ definitions:
     type: "object"
     required:
     - "stack"
-    - "stackBaseURL"
-    - "stackRepoId"
-    - "utilsBaseURL"
-    - "utilsRepoId"
     - "verify"
     - "version"
     properties:
@@ -7429,6 +7718,13 @@ definitions:
         type: "boolean"
         description: "whether to verify or not the repo url"
         default: false
+      repositoryVersion:
+        type: "string"
+        description: "version of the repository for VDF file creation in Ambari"
+      versionDefinitionFileUrl:
+        type: "string"
+        description: "local path on the Ambari server or URL that point to the desired\
+          \ VDF file"
   FlexUsageControllerJson:
     type: "object"
     properties:
@@ -7468,6 +7764,16 @@ definitions:
         type: "integer"
         format: "int32"
         description: "scaling adjustment of the instance groups"
+  RdsBuildResult:
+    type: "object"
+    required:
+    - "results"
+    properties:
+      results:
+        type: "object"
+        description: "name of the created dbs"
+        additionalProperties:
+          type: "string"
   RecommendationRequestJson:
     type: "object"
     properties:
@@ -7499,16 +7805,6 @@ definitions:
         type: "integer"
         format: "int64"
         description: "id that could indentify an existing blueprint"
-  RdsBuildResult:
-    type: "object"
-    required:
-    - "results"
-    properties:
-      results:
-        type: "object"
-        description: "name of the created dbs"
-        additionalProperties:
-          type: "string"
   CustomContainerResponse:
     type: "object"
     properties:
@@ -7556,15 +7852,6 @@ definitions:
         description: "resource is visible in account"
         readOnly: true
         default: false
-  DiskResponse:
-    type: "object"
-    properties:
-      type:
-        type: "string"
-      name:
-        type: "string"
-      displayName:
-        type: "string"
   RDSBuildRequest:
     type: "object"
     required:
@@ -7577,6 +7864,15 @@ definitions:
       clusterName:
         type: "string"
         description: "requested cluster name"
+  DiskResponse:
+    type: "object"
+    properties:
+      type:
+        type: "string"
+      name:
+        type: "string"
+      displayName:
+        type: "string"
   Id:
     type: "object"
     required:
@@ -7769,22 +8065,6 @@ definitions:
         type: "boolean"
         description: "flag for making the rule modifiable"
         default: false
-  AmbariRepoDetails:
-    type: "object"
-    required:
-    - "baseUrl"
-    - "gpgKeyUrl"
-    - "version"
-    properties:
-      version:
-        type: "string"
-        description: "version of the Ambari"
-      baseUrl:
-        type: "string"
-        description: "url of the Ambari repository"
-      gpgKeyUrl:
-        type: "string"
-        description: "gpg key of the Ambari repository"
   TopologyRequest:
     type: "object"
     required:
@@ -7810,6 +8090,22 @@ definitions:
         description: "topology mapping"
         additionalProperties:
           type: "string"
+  AmbariRepoDetails:
+    type: "object"
+    required:
+    - "baseUrl"
+    - "gpgKeyUrl"
+    - "version"
+    properties:
+      version:
+        type: "string"
+        description: "version of the Ambari"
+      baseUrl:
+        type: "string"
+        description: "url of the Ambari repository"
+      gpgKeyUrl:
+        type: "string"
+        description: "gpg key of the Ambari repository"
   CloudGatewayJson:
     type: "object"
     properties:
@@ -7842,6 +8138,8 @@ definitions:
         type: "string"
       os:
         type: "string"
+      osType:
+        type: "string"
       uuid:
         type: "string"
       version:
@@ -7862,7 +8160,6 @@ definitions:
     type: "object"
     required:
     - "cloudPlatform"
-    - "instanceType"
     - "name"
     - "volumeCount"
     - "volumeSize"
@@ -7887,6 +8184,9 @@ definitions:
       instanceType:
         type: "string"
         description: "type of the instance"
+      customInstanceType:
+        description: "custom instancetype definition"
+        $ref: "#/definitions/CustomInstanceType"
       topologyId:
         type: "integer"
         format: "int64"
@@ -7910,6 +8210,19 @@ definitions:
         type: "boolean"
         description: "resource is visible in account"
         default: false
+  UserProfileRequest:
+    type: "object"
+    properties:
+      credentialName:
+        type: "string"
+      credentialId:
+        type: "integer"
+        format: "int64"
+      uiProperties:
+        type: "object"
+        additionalProperties:
+          type: "object"
+          properties: {}
   AmbariDatabaseDetails:
     type: "object"
     required:
@@ -7951,19 +8264,21 @@ definitions:
         type: "string"
         description: "password for the Ambari database"
         pattern: "^[^']+$"
-  UserProfileRequest:
+  ImagesResponse:
     type: "object"
     properties:
-      credentialName:
-        type: "string"
-      credentialId:
-        type: "integer"
-        format: "int64"
-      uiProperties:
-        type: "object"
-        additionalProperties:
-          type: "object"
-          properties: {}
+      baseImages:
+        type: "array"
+        items:
+          $ref: "#/definitions/BaseImageResponse"
+      hdpImages:
+        type: "array"
+        items:
+          $ref: "#/definitions/ImageResponse"
+      hdfImages:
+        type: "array"
+        items:
+          $ref: "#/definitions/ImageResponse"
   ClusterV2Request:
     type: "object"
     properties:
@@ -7974,10 +8289,9 @@ definitions:
       emailTo:
         type: "string"
         description: "send email to the requested address"
-      ldapConfigId:
-        type: "integer"
-        format: "int64"
-        description: "LDAP config id for the cluster"
+      ldapConfigName:
+        type: "string"
+        description: "LDAP config name for the cluster"
       rdsConfigIds:
         type: "array"
         description: "RDS configuration ids for the cluster"
@@ -8006,21 +8320,6 @@ definitions:
       byosRequest:
         description: "byos specific requests for cluster"
         $ref: "#/definitions/ByosV2Request"
-  ImagesResponse:
-    type: "object"
-    properties:
-      baseImages:
-        type: "array"
-        items:
-          $ref: "#/definitions/BaseImageResponse"
-      hdpImages:
-        type: "array"
-        items:
-          $ref: "#/definitions/ImageResponse"
-      hdfImages:
-        type: "array"
-        items:
-          $ref: "#/definitions/ImageResponse"
   GatewayJson:
     type: "object"
     properties:
@@ -8197,7 +8496,7 @@ definitions:
         $ref: "#/definitions/CustomContainerResponse"
       ambariStackDetails:
         description: "details of the Ambari stack"
-        $ref: "#/definitions/AmbariStackDetails"
+        $ref: "#/definitions/AmbariStackDetailsResponse"
       ambariRepoDetailsJson:
         description: "details of the Ambari package repository"
         $ref: "#/definitions/AmbariRepoDetails"
@@ -8346,7 +8645,7 @@ definitions:
         $ref: "#/definitions/CustomContainerResponse"
       ambariStackDetails:
         description: "details of the Ambari stack"
-        $ref: "#/definitions/AmbariStackDetails"
+        $ref: "#/definitions/AmbariStackDetailsResponse"
       ambariRepoDetailsJson:
         description: "details of the Ambari package repository"
         $ref: "#/definitions/AmbariRepoDetails"
@@ -8356,13 +8655,6 @@ definitions:
       customQueue:
         type: "string"
         description: "custom queue for yarn orchestrator"
-  VmTypeJson:
-    type: "object"
-    properties:
-      value:
-        type: "string"
-      vmTypeMetaJson:
-        $ref: "#/definitions/VmTypeMetaJson"
   RdsConfigProperty:
     type: "object"
     properties:
@@ -8370,6 +8662,13 @@ definitions:
         type: "string"
       value:
         type: "string"
+  VmTypeJson:
+    type: "object"
+    properties:
+      value:
+        type: "string"
+      vmTypeMetaJson:
+        $ref: "#/definitions/VmTypeMetaJson"
   PlatformOrchestratorsJson:
     type: "object"
     properties:
@@ -8422,15 +8721,6 @@ definitions:
         uniqueItems: true
         items:
           $ref: "#/definitions/DiskResponse"
-  ByosV2Request:
-    type: "object"
-    properties:
-      customContainer:
-        description: "custom containers"
-        $ref: "#/definitions/CustomContainerRequest"
-      customQueue:
-        type: "string"
-        description: "custom queue for yarn orchestrator"
   BlueprintRequest:
     type: "object"
     required:
@@ -8468,14 +8758,28 @@ definitions:
             type: "object"
             additionalProperties:
               type: "string"
-  AmbariAddress:
+  ByosV2Request:
     type: "object"
-    required:
-    - "ambariAddress"
     properties:
-      ambariAddress:
+      customContainer:
+        description: "custom containers"
+        $ref: "#/definitions/CustomContainerRequest"
+      customQueue:
         type: "string"
-        description: "ambari server address"
+        description: "custom queue for yarn orchestrator"
+  SecurityRulesResponse:
+    type: "object"
+    properties:
+      core:
+        type: "array"
+        description: "security rules for core type"
+        items:
+          $ref: "#/definitions/SecurityRuleResponse"
+      gateway:
+        type: "array"
+        description: "security rules for gateway type"
+        items:
+          $ref: "#/definitions/SecurityRuleResponse"
   NetworkV2Request:
     type: "object"
     properties:
@@ -8488,6 +8792,14 @@ definitions:
         additionalProperties:
           type: "object"
           properties: {}
+  AmbariAddress:
+    type: "object"
+    required:
+    - "ambariAddress"
+    properties:
+      ambariAddress:
+        type: "string"
+        description: "ambari server address"
   AmbariV2Request:
     type: "object"
     required:
@@ -8554,6 +8866,26 @@ definitions:
         description: "cluster can connect to a datalake you can define the parameters\
           \ here"
         $ref: "#/definitions/ConnectedClusterRequest"
+  AmbariStackDetailsResponse:
+    type: "object"
+    properties:
+      stack:
+        type: "object"
+        additionalProperties:
+          type: "string"
+      util:
+        type: "object"
+        additionalProperties:
+          type: "string"
+      knox:
+        type: "object"
+        additionalProperties:
+          type: "string"
+      verify:
+        type: "boolean"
+        default: false
+      hdpVersion:
+        type: "string"
   Constraint:
     type: "object"
     required:
@@ -8632,21 +8964,6 @@ definitions:
       instanceGroupAdjustment:
         description: "instance group adjustment"
         $ref: "#/definitions/InstanceGroupAdjustment"
-  PlatformVariantsJson:
-    type: "object"
-    properties:
-      platformToVariants:
-        type: "object"
-        description: "platform variants"
-        additionalProperties:
-          type: "array"
-          items:
-            type: "string"
-      defaultVariants:
-        type: "object"
-        description: "default variants"
-        additionalProperties:
-          type: "string"
   HostGroupAdjustment:
     type: "object"
     required:
@@ -8668,6 +8985,36 @@ definitions:
         type: "boolean"
         description: "validate node count during downscale"
         default: false
+  PlatformVariantsJson:
+    type: "object"
+    properties:
+      platformToVariants:
+        type: "object"
+        description: "platform variants"
+        additionalProperties:
+          type: "array"
+          items:
+            type: "string"
+      defaultVariants:
+        type: "object"
+        description: "default variants"
+        additionalProperties:
+          type: "string"
+  SpecialParametersJson:
+    type: "object"
+    properties:
+      specialParameters:
+        type: "object"
+        description: "custom parameters"
+        additionalProperties:
+          type: "boolean"
+      platformSpecificSpecialParameters:
+        type: "object"
+        description: "platform specific custom parameters"
+        additionalProperties:
+          type: "object"
+          additionalProperties:
+            type: "boolean"
   OperationDetails:
     type: "object"
     properties:
@@ -8739,8 +9086,6 @@ definitions:
           type: "string"
   TemplateV2Request:
     type: "object"
-    required:
-    - "instanceType"
     properties:
       volumeCount:
         type: "integer"
@@ -8762,18 +9107,9 @@ definitions:
       instanceType:
         type: "string"
         description: "type of the instance"
-  StackAuthenticationResponse:
-    type: "object"
-    properties:
-      publicKey:
-        type: "string"
-        description: "public key for accessing instances"
-      publicKeyId:
-        type: "string"
-        description: "public key id for accessing instances"
-      loginUserName:
-        type: "string"
-        description: "authentication name for machines"
+      customInstanceType:
+        description: "custom instancetype definition"
+        $ref: "#/definitions/CustomInstanceType"
   TopologyResponse:
     type: "object"
     required:
@@ -8803,6 +9139,18 @@ definitions:
         type: "integer"
         format: "int64"
         description: "id of the resource"
+  StackAuthenticationResponse:
+    type: "object"
+    properties:
+      publicKey:
+        type: "string"
+        description: "public key for accessing instances"
+      publicKeyId:
+        type: "string"
+        description: "public key id for accessing instances"
+      loginUserName:
+        type: "string"
+        description: "authentication name for machines"
   PlatformVmtypesResponse:
     type: "object"
     properties:
@@ -8848,6 +9196,18 @@ definitions:
         - "EXACT"
         - "PERCENTAGE"
         - "BEST_EFFORT"
+  ImageCatalogRequest:
+    type: "object"
+    required:
+    - "name"
+    - "url"
+    properties:
+      name:
+        type: "string"
+        description: "name of the resource"
+      url:
+        type: "string"
+        description: "custom image catalog's URL"
   RegionResponse:
     type: "object"
     properties:
@@ -8895,6 +9255,9 @@ definitions:
         type: "integer"
         format: "int64"
         description: "blueprint id for the cluster"
+      blueprintName:
+        type: "string"
+        description: "blueprint name for the cluster"
       blueprint:
         description: "blueprint for the cluster"
         $ref: "#/definitions/BlueprintRequest"
@@ -9040,6 +9403,8 @@ definitions:
         type: "string"
       os:
         type: "string"
+      osType:
+        type: "string"
       uuid:
         type: "string"
       version:
@@ -9056,30 +9421,6 @@ definitions:
             type: "string"
       stackDetails:
         $ref: "#/definitions/StackDetailsJson"
-  PlatformResourceRequestJson:
-    type: "object"
-    properties:
-      credentialId:
-        type: "integer"
-        format: "int64"
-        description: "credential resource id for the request"
-      credentialName:
-        type: "string"
-        description: "credential resource name for the request"
-      region:
-        type: "string"
-        description: "Related region"
-      platformVariant:
-        type: "string"
-        description: "cloud provider api variant"
-      filters:
-        type: "object"
-        description: "filter for resources"
-        additionalProperties:
-          type: "string"
-      availabilityZone:
-        type: "string"
-        description: "related availability zone"
   BlueprintResponse:
     type: "object"
     required:
@@ -9106,9 +9447,6 @@ definitions:
         type: "integer"
         format: "int64"
         description: "id of the resource"
-      blueprintName:
-        type: "string"
-        description: "gathered from blueprintName field from the blueprint JSON"
       hostGroupCount:
         type: "integer"
         format: "int32"
@@ -9124,6 +9462,30 @@ definitions:
         type: "boolean"
         description: "resource is visible in account"
         default: false
+  PlatformResourceRequestJson:
+    type: "object"
+    properties:
+      credentialId:
+        type: "integer"
+        format: "int64"
+        description: "credential resource id for the request"
+      credentialName:
+        type: "string"
+        description: "credential resource name for the request"
+      region:
+        type: "string"
+        description: "Related region"
+      platformVariant:
+        type: "string"
+        description: "cloud provider api variant"
+      filters:
+        type: "object"
+        description: "filter for resources"
+        additionalProperties:
+          type: "string"
+      availabilityZone:
+        type: "string"
+        description: "related availability zone"
   CredentialSourceRequest:
     type: "object"
     required:
@@ -9410,6 +9772,14 @@ definitions:
       ambariStackDetails:
         description: "details of the Ambari stack"
         $ref: "#/definitions/AmbariStackDetails"
+      kerberosPassword:
+        type: "string"
+        description: "kerberos admin password"
+        minLength: 5
+        maxLength: 50
+      kerberosPrincipal:
+        type: "string"
+        description: "kerberos principal"
   CredentialRequest:
     type: "object"
     required:
@@ -9685,6 +10055,28 @@ definitions:
       stackUuid:
         type: "string"
         description: "unique id of the cluster"
+  ImageCatalogResponse:
+    type: "object"
+    required:
+    - "id"
+    - "name"
+    - "publicInAccount"
+    - "url"
+    properties:
+      name:
+        type: "string"
+        description: "name of the resource"
+      url:
+        type: "string"
+        description: "custom image catalog's URL"
+      id:
+        type: "integer"
+        format: "int64"
+        description: "id of the resource"
+      publicInAccount:
+        type: "boolean"
+        description: "resource is visible in account"
+        default: false
   StackV2Request:
     type: "object"
     required:
@@ -9889,10 +10281,9 @@ definitions:
         type: "string"
         description: "type of recipe"
         enum:
-        - "LEGACY"
-        - "MIGRATED"
-        - "PRE"
-        - "POST"
+        - "PRE_AMBARI_START"
+        - "POST_AMBARI_START"
+        - "POST_CLUSTER_INSTALL"
       content:
         type: "string"
         description: "content of recipe"
@@ -10016,10 +10407,9 @@ definitions:
         type: "string"
         description: "type of recipe"
         enum:
-        - "LEGACY"
-        - "MIGRATED"
-        - "PRE"
-        - "POST"
+        - "PRE_AMBARI_START"
+        - "POST_AMBARI_START"
+        - "POST_CLUSTER_INSTALL"
       content:
         type: "string"
         description: "content of recipe"
@@ -10139,6 +10529,7 @@ definitions:
         type: "string"
       principal:
         type: "string"
+        description: "kerberos principal"
       ldapUrl:
         type: "string"
       containerDn:
@@ -10238,6 +10629,51 @@ definitions:
         description: "If true, the failed nodes will only be removed, otherwise the\
           \ failed nodes will be removed and new nodes will be started."
         default: false
+  AccountPreference:
+    type: "object"
+    required:
+    - "clusterTimeToLive"
+    - "userTimeToLive"
+    properties:
+      maxNumberOfClusters:
+        type: "integer"
+        format: "int64"
+        description: "max number of clusters in the account (0 when unlimited)"
+        minimum: 0.0
+      maxNumberOfNodesPerCluster:
+        type: "integer"
+        format: "int64"
+        description: "max number of vms in a cluster of account (0 when unlimited)"
+        minimum: 0.0
+      maxNumberOfClustersPerUser:
+        type: "integer"
+        format: "int64"
+        description: "max number of clusters for user within the account (0 when unlimited)"
+        minimum: 0.0
+      allowedInstanceTypes:
+        type: "array"
+        description: "allowed instance types in the account (empty list for no restriction)"
+        items:
+          type: "string"
+      clusterTimeToLive:
+        type: "integer"
+        format: "int64"
+        description: "lifecycle of the cluster in hours (0 for immortal clusters)"
+        minimum: 0.0
+      userTimeToLive:
+        type: "integer"
+        format: "int64"
+        description: "lifecycle of the account and its clusters in hours (0 for immortal\
+          \ account)"
+        minimum: 0.0
+      platforms:
+        type: "string"
+        description: "list of the cloudplatforms visible on the UI"
+      defaultTags:
+        type: "object"
+        description: "default tags for the resources created"
+        additionalProperties:
+          type: "string"
   StackResponse:
     type: "object"
     required:
@@ -10414,48 +10850,3 @@ definitions:
         type: "boolean"
         description: "resource is visible in account"
         default: false
-  AccountPreference:
-    type: "object"
-    required:
-    - "clusterTimeToLive"
-    - "userTimeToLive"
-    properties:
-      maxNumberOfClusters:
-        type: "integer"
-        format: "int64"
-        description: "max number of clusters in the account (0 when unlimited)"
-        minimum: 0.0
-      maxNumberOfNodesPerCluster:
-        type: "integer"
-        format: "int64"
-        description: "max number of vms in a cluster of account (0 when unlimited)"
-        minimum: 0.0
-      maxNumberOfClustersPerUser:
-        type: "integer"
-        format: "int64"
-        description: "max number of clusters for user within the account (0 when unlimited)"
-        minimum: 0.0
-      allowedInstanceTypes:
-        type: "array"
-        description: "allowed instance types in the account (empty list for no restriction)"
-        items:
-          type: "string"
-      clusterTimeToLive:
-        type: "integer"
-        format: "int64"
-        description: "lifecycle of the cluster in hours (0 for immortal clusters)"
-        minimum: 0.0
-      userTimeToLive:
-        type: "integer"
-        format: "int64"
-        description: "lifecycle of the account and its clusters in hours (0 for immortal\
-          \ account)"
-        minimum: 0.0
-      platforms:
-        type: "string"
-        description: "list of the cloudplatforms visible on the UI"
-      defaultTags:
-        type: "object"
-        description: "default tags for the resources created"
-        additionalProperties:
-          type: "string"
