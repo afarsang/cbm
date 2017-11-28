@@ -16,7 +16,7 @@ info:
     >http://hortonworks.com/apache/cloudbreak/</a>"
   version: "2.2.0-dev.79"
   title: "Cloudbreak API"
-basePath: "/api"
+basePath: "/cb/api"
 tags:
 - name: "v1ldap"
 - name: "v1topologies"
