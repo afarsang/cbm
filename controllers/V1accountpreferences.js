@@ -12,6 +12,10 @@ module.exports.isPlatformSelectionDisabled = function isPlatformSelectionDisable
   V1accountpreferences.isPlatformSelectionDisabled(req.swagger.params, res, next);
 };
 
+module.exports.platformEnablement = function platformEnablement (req, res, next) {
+  V1accountpreferences.platformEnablement(req.swagger.params, res, next);
+};
+
 module.exports.postAccountPreferencesEndpoint = function postAccountPreferencesEndpoint (req, res, next) {
   V1accountpreferences.postAccountPreferencesEndpoint(req.swagger.params, res, next);
 };
