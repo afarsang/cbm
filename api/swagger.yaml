@@ -14,37 +14,37 @@ info:
     \ Ambari, Docker lightweight containers, Swarm and Consul.\nFor further product\
     \ documentation follow the link: <a href=\"http://hortonworks.com/apache/cloudbreak/\"\
     >http://hortonworks.com/apache/cloudbreak/</a>"
-  version: "2.2.0-dev.79"
+  version: "2.2.0-dev.127"
   title: "Cloudbreak API"
-basePath: "/cb/api"
+basePath: "/api"
 tags:
-- name: "v1ldap"
-- name: "v1topologies"
-- name: "v1events"
-- name: "v1accountpreferences"
 - name: "v1credentials"
-- name: "v1usages"
-- name: "v1users"
-- name: "cluster"
-- name: "v1constraints"
-- name: "v1blueprints"
 - name: "v1templates"
 - name: "v1recipes"
-- name: "v1imagecatalogs"
-- name: "v1networks"
-- name: "v1smartsensesubscriptions"
-- name: "v1securityrules"
-- name: "v2connectors"
-- name: "v2stacks"
-- name: "v1securitygroups"
-- name: "v1stacks"
-- name: "v1clustertemplates"
-- name: "v1flexsubscriptions"
-- name: "v1util"
-- name: "v1rdsconfigs"
 - name: "v1subscriptions"
-- name: "v1connectors"
+- name: "v1clustertemplates"
+- name: "v1util"
+- name: "v1events"
 - name: "v1settings"
+- name: "cluster"
+- name: "v1securitygroups"
+- name: "v2stacks"
+- name: "v1securityrules"
+- name: "v1ldap"
+- name: "v1smartsensesubscriptions"
+- name: "v1usages"
+- name: "v1topologies"
+- name: "v1connectors"
+- name: "v2connectors"
+- name: "v1networks"
+- name: "v1users"
+- name: "v1flexsubscriptions"
+- name: "v1rdsconfigs"
+- name: "v1accountpreferences"
+- name: "v1stacks"
+- name: "v1blueprints"
+- name: "v1constraints"
+- name: "v1imagecatalogs"
 schemes:
 - "http"
 - "https"
@@ -6895,6 +6895,54 @@ definitions:
         enum:
         - "MANUAL"
         - "AUTO"
+  RDSConfig:
+    type: "object"
+    required:
+    - "connectionPassword"
+    - "connectionURL"
+    - "connectionUserName"
+    - "databaseType"
+    - "hdpVersion"
+    - "name"
+    properties:
+      connectionURL:
+        type: "string"
+        description: "JDBC connection URL in the form of jdbc:<db-type>://<address>:<port>/<db>"
+        pattern: "^jdbc:postgresql://[-\\w\\.]*:\\d{1,5}/?\\w*"
+      databaseType:
+        type: "string"
+        description: "Type of the external database (allowed values: MYSQL, POSTGRES)"
+        enum:
+        - "POSTGRES"
+      hdpVersion:
+        type: "string"
+        description: "HDP version for the RDS configuration"
+      validated:
+        type: "boolean"
+        description: "If true, then the RDS configuration will be validated"
+        default: false
+      type:
+        type: "string"
+        description: "Type of rds (HIVE or RANGER)"
+        enum:
+        - "HIVE"
+        - "RANGER"
+        - "DRUID"
+      properties:
+        type: "array"
+        description: "custom properties for rds connection"
+        uniqueItems: true
+        items:
+          $ref: "#/definitions/RdsConfigProperty"
+      name:
+        type: "string"
+        description: "Name of the RDS configuration resource"
+      connectionUserName:
+        type: "string"
+        description: "Username to use for the jdbc connection"
+      connectionPassword:
+        type: "string"
+        description: "Password to use for the jdbc connection"
   ClusterRequest:
     type: "object"
     required:
@@ -7027,54 +7075,6 @@ definitions:
         description: "cluster can connect to a datalake you can define the parameters\
           \ here"
         $ref: "#/definitions/ConnectedClusterRequest"
-  RDSConfig:
-    type: "object"
-    required:
-    - "connectionPassword"
-    - "connectionURL"
-    - "connectionUserName"
-    - "databaseType"
-    - "hdpVersion"
-    - "name"
-    properties:
-      connectionURL:
-        type: "string"
-        description: "JDBC connection URL in the form of jdbc:<db-type>://<address>:<port>/<db>"
-        pattern: "^jdbc:postgresql://[-\\w\\.]*:\\d{1,5}/?\\w*"
-      databaseType:
-        type: "string"
-        description: "Type of the external database (allowed values: MYSQL, POSTGRES)"
-        enum:
-        - "POSTGRES"
-      hdpVersion:
-        type: "string"
-        description: "HDP version for the RDS configuration"
-      validated:
-        type: "boolean"
-        description: "If true, then the RDS configuration will be validated"
-        default: false
-      type:
-        type: "string"
-        description: "Type of rds (HIVE or RANGER)"
-        enum:
-        - "HIVE"
-        - "RANGER"
-        - "DRUID"
-      properties:
-        type: "array"
-        description: "custom properties for rds connection"
-        uniqueItems: true
-        items:
-          $ref: "#/definitions/RdsConfigProperty"
-      name:
-        type: "string"
-        description: "Name of the RDS configuration resource"
-      connectionUserName:
-        type: "string"
-        description: "Username to use for the jdbc connection"
-      connectionPassword:
-        type: "string"
-        description: "Password to use for the jdbc connection"
   PlatformRegionsJson:
     type: "object"
     properties:
@@ -7161,21 +7161,6 @@ definitions:
         additionalProperties:
           type: "object"
           properties: {}
-  StackRepoDetailsJson:
-    type: "object"
-    properties:
-      stack:
-        type: "object"
-        additionalProperties:
-          type: "string"
-      util:
-        type: "object"
-        additionalProperties:
-          type: "string"
-      knox:
-        type: "object"
-        additionalProperties:
-          type: "string"
   OrchestratorResponse:
     type: "object"
     required:
@@ -7193,6 +7178,21 @@ definitions:
       type:
         type: "string"
         description: "type of the orchestrator"
+  StackRepoDetailsJson:
+    type: "object"
+    properties:
+      stack:
+        type: "object"
+        additionalProperties:
+          type: "string"
+      util:
+        type: "object"
+        additionalProperties:
+          type: "string"
+      knox:
+        type: "object"
+        additionalProperties:
+          type: "string"
   HardwareInfoResponse:
     type: "object"
     properties:
@@ -7235,23 +7235,6 @@ definitions:
       kerberosPrincipal:
         type: "string"
         description: "kerberos principal"
-  UpdateImageCatalogRequest:
-    type: "object"
-    required:
-    - "id"
-    - "name"
-    - "url"
-    properties:
-      name:
-        type: "string"
-        description: "name of the resource"
-      url:
-        type: "string"
-        description: "custom image catalog's URL"
-      id:
-        type: "integer"
-        format: "int64"
-        description: "id of the resource"
   OrchestratorRequest:
     type: "object"
     required:
@@ -7269,6 +7252,26 @@ definitions:
       type:
         type: "string"
         description: "type of the orchestrator"
+  UpdateImageCatalogRequest:
+    type: "object"
+    required:
+    - "id"
+    - "name"
+    - "url"
+    properties:
+      name:
+        type: "string"
+        description: "name of the resource"
+        minLength: 5
+        maxLength: 100
+        pattern: "([a-z][-a-z0-9]*[a-z0-9])"
+      url:
+        type: "string"
+        description: "custom image catalog's URL"
+      id:
+        type: "integer"
+        format: "int64"
+        description: "id of the resource"
   AutoscaleStackResponse:
     type: "object"
     required:
@@ -7315,6 +7318,7 @@ definitions:
         - "UPDATE_FAILED"
         - "CREATE_FAILED"
         - "ENABLE_SECURITY_FAILED"
+        - "PRE_DELETE_IN_PROGRESS"
         - "DELETE_IN_PROGRESS"
         - "DELETE_FAILED"
         - "DELETE_COMPLETED"
@@ -7338,6 +7342,7 @@ definitions:
         - "UPDATE_FAILED"
         - "CREATE_FAILED"
         - "ENABLE_SECURITY_FAILED"
+        - "PRE_DELETE_IN_PROGRESS"
         - "DELETE_IN_PROGRESS"
         - "DELETE_FAILED"
         - "DELETE_COMPLETED"
@@ -7501,6 +7506,7 @@ definitions:
         - "UPDATE_FAILED"
         - "CREATE_FAILED"
         - "ENABLE_SECURITY_FAILED"
+        - "PRE_DELETE_IN_PROGRESS"
         - "DELETE_IN_PROGRESS"
         - "DELETE_FAILED"
         - "DELETE_COMPLETED"
@@ -7531,6 +7537,7 @@ definitions:
         - "UPDATE_FAILED"
         - "CREATE_FAILED"
         - "ENABLE_SECURITY_FAILED"
+        - "PRE_DELETE_IN_PROGRESS"
         - "DELETE_IN_PROGRESS"
         - "DELETE_FAILED"
         - "DELETE_COMPLETED"
@@ -7725,6 +7732,9 @@ definitions:
         type: "string"
         description: "local path on the Ambari server or URL that point to the desired\
           \ VDF file"
+      mpackUrl:
+        type: "string"
+        description: "url the MPACK that needs to be installed before HDF installation"
   FlexUsageControllerJson:
     type: "object"
     properties:
@@ -7805,6 +7815,18 @@ definitions:
         type: "integer"
         format: "int64"
         description: "id that could indentify an existing blueprint"
+  RDSBuildRequest:
+    type: "object"
+    required:
+    - "clusterName"
+    - "rdsConfigRequest"
+    properties:
+      rdsConfigRequest:
+        description: "rds config request"
+        $ref: "#/definitions/RDSConfig"
+      clusterName:
+        type: "string"
+        description: "requested cluster name"
   CustomContainerResponse:
     type: "object"
     properties:
@@ -7852,18 +7874,6 @@ definitions:
         description: "resource is visible in account"
         readOnly: true
         default: false
-  RDSBuildRequest:
-    type: "object"
-    required:
-    - "clusterName"
-    - "rdsConfigRequest"
-    properties:
-      rdsConfigRequest:
-        description: "rds config request"
-        $ref: "#/definitions/RDSConfig"
-      clusterName:
-        type: "string"
-        description: "requested cluster name"
   DiskResponse:
     type: "object"
     properties:
@@ -7882,6 +7892,47 @@ definitions:
         type: "integer"
         format: "int64"
         description: "id of the resource"
+  HostGroupResponse:
+    type: "object"
+    required:
+    - "constraint"
+    - "name"
+    properties:
+      name:
+        type: "string"
+        description: "name of the resource"
+      constraint:
+        description: "instance group or resource constraint for a hostgroup"
+        $ref: "#/definitions/Constraint"
+      recipeIds:
+        type: "array"
+        description: "referenced recipe ids"
+        uniqueItems: true
+        items:
+          type: "integer"
+          format: "int64"
+      recoveryMode:
+        type: "string"
+        description: "recovery mode of the hostgroup's nodes"
+        enum:
+        - "MANUAL"
+        - "AUTO"
+      id:
+        type: "integer"
+        format: "int64"
+        description: "id of the resource"
+      recipes:
+        type: "array"
+        description: "referenced recipes"
+        uniqueItems: true
+        items:
+          $ref: "#/definitions/RecipeResponse"
+      metadata:
+        type: "array"
+        description: "metadata of hosts"
+        uniqueItems: true
+        items:
+          $ref: "#/definitions/HostMetadata"
   LdapConfigResponse:
     type: "object"
     required:
@@ -7943,6 +7994,9 @@ definitions:
       groupMemberAttribute:
         type: "string"
         description: "Group Member Attribute (defaults to member)"
+      ambariAdminGroup:
+        type: "string"
+        description: "LDAP group for Ambari administrators"
       name:
         type: "string"
         description: "name of the resource"
@@ -7954,47 +8008,6 @@ definitions:
         type: "boolean"
         description: "resource is visible in account"
         default: false
-  HostGroupResponse:
-    type: "object"
-    required:
-    - "constraint"
-    - "name"
-    properties:
-      name:
-        type: "string"
-        description: "name of the resource"
-      constraint:
-        description: "instance group or resource constraint for a hostgroup"
-        $ref: "#/definitions/Constraint"
-      recipeIds:
-        type: "array"
-        description: "referenced recipe ids"
-        uniqueItems: true
-        items:
-          type: "integer"
-          format: "int64"
-      recoveryMode:
-        type: "string"
-        description: "recovery mode of the hostgroup's nodes"
-        enum:
-        - "MANUAL"
-        - "AUTO"
-      id:
-        type: "integer"
-        format: "int64"
-        description: "id of the resource"
-      recipes:
-        type: "array"
-        description: "referenced recipes"
-        uniqueItems: true
-        items:
-          $ref: "#/definitions/RecipeResponse"
-      metadata:
-        type: "array"
-        description: "metadata of hosts"
-        uniqueItems: true
-        items:
-          $ref: "#/definitions/HostMetadata"
   HostMetadata:
     type: "object"
     required:
@@ -8065,6 +8078,22 @@ definitions:
         type: "boolean"
         description: "flag for making the rule modifiable"
         default: false
+  AmbariRepoDetails:
+    type: "object"
+    required:
+    - "baseUrl"
+    - "gpgKeyUrl"
+    - "version"
+    properties:
+      version:
+        type: "string"
+        description: "version of the Ambari"
+      baseUrl:
+        type: "string"
+        description: "url of the Ambari repository"
+      gpgKeyUrl:
+        type: "string"
+        description: "gpg key of the Ambari repository"
   TopologyRequest:
     type: "object"
     required:
@@ -8090,22 +8119,6 @@ definitions:
         description: "topology mapping"
         additionalProperties:
           type: "string"
-  AmbariRepoDetails:
-    type: "object"
-    required:
-    - "baseUrl"
-    - "gpgKeyUrl"
-    - "version"
-    properties:
-      version:
-        type: "string"
-        description: "version of the Ambari"
-      baseUrl:
-        type: "string"
-        description: "url of the Ambari repository"
-      gpgKeyUrl:
-        type: "string"
-        description: "gpg key of the Ambari repository"
   CloudGatewayJson:
     type: "object"
     properties:
@@ -8210,19 +8223,6 @@ definitions:
         type: "boolean"
         description: "resource is visible in account"
         default: false
-  UserProfileRequest:
-    type: "object"
-    properties:
-      credentialName:
-        type: "string"
-      credentialId:
-        type: "integer"
-        format: "int64"
-      uiProperties:
-        type: "object"
-        additionalProperties:
-          type: "object"
-          properties: {}
   AmbariDatabaseDetails:
     type: "object"
     required:
@@ -8264,21 +8264,19 @@ definitions:
         type: "string"
         description: "password for the Ambari database"
         pattern: "^[^']+$"
-  ImagesResponse:
+  UserProfileRequest:
     type: "object"
     properties:
-      baseImages:
-        type: "array"
-        items:
-          $ref: "#/definitions/BaseImageResponse"
-      hdpImages:
-        type: "array"
-        items:
-          $ref: "#/definitions/ImageResponse"
-      hdfImages:
-        type: "array"
-        items:
-          $ref: "#/definitions/ImageResponse"
+      credentialName:
+        type: "string"
+      credentialId:
+        type: "integer"
+        format: "int64"
+      uiProperties:
+        type: "object"
+        additionalProperties:
+          type: "object"
+          properties: {}
   ClusterV2Request:
     type: "object"
     properties:
@@ -8320,6 +8318,21 @@ definitions:
       byosRequest:
         description: "byos specific requests for cluster"
         $ref: "#/definitions/ByosV2Request"
+  ImagesResponse:
+    type: "object"
+    properties:
+      baseImages:
+        type: "array"
+        items:
+          $ref: "#/definitions/BaseImageResponse"
+      hdpImages:
+        type: "array"
+        items:
+          $ref: "#/definitions/ImageResponse"
+      hdfImages:
+        type: "array"
+        items:
+          $ref: "#/definitions/ImageResponse"
   GatewayJson:
     type: "object"
     properties:
@@ -8382,6 +8395,7 @@ definitions:
         - "UPDATE_FAILED"
         - "CREATE_FAILED"
         - "ENABLE_SECURITY_FAILED"
+        - "PRE_DELETE_IN_PROGRESS"
         - "DELETE_IN_PROGRESS"
         - "DELETE_FAILED"
         - "DELETE_COMPLETED"
@@ -8506,6 +8520,10 @@ definitions:
       customQueue:
         type: "string"
         description: "custom queue for yarn orchestrator"
+      creationFinished:
+        type: "integer"
+        format: "int64"
+        description: "Epoch time of cluster creation finish"
       password:
         type: "string"
         description: "ambari password"
@@ -8531,6 +8549,7 @@ definitions:
         - "UPDATE_FAILED"
         - "CREATE_FAILED"
         - "ENABLE_SECURITY_FAILED"
+        - "PRE_DELETE_IN_PROGRESS"
         - "DELETE_IN_PROGRESS"
         - "DELETE_FAILED"
         - "DELETE_COMPLETED"
@@ -8655,6 +8674,10 @@ definitions:
       customQueue:
         type: "string"
         description: "custom queue for yarn orchestrator"
+      creationFinished:
+        type: "integer"
+        format: "int64"
+        description: "Epoch time of cluster creation finish"
   RdsConfigProperty:
     type: "object"
     properties:
@@ -8767,6 +8790,26 @@ definitions:
       customQueue:
         type: "string"
         description: "custom queue for yarn orchestrator"
+  AmbariAddress:
+    type: "object"
+    required:
+    - "ambariAddress"
+    properties:
+      ambariAddress:
+        type: "string"
+        description: "ambari server address"
+  NetworkV2Request:
+    type: "object"
+    properties:
+      subnetCIDR:
+        type: "string"
+        description: "the subnet definition of the network in CIDR format"
+      parameters:
+        type: "object"
+        description: "provider specific parameters of the specified network"
+        additionalProperties:
+          type: "object"
+          properties: {}
   SecurityRulesResponse:
     type: "object"
     properties:
@@ -8780,26 +8823,6 @@ definitions:
         description: "security rules for gateway type"
         items:
           $ref: "#/definitions/SecurityRuleResponse"
-  NetworkV2Request:
-    type: "object"
-    properties:
-      subnetCIDR:
-        type: "string"
-        description: "the subnet definition of the network in CIDR format"
-      parameters:
-        type: "object"
-        description: "provider specific parameters of the specified network"
-        additionalProperties:
-          type: "object"
-          properties: {}
-  AmbariAddress:
-    type: "object"
-    required:
-    - "ambariAddress"
-    properties:
-      ambariAddress:
-        type: "string"
-        description: "ambari server address"
   AmbariV2Request:
     type: "object"
     required:
@@ -9110,6 +9133,18 @@ definitions:
       customInstanceType:
         description: "custom instancetype definition"
         $ref: "#/definitions/CustomInstanceType"
+  StackAuthenticationResponse:
+    type: "object"
+    properties:
+      publicKey:
+        type: "string"
+        description: "public key for accessing instances"
+      publicKeyId:
+        type: "string"
+        description: "public key id for accessing instances"
+      loginUserName:
+        type: "string"
+        description: "authentication name for machines"
   TopologyResponse:
     type: "object"
     required:
@@ -9139,18 +9174,6 @@ definitions:
         type: "integer"
         format: "int64"
         description: "id of the resource"
-  StackAuthenticationResponse:
-    type: "object"
-    properties:
-      publicKey:
-        type: "string"
-        description: "public key for accessing instances"
-      publicKeyId:
-        type: "string"
-        description: "public key id for accessing instances"
-      loginUserName:
-        type: "string"
-        description: "authentication name for machines"
   PlatformVmtypesResponse:
     type: "object"
     properties:
@@ -9205,6 +9228,9 @@ definitions:
       name:
         type: "string"
         description: "name of the resource"
+        minLength: 5
+        maxLength: 100
+        pattern: "([a-z][-a-z0-9]*[a-z0-9])"
       url:
         type: "string"
         description: "custom image catalog's URL"
@@ -9518,15 +9544,6 @@ definitions:
         type: "integer"
         format: "int32"
         description: "scaling adjustment of the instance groups"
-  FlexUsageComponentJson:
-    type: "object"
-    properties:
-      componentId:
-        type: "string"
-      instances:
-        type: "array"
-        items:
-          $ref: "#/definitions/FlexUsageComponentInstanceJson"
   RDSConfigResponse:
     type: "object"
     required:
@@ -9585,6 +9602,15 @@ definitions:
         uniqueItems: true
         items:
           type: "string"
+  FlexUsageComponentJson:
+    type: "object"
+    properties:
+      componentId:
+        type: "string"
+      instances:
+        type: "array"
+        items:
+          $ref: "#/definitions/FlexUsageComponentInstanceJson"
   instanceGroups:
     type: "object"
     required:
@@ -10066,6 +10092,9 @@ definitions:
       name:
         type: "string"
         description: "name of the resource"
+        minLength: 5
+        maxLength: 100
+        pattern: "([a-z][-a-z0-9]*[a-z0-9])"
       url:
         type: "string"
         description: "custom image catalog's URL"
@@ -10077,6 +10106,19 @@ definitions:
         type: "boolean"
         description: "resource is visible in account"
         default: false
+      default:
+        type: "boolean"
+        default: false
+  SubscriptionRequest:
+    type: "object"
+    required:
+    - "endpointUrl"
+    properties:
+      endpointUrl:
+        type: "string"
+        description: "url of the endpoint"
+        pattern: "^(https?:\\/\\/)((([\\da-z\\.-]+)\\.([a-z]{2,6}))|localhost|[1-9][0-9]{0,2}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3})(:[1-9][0-9]{1,4})?\\\
+          /([\\/\\w\\.-]*)\\/?$"
   StackV2Request:
     type: "object"
     required:
@@ -10178,16 +10220,6 @@ definitions:
       clusterRequest:
         description: "cluster request object on stack"
         $ref: "#/definitions/ClusterV2Request"
-  SubscriptionRequest:
-    type: "object"
-    required:
-    - "endpointUrl"
-    properties:
-      endpointUrl:
-        type: "string"
-        description: "url of the endpoint"
-        pattern: "^(https?:\\/\\/)((([\\da-z\\.-]+)\\.([a-z]{2,6}))|localhost|[1-9][0-9]{0,2}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3})(:[1-9][0-9]{1,4})?\\\
-          /([\\/\\w\\.-]*)\\/?$"
   ImageJson:
     type: "object"
     properties:
@@ -10282,6 +10314,7 @@ definitions:
         description: "type of recipe"
         enum:
         - "PRE_AMBARI_START"
+        - "PRE_TERMINATION"
         - "POST_AMBARI_START"
         - "POST_CLUSTER_INSTALL"
       content:
@@ -10378,15 +10411,6 @@ definitions:
         items:
           type: "string"
           format: "byte"
-  FlexUsageProductJson:
-    type: "object"
-    properties:
-      productId:
-        type: "string"
-      components:
-        type: "array"
-        items:
-          $ref: "#/definitions/FlexUsageComponentJson"
   RecipeRequest:
     type: "object"
     required:
@@ -10408,6 +10432,7 @@ definitions:
         description: "type of recipe"
         enum:
         - "PRE_AMBARI_START"
+        - "PRE_TERMINATION"
         - "POST_AMBARI_START"
         - "POST_CLUSTER_INSTALL"
       content:
@@ -10416,6 +10441,15 @@ definitions:
       uri:
         type: "string"
         description: "recipe uri"
+  FlexUsageProductJson:
+    type: "object"
+    properties:
+      productId:
+        type: "string"
+      components:
+        type: "array"
+        items:
+          $ref: "#/definitions/FlexUsageComponentJson"
   FlexUsageComponentInstanceJson:
     type: "object"
     properties:
@@ -10537,6 +10571,13 @@ definitions:
       tcpAllowed:
         type: "boolean"
         default: false
+  BlueprintInput:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      propertyValue:
+        type: "string"
   LdapConfigRequest:
     type: "object"
     required:
@@ -10599,6 +10640,9 @@ definitions:
       groupMemberAttribute:
         type: "string"
         description: "Group Member Attribute (defaults to member)"
+      ambariAdminGroup:
+        type: "string"
+        description: "LDAP group for Ambari administrators"
       name:
         type: "string"
         description: "name of the resource"
@@ -10607,13 +10651,6 @@ definitions:
       bindPassword:
         type: "string"
         description: "password for the provided bind DN"
-  BlueprintInput:
-    type: "object"
-    properties:
-      name:
-        type: "string"
-      propertyValue:
-        type: "string"
   ClusterRepairRequest:
     type: "object"
     required:
@@ -10629,51 +10666,6 @@ definitions:
         description: "If true, the failed nodes will only be removed, otherwise the\
           \ failed nodes will be removed and new nodes will be started."
         default: false
-  AccountPreference:
-    type: "object"
-    required:
-    - "clusterTimeToLive"
-    - "userTimeToLive"
-    properties:
-      maxNumberOfClusters:
-        type: "integer"
-        format: "int64"
-        description: "max number of clusters in the account (0 when unlimited)"
-        minimum: 0.0
-      maxNumberOfNodesPerCluster:
-        type: "integer"
-        format: "int64"
-        description: "max number of vms in a cluster of account (0 when unlimited)"
-        minimum: 0.0
-      maxNumberOfClustersPerUser:
-        type: "integer"
-        format: "int64"
-        description: "max number of clusters for user within the account (0 when unlimited)"
-        minimum: 0.0
-      allowedInstanceTypes:
-        type: "array"
-        description: "allowed instance types in the account (empty list for no restriction)"
-        items:
-          type: "string"
-      clusterTimeToLive:
-        type: "integer"
-        format: "int64"
-        description: "lifecycle of the cluster in hours (0 for immortal clusters)"
-        minimum: 0.0
-      userTimeToLive:
-        type: "integer"
-        format: "int64"
-        description: "lifecycle of the account and its clusters in hours (0 for immortal\
-          \ account)"
-        minimum: 0.0
-      platforms:
-        type: "string"
-        description: "list of the cloudplatforms visible on the UI"
-      defaultTags:
-        type: "object"
-        description: "default tags for the resources created"
-        additionalProperties:
-          type: "string"
   StackResponse:
     type: "object"
     required:
@@ -10770,6 +10762,7 @@ definitions:
         - "UPDATE_FAILED"
         - "CREATE_FAILED"
         - "ENABLE_SECURITY_FAILED"
+        - "PRE_DELETE_IN_PROGRESS"
         - "DELETE_IN_PROGRESS"
         - "DELETE_FAILED"
         - "DELETE_COMPLETED"
@@ -10850,3 +10843,48 @@ definitions:
         type: "boolean"
         description: "resource is visible in account"
         default: false
+  AccountPreference:
+    type: "object"
+    required:
+    - "clusterTimeToLive"
+    - "userTimeToLive"
+    properties:
+      maxNumberOfClusters:
+        type: "integer"
+        format: "int64"
+        description: "max number of clusters in the account (0 when unlimited)"
+        minimum: 0.0
+      maxNumberOfNodesPerCluster:
+        type: "integer"
+        format: "int64"
+        description: "max number of vms in a cluster of account (0 when unlimited)"
+        minimum: 0.0
+      maxNumberOfClustersPerUser:
+        type: "integer"
+        format: "int64"
+        description: "max number of clusters for user within the account (0 when unlimited)"
+        minimum: 0.0
+      allowedInstanceTypes:
+        type: "array"
+        description: "allowed instance types in the account (empty list for no restriction)"
+        items:
+          type: "string"
+      clusterTimeToLive:
+        type: "integer"
+        format: "int64"
+        description: "lifecycle of the cluster in hours (0 for immortal clusters)"
+        minimum: 0.0
+      userTimeToLive:
+        type: "integer"
+        format: "int64"
+        description: "lifecycle of the account and its clusters in hours (0 for immortal\
+          \ account)"
+        minimum: 0.0
+      platforms:
+        type: "string"
+        description: "list of the cloudplatforms visible on the UI"
+      defaultTags:
+        type: "object"
+        description: "default tags for the resources created"
+        additionalProperties:
+          type: "string"
